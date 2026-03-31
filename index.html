@@ -1268,6 +1268,30 @@
       .pdf-modal-title { font-size: 0.75rem; }
     }
 
+    /* ─── LAPTOP / MEDIUM SCREEN OVERRIDES (no external display) ─── */
+    @media (max-width: 1400px) {
+      /* Decorative background numbers — scale down so they don't overwhelm */
+      .divider-number { font-size: clamp(4.5rem, 10vw, 9rem); }
+
+      /* Divider tagline text */
+      .divider-tag-line { font-size: clamp(1.8rem, 2.8vw, 3rem); }
+
+      /* Vertical section title */
+      .divider-title { font-size: clamp(3rem, 6vw, 5.5rem); }
+
+      /* Hero name */
+      .hero-hello   { font-size: clamp(2.4rem, 4.8vw, 4rem); }
+      .hero-jagnoor { font-size: clamp(2.8rem, 5.5vw, 5rem); }
+      .hero-hunjan  { font-size: clamp(2.8rem, 5.5vw, 5rem); }
+      .hero-portfolio-word { font-size: clamp(2.8rem, 5vw, 4.5rem); }
+
+      /* Tagline section */
+      .tagline-line { font-size: clamp(2rem, 4vw, 3.8rem); }
+
+      /* Section heading */
+      .section-title-text { font-size: clamp(1.8rem, 2.8vw, 2.8rem); }
+    }
+
     /* Noise overlay on hero */
     #hero::after {
       content: '';
@@ -1549,7 +1573,25 @@
 
     <div class="report-divider-line"></div>
 
-    <!-- ── REPORT 7: CAPs Reports (grouped) ── -->
+    <!-- ── REPORT 7: Conflict Trends in Somalia 2025 ── -->
+    <div class="report-spread report-pdf-only reveal">
+      <div class="report-pdf-frame">
+        <iframe src="Report-Design/Conflict%20Trends%20in%20Somalia%20in%202025%20-%20Final%20Draft%20-%20JH.pdf" title="Conflict Trends in Somalia in 2025"></iframe>
+      </div>
+      <div class="report-desc">
+        <div class="report-desc-left">
+          <div class="report-desc-title">Conflict Trends in Somalia in 2025</div>
+          <div class="report-desc-agency">IOM UN Migration · Somalia</div>
+        </div>
+        <div class="report-desc-body">An analysis of evolving conflict dynamics across Somalia in 2025 — mapping key drivers, emerging patterns, and their implications for humanitarian response and peacebuilding programming.</div>
+        <div class="report-desc-tag">IOM · Conflict · Somalia · 2025</div>
+        <button class="report-view-pdf" data-pdf="Report-Design/Conflict%20Trends%20in%20Somalia%20in%202025%20-%20Final%20Draft%20-%20JH.pdf" data-title="Conflict Trends in Somalia in 2025">↗ View Full Report</button>
+      </div>
+    </div>
+
+    <div class="report-divider-line"></div>
+
+    <!-- ── REPORT 8: CAPs Reports (grouped) ── -->
     <div class="report-spread report-pdf-only reveal">
       <div class="caps-group">
         <div class="caps-item">
@@ -1640,7 +1682,7 @@
       </div>
       <div class="social-campaign-info">
         <span class="social-campaign-name">Building Peace One Family at a Time</span>
-        <span class="social-campaign-meta">IOM × UKID · #WomentoWomen</span>
+        <span class="social-campaign-meta">IOM × UKAID · #WomentoWomen</span>
       </div>
     </div>
 
@@ -2382,3 +2424,4 @@
   </script>
 </body>
 </html>
+
