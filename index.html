@@ -338,6 +338,8 @@
     #ppt-divider .divider-num-small { color: rgba(0,0,0,0.7); }
     #brand-divider     { background: var(--teal); }
     #web-divider       { background: var(--lime); color: var(--dark); }
+    #app-divider       { background: var(--cyan); color: var(--dark); }
+    #app-divider .divider-tag-line.accent { color: #00364F; }
     #web-divider .divider-title,
     #web-divider .divider-num-small { color: rgba(0,0,0,0.7); }
 
@@ -713,11 +715,12 @@
     #ppt-content      { background: #3A1A6B; }  /* deep violet */
     #brand-content    { background: #6B3A1A; }  /* warm amber/rust */
     #web-content      { background: #0F2440; }  /* midnight navy */
+    #app-content      { background: #001E2B; }  /* deep dark teal */
 
     /* ── All content sections: white text on rich dark bg ── */
     #reports-content, .reports-section,
     #social-content, #info-content,
-    #ppt-content, #brand-content, #web-content {
+    #ppt-content, #brand-content, #web-content, #app-content {
       color: white;
     }
 
@@ -727,7 +730,8 @@
     #info-content .section-num,
     #ppt-content .section-num,
     #brand-content .section-num,
-    #web-content .section-num { color: rgba(255,255,255,0.3); }
+    #web-content .section-num,
+    #app-content .section-num { color: rgba(255,255,255,0.3); }
 
     #reports-content .section-line,
     .reports-section .section-line,
@@ -735,7 +739,8 @@
     #info-content .section-line,
     #ppt-content .section-line,
     #brand-content .section-line,
-    #web-content .section-line { background: rgba(255,255,255,0.15); }
+    #web-content .section-line,
+    #app-content .section-line { background: rgba(255,255,255,0.15); }
 
     /* ── Section title text — bright white, accent colour ── */
     .section-title-text.green    { color: #A8FFB8; }
@@ -744,6 +749,7 @@
     .section-title-text.lavender { color: #D8B8FF; }
     .section-title-text.teal     { color: #A8FFE8; }
     .section-title-text.lime     { color: #EEFF88; }
+    .section-title-text.cyan     { color: #A8EEFF; }
 
     /* ── Cards on rich dark backgrounds ── */
     #reports-content .card,
@@ -811,6 +817,7 @@
     #ppt-strip      { background: var(--lavender); color: #1a103a; }
     #brand-strip    { background: var(--teal); color: white; }
     #web-strip      { background: var(--lime); color: #2a3000; }
+    #app-strip      { background: var(--cyan); color: #003a52; }
 
     @keyframes marquee {
       from { transform: translateX(0); }
@@ -1301,6 +1308,104 @@
       pointer-events: none;
     }
     .hero-left { z-index: 2; }
+
+    /* ══════════════════════════════════════
+       APP DESIGN SECTION
+    ══════════════════════════════════════ */
+    .app-block { margin-bottom: 5.5rem; }
+    .app-block:last-child { margin-bottom: 0; }
+
+    .app-screens-strip {
+      display: flex;
+      gap: 1.1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 1.5rem 0 2rem;
+      scrollbar-width: none;
+      cursor: grab;
+    }
+    .app-screens-strip::-webkit-scrollbar { display: none; }
+    .app-screens-strip:active { cursor: grabbing; }
+
+    .app-screen-frame {
+      flex: 0 0 auto;
+      width: 195px;
+      scroll-snap-align: start;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 14px 45px rgba(0,0,0,0.6);
+      border: 2px solid rgba(0,174,239,0.15);
+      transition: transform 0.3s cubic-bezier(.22,1,.36,1), box-shadow 0.3s ease;
+    }
+    .app-screen-frame:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 22px 65px rgba(0,174,239,0.25);
+    }
+    .app-screen-frame img { width: 100%; height: auto; display: block; }
+
+    .app-info {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      gap: 2rem 3.5rem;
+      align-items: start;
+      margin-top: 0.5rem;
+    }
+    .app-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.65rem;
+      border-radius: 20px;
+      margin-bottom: 0.6rem;
+    }
+    .app-status.live     { background: rgba(76,184,106,0.18); color: #4CB86A; border: 1px solid rgba(76,184,106,0.4); }
+    .app-status.proposal { background: rgba(245,213,71,0.14); color: #F5D547; border: 1px solid rgba(245,213,71,0.35); }
+    .app-name {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 1.55rem;
+      color: white;
+      line-height: 1.1;
+      margin-bottom: 0.35rem;
+    }
+    .app-agency {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(0,174,239,0.75);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .app-tags-row { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .app-tag {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      padding: 0.28rem 0.75rem;
+      background: rgba(0,174,239,0.1);
+      color: #00AEEF;
+      border: 1px solid rgba(0,174,239,0.28);
+      border-radius: 3px;
+    }
+    .app-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.91rem;
+      line-height: 1.78;
+      color: rgba(255,255,255,0.68);
+    }
+    .app-desc strong { color: rgba(255,255,255,0.9); font-weight: 600; }
+    .app-divider-line { height: 1px; background: rgba(255,255,255,0.07); margin: 4rem 0; }
+
+    @media (max-width: 768px) {
+      .app-info { grid-template-columns: 1fr; gap: 1.5rem; }
+      .app-screen-frame { width: 150px; border-radius: 16px; }
+    }
+
   </style>
 </head>
 <body>
@@ -1318,6 +1423,7 @@
       <li><a href="#ppt-divider">Powerpoints</a></li>
       <li><a href="#brand-divider">Brand</a></li>
       <li><a href="#web-divider">Websites</a></li>
+      <li><a href="#app-divider">Apps</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -2211,6 +2317,110 @@
         </div>
       </div>
     </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════ -->
+  <!--  07  APP DESIGN                        -->
+  <!-- ══════════════════════════════════════ -->
+  <section class="section-divider" id="app-divider">
+    <div class="divider-number">07</div>
+    <div class="divider-tagline">
+      <span class="divider-tag-line dark reveal">I design it,</span>
+      <span class="divider-tag-line dark reveal reveal-delay-1">prototype it,</span>
+      <span class="divider-tag-line dark reveal reveal-delay-2">and ship it —</span>
+      <span class="divider-tag-line dark reveal reveal-delay-3">every screen</span>
+      <span class="divider-tag-line accent reveal reveal-delay-4">built for the</span>
+      <span class="divider-tag-line accent reveal reveal-delay-4">people using it.</span>
+    </div>
+    <div class="divider-label-wrap">
+      <div class="divider-num-small">07</div>
+      <div class="divider-title">APP DESIGN</div>
+    </div>
+  </section>
+
+  <div id="app-strip" class="quote-strip">
+    <span class="quote-strip-inner">
+      <span>Mazingira</span><span>Field Monitor</span><span>Offline-First</span><span>GPS Reporting</span>
+      <span>English · Swahili</span><span>M&amp;E Tools</span><span>Community-Driven</span><span>Encrypted DB</span>
+      <span>Mazingira</span><span>Field Monitor</span><span>Offline-First</span><span>GPS Reporting</span>
+      <span>English · Swahili</span><span>M&amp;E Tools</span><span>Community-Driven</span><span>Encrypted DB</span>
+    </span>
+  </div>
+
+  <section class="content-section" id="app-content">
+    <div class="section-header reveal">
+      <span class="section-num">07</span>
+      <span class="section-title-text cyan">App Design</span>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- ── APP 1: MAZINGIRA ── -->
+    <div class="app-block reveal">
+      <div class="app-screens-strip">
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot1.jpeg" alt="Mazingira app screen 1"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot2.jpeg" alt="Mazingira app screen 2"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot3.jpeg" alt="Mazingira app screen 3"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot4.jpeg" alt="Mazingira app screen 4"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot5.jpeg" alt="Mazingira app screen 5"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot6.jpeg" alt="Mazingira app screen 6"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot7.jpeg" alt="Mazingira app screen 7"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot8.jpeg" alt="Mazingira app screen 8"></div>
+      </div>
+      <div class="app-info">
+        <div>
+          <div class="app-status live">● Live</div>
+          <div class="app-name">Mazingira</div>
+          <div class="app-agency">IOM UN Migration · Environmental Justice</div>
+          <div class="app-tags-row">
+            <span class="app-tag">Offline-First</span>
+            <span class="app-tag">GPS Reporting</span>
+            <span class="app-tag">Photo Upload</span>
+            <span class="app-tag">Maps</span>
+            <span class="app-tag">English · Swahili</span>
+            <span class="app-tag">Sync on Connect</span>
+            <span class="app-tag">Community-Driven</span>
+          </div>
+        </div>
+        <div class="app-desc">
+          A community-driven <strong>Environmental Justice Tracker</strong> that puts pollution reporting in the hands of the people most affected by it. Residents in informal settlements, areas near schools, and industrial zones can document <strong>air pollution, illegal dumping, factory emissions, water contamination, and noise pollution</strong> — with photos and precise GPS coordinates — directly from their phones.<br><br>
+          The app works <strong>fully offline</strong>, queuing reports locally and syncing to the backend the moment connectivity returns — so a weak signal never stops a report from being filed. An integrated map layer makes environmental disparities visible across vulnerable communities, turning lived experience into documented evidence. Available in both <strong>English and Swahili</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="app-divider-line"></div>
+
+    <!-- ── APP 2: FIELD MONITOR ── -->
+    <div class="app-block reveal">
+      <div class="app-screens-strip">
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Field-Monitor-App/Screenshot-1.jpeg" alt="Field Monitor app screen 1"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Field-Monitor-App/Screenshot-2.jpeg" alt="Field Monitor app screen 2"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Field-Monitor-App/Screenshot-2.5.jpeg" alt="Field Monitor app screen 2b"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Field-Monitor-App/Screenshot-3.jpeg" alt="Field Monitor app screen 3"></div>
+        <div class="app-screen-frame"><img loading="lazy" src="App-design/Field-Monitor-App/Screenshot-4.jpeg" alt="Field Monitor app screen 4"></div>
+      </div>
+      <div class="app-info">
+        <div>
+          <div class="app-status proposal">◎ Proposal</div>
+          <div class="app-name">Field Monitor</div>
+          <div class="app-agency">IOM UN Migration · M&amp;E</div>
+          <div class="app-tags-row">
+            <span class="app-tag">Field Reporting</span>
+            <span class="app-tag">Real-Time Sync</span>
+            <span class="app-tag">Encrypted DB</span>
+            <span class="app-tag">Smartphone-First</span>
+            <span class="app-tag">M&amp;E Tools</span>
+            <span class="app-tag">Instant Updates</span>
+          </div>
+        </div>
+        <div class="app-desc">
+          A proposed <strong>field monitoring app</strong> designed for IOM's M&amp;E team — built around how field officers actually work. Instead of paper forms or slow desktop dashboards, staff log tasks, activities, and progress <strong>directly from their smartphones</strong> in real time.<br><br>
+          Reports update <strong>instantly</strong> across the team, giving programme managers live visibility without chasing emails. Data is stored in a <strong>secure, encrypted database</strong>, keeping sensitive field information protected. Designed to be fast, intuitive, and friction-free — because in the field, every minute counts.
+        </div>
+      </div>
+    </div>
+
   </section>
 
 
