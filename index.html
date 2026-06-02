@@ -1309,6 +1309,38 @@
     }
     .hero-left { z-index: 2; }
 
+    /* ─── BACK TO TOP ─── */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: white;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      backdrop-filter: blur(8px);
+      padding: 0.55rem 1.1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .back-to-top:hover { background: rgba(255,255,255,0.2); }
+
     /* ══════════════════════════════════════
        APP DESIGN SECTION
     ══════════════════════════════════════ */
@@ -1412,6 +1444,9 @@
 
   <!-- Custom cursor -->
   <div class="cursor" id="cursor"></div>
+
+  <!-- Back to top -->
+  <a class="back-to-top" id="back-to-top" href="#hero">↑ Top</a>
 
   <!-- NAV -->
   <nav>
@@ -2495,6 +2530,12 @@
   </section>
 
   <script>
+    // ─── BACK TO TOP ──────────────────────────────────────────
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+
     // ─── CURSOR ───────────────────────────────────────────────
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', e => {
