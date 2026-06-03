@@ -2593,36 +2593,139 @@
       tick();
     })();
 
-    // ─── NAME SCRAMBLE ────────────────────────────────────────
+    // ─── LETTER FALL PHYSICS ──────────────────────────────────
     (function () {
-      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
+      const GRAVITY      = 0.48;
+      const BOUNCE       = 0.42;
+      const FRICTION     = 0.80;
+      const REPEL_R      = 100;
+      const REPEL_FORCE  = 6;
 
-      function scramble(el) {
-        if (el._scrambling) return;
-        el._scrambling = true;
-        const original = el.textContent;
-        const len = original.length;
-        let frame = 0;
-        const total = len * 5;
+      let triggered = false;
+      const bodies  = [];
+      let mouseX = -9999, mouseY = -9999;
 
-        const id = setInterval(() => {
-          el.textContent = original.split('').map((ch, i) => {
-            if (ch === ' ') return ' ';
-            if (frame >= i * 5 + 15) return ch;
-            return CHARS[Math.floor(Math.random() * CHARS.length)];
-          }).join('');
-          frame++;
-          if (frame > total) {
-            el.textContent = original;
-            el._scrambling = false;
-            clearInterval(id);
-          }
-        }, 28);
+      function splitToLetters(el) {
+        const text = el.textContent;
+        el.innerHTML = '';
+        el.style.display = 'flex';
+        [...text].forEach(ch => {
+          const s = document.createElement('span');
+          s.textContent = ch === ' ' ? ' ' : ch;
+          s.style.display = 'inline-block';
+          s.classList.add('hero-name-letter');
+          el.appendChild(s);
+        });
       }
 
-      ['hero-jagnoor', 'hero-hunjan'].forEach(cls => {
-        const el = document.querySelector('.' + cls);
-        if (el) el.addEventListener('mouseenter', () => scramble(el));
+      function launch() {
+        if (triggered) return;
+        triggered = true;
+
+        const container   = document.querySelector('.hero-left');
+        const cRect       = container.getBoundingClientRect();
+        const floorY      = container.clientHeight - 50;
+        const maxX        = container.clientWidth;
+
+        document.querySelectorAll('.hero-name-letter').forEach(span => {
+          const r  = span.getBoundingClientRect();
+          const x  = r.left - cRect.left;
+          const y  = r.top  - cRect.top;
+          const cs = window.getComputedStyle(span.parentElement);
+
+          const div = document.createElement('div');
+          div.textContent = span.textContent;
+          div.style.cssText = `
+            position:absolute; left:${x}px; top:${y}px;
+            width:${r.width}px; height:${r.height}px;
+            font-family:${cs.fontFamily}; font-size:${cs.fontSize};
+            font-weight:${cs.fontWeight}; color:${cs.color};
+            line-height:1; display:flex; align-items:center;
+            justify-content:center; pointer-events:auto;
+            cursor:grab; user-select:none; z-index:10;
+            transform-origin:center center;
+          `;
+          container.appendChild(div);
+          span.style.visibility = 'hidden';
+
+          bodies.push({
+            el: div, x, y,
+            w: r.width, h: r.height,
+            vx: (Math.random() - 0.5) * 5,
+            vy: -Math.random() * 4 - 1,
+            rot: 0,
+            vrot: (Math.random() - 0.5) * 12,
+            onGround: false,
+            floorY, maxX,
+          });
+        });
+
+        container.addEventListener('mousemove', e => {
+          const cr = container.getBoundingClientRect();
+          mouseX = e.clientX - cr.left;
+          mouseY = e.clientY - cr.top;
+        });
+        container.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
+
+        loop();
+      }
+
+      function loop() {
+        bodies.forEach(b => {
+          const cx = b.x + b.w / 2;
+          const cy = b.y + b.h / 2;
+          const dx = cx - mouseX;
+          const dy = cy - mouseY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < REPEL_R && dist > 0) {
+            const f = (REPEL_R - dist) / REPEL_R * REPEL_FORCE;
+            b.vx += (dx / dist) * f;
+            b.vy += (dy / dist) * f;
+            b.onGround = false;
+          }
+
+          if (!b.onGround) {
+            b.vy   += GRAVITY;
+            b.x    += b.vx;
+            b.y    += b.vy;
+            b.rot  += b.vrot;
+            b.vrot *= 0.97;
+
+            if (b.y + b.h >= b.floorY) {
+              b.y   = b.floorY - b.h;
+              b.vy *= -BOUNCE;
+              b.vx *= FRICTION;
+              b.vrot *= 0.5;
+              if (Math.abs(b.vy) < 0.9) { b.vy = 0; b.onGround = true; }
+            }
+            if (b.y < 0)              { b.y = 0; b.vy = Math.abs(b.vy) * 0.4; }
+            if (b.x < 0)              { b.x = 0; b.vx = Math.abs(b.vx) * 0.5; }
+            if (b.x + b.w > b.maxX)  { b.x = b.maxX - b.w; b.vx = -Math.abs(b.vx) * 0.5; }
+          } else {
+            b.vx  *= 0.88;
+            b.x   += b.vx;
+            b.rot *= 0.88;
+            if (Math.abs(b.vx) < 0.05) b.vx = 0;
+            if (b.x < 0)             { b.x = 0; b.vx = 0; }
+            if (b.x + b.w > b.maxX) { b.x = b.maxX - b.w; b.vx = 0; }
+            b.y = b.floorY - b.h;
+          }
+
+          b.el.style.left      = b.x   + 'px';
+          b.el.style.top       = b.y   + 'px';
+          b.el.style.transform = `rotate(${b.rot}deg)`;
+        });
+        requestAnimationFrame(loop);
+      }
+
+      window.addEventListener('load', () => {
+        ['.hero-jagnoor', '.hero-hunjan'].forEach(cls => {
+          const el = document.querySelector(cls);
+          if (!el) return;
+          splitToLetters(el);
+          el.addEventListener('mouseenter', launch, { once: true });
+        });
       });
     })();
 
