@@ -121,6 +121,7 @@
       line-height: 1; color: var(--navy);
       opacity: 0; transform: translateY(40px);
       animation: slideUp 0.8s cubic-bezier(.22,1,.36,1) 0.35s forwards;
+      cursor: crosshair;
     }
     .hero-hunjan {
       font-family: 'Nunito', sans-serif;
@@ -129,6 +130,7 @@
       line-height: 1; color: var(--navy);
       opacity: 0; transform: translateY(40px);
       animation: slideUp 0.8s cubic-bezier(.22,1,.36,1) 0.5s forwards;
+      cursor: crosshair;
     }
 
     .hero-bio {
@@ -1465,6 +1467,7 @@
 
   <!-- ══ HERO ══ -->
   <section id="hero">
+    <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
     <div class="hero-left">
       <div class="hero-contact">
         Jagnoor2211@gmail.com<br>Nairobi, Kenya
@@ -2535,6 +2538,93 @@
     window.addEventListener('scroll', () => {
       backToTop.classList.toggle('visible', window.scrollY > 400);
     }, { passive: true });
+
+    // ─── HERO CONSTELLATION ───────────────────────────────────
+    (function () {
+      const canvas = document.getElementById('hero-canvas');
+      const ctx    = canvas.getContext('2d');
+      const hero   = document.getElementById('hero');
+
+      function resize() {
+        canvas.width  = hero.offsetWidth;
+        canvas.height = hero.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+
+      const COUNT = 55;
+      const pts = Array.from({ length: COUNT }, () => ({
+        x:  Math.random() * canvas.width,
+        y:  Math.random() * canvas.height,
+        r:  Math.random() * 2.2 + 0.6,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        o:  Math.random() * 0.25 + 0.06,
+      }));
+
+      function tick() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < COUNT; i++) {
+          const a = pts[i];
+          for (let j = i + 1; j < COUNT; j++) {
+            const b  = pts[j];
+            const dx = a.x - b.x, dy = a.y - b.y;
+            const d  = Math.sqrt(dx * dx + dy * dy);
+            if (d < 130) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(0,55,75,${0.18 * (1 - d / 130)})`;
+              ctx.lineWidth = 0.6;
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+          ctx.beginPath();
+          ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(0,45,65,${a.o})`;
+          ctx.fill();
+
+          a.x += a.vx; a.y += a.vy;
+          if (a.x < 0 || a.x > canvas.width)  a.vx *= -1;
+          if (a.y < 0 || a.y > canvas.height) a.vy *= -1;
+        }
+        requestAnimationFrame(tick);
+      }
+      tick();
+    })();
+
+    // ─── NAME SCRAMBLE ────────────────────────────────────────
+    (function () {
+      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
+
+      function scramble(el) {
+        if (el._scrambling) return;
+        el._scrambling = true;
+        const original = el.textContent;
+        const len = original.length;
+        let frame = 0;
+        const total = len * 5;
+
+        const id = setInterval(() => {
+          el.textContent = original.split('').map((ch, i) => {
+            if (ch === ' ') return ' ';
+            if (frame >= i * 5 + 15) return ch;
+            return CHARS[Math.floor(Math.random() * CHARS.length)];
+          }).join('');
+          frame++;
+          if (frame > total) {
+            el.textContent = original;
+            el._scrambling = false;
+            clearInterval(id);
+          }
+        }, 28);
+      }
+
+      ['hero-jagnoor', 'hero-hunjan'].forEach(cls => {
+        const el = document.querySelector('.' + cls);
+        if (el) el.addEventListener('mouseenter', () => scramble(el));
+      });
+    })();
 
     // ─── CURSOR ───────────────────────────────────────────────
     const cursor = document.getElementById('cursor');
