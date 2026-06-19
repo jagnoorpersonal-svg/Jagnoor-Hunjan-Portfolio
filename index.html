@@ -1879,6 +1879,162 @@
       margin-top: 2px;
     }
 
+
+    /* ═══════════════════════════════════════
+       SOCIAL: phone + infinite swipe layout
+    ═══════════════════════════════════════ */
+    .soc-layout {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* ── Phone device ── */
+    .ph-device {
+      width: 265px;
+      background: linear-gradient(160deg, #1c1c2e 0%, #0a0a18 100%);
+      border-radius: 44px;
+      border: 2px solid rgba(255,255,255,0.1);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        10px 20px 70px rgba(0,0,0,0.75),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+      padding: 14px 10px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      position: relative;
+      transition: transform 0.4s cubic-bezier(.22,1,.36,1);
+      flex-shrink: 0;
+    }
+    .ph-device:hover { transform: scale(1.02); }
+
+    /* Hardware buttons */
+    .ph-device::before {
+      content:''; position:absolute; left:-4px; top:70px;
+      width:3px; height:26px; background:rgba(255,255,255,0.2);
+      border-radius:2px 0 0 2px;
+      box-shadow:0 36px 0 rgba(255,255,255,0.2), 0 70px 0 rgba(255,255,255,0.2);
+    }
+    .ph-device::after {
+      content:''; position:absolute; right:-4px; top:90px;
+      width:3px; height:52px; background:rgba(255,255,255,0.2);
+      border-radius:0 2px 2px 0;
+    }
+
+    .ph-island {
+      width:88px; height:22px; background:#000;
+      border-radius:20px; flex-shrink:0;
+    }
+    .ph-status {
+      width:100%; display:flex; justify-content:space-between;
+      padding:0 8px; font-size:0.58rem; font-weight:600;
+      color:rgba(255,255,255,0.6); flex-shrink:0;
+      font-family:'DM Sans',sans-serif;
+    }
+    .ph-screen {
+      width:100%; border-radius:18px; overflow:hidden;
+      background:#000; flex-shrink:0;
+    }
+    .ph-ig-bar {
+      display:flex; align-items:center; gap:0.5rem;
+      padding:0.45rem 0.75rem; background:#111;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+    .ph-ig-back  { font-size:0.75rem; color:rgba(255,255,255,0.5); }
+    .ph-ig-title { font-size:0.7rem; font-weight:700; font-family:'Nunito',sans-serif; color:rgba(255,255,255,0.9); }
+
+    /* ── Infinite-loop carousel inside phone ── */
+    .ph-carousel {
+      display:flex;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;
+    }
+    .ph-carousel::-webkit-scrollbar { display:none; }
+    .ph-slide {
+      flex:0 0 100%;
+      scroll-snap-align:start;
+      aspect-ratio:1/1;
+    }
+    .ph-slide img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    .ph-ig-actions {
+      display:flex; align-items:center; gap:0.7rem;
+      padding:0.4rem 0.7rem; background:#111;
+      border-top:1px solid rgba(255,255,255,0.06); font-size:0.85rem;
+    }
+
+    /* Thin post progress bar (replaces dots for 20+ slides) */
+    .ph-progress-wrap {
+      width:calc(100% - 20px); height:3px;
+      background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden; flex-shrink:0;
+    }
+    .ph-progress-bar {
+      height:100%; background:white; border-radius:2px;
+      width:0%; transition:width 0.3s ease;
+    }
+    .ph-bar {
+      width:76px; height:4px; background:rgba(255,255,255,0.25);
+      border-radius:2px; flex-shrink:0; margin-top:2px;
+    }
+
+    /* ── Description column ── */
+    .soc-desc-col {
+      display:grid; gap:1.5rem; align-content:start; padding-top:0.5rem;
+    }
+    .soc-info-wrap { position:relative; min-height:220px; }
+    .soc-info-panel {
+      position:absolute; inset:0;
+      opacity:0; transform:translateY(10px);
+      transition:opacity 0.45s ease, transform 0.45s ease;
+      pointer-events:none;
+      display:grid; gap:0.9rem; align-content:start;
+    }
+    .soc-info-panel.active {
+      opacity:1; transform:translateY(0); pointer-events:auto;
+    }
+    .soc-title {
+      font-family:'Nunito',sans-serif; font-weight:900; font-size:1.3rem;
+      color:white; line-height:1.2;
+      border-bottom:1px solid rgba(255,255,255,0.12); padding-bottom:0.45rem;
+    }
+    .soc-agency {
+      font-size:0.71rem; font-weight:700; letter-spacing:0.1em;
+      text-transform:uppercase; color:rgba(255,255,255,0.4);
+    }
+    .soc-body {
+      font-family:'DM Sans',sans-serif; font-size:0.88rem;
+      line-height:1.78; color:rgba(255,255,255,0.62);
+    }
+
+    /* ── Campaign selector dots ── */
+    .soc-camp-dots { display:flex; gap:0.55rem; flex-wrap:wrap; }
+    .soc-camp-dot {
+      width:8px; height:8px; border-radius:50%;
+      background:rgba(255,255,255,0.2); border:none; cursor:pointer; padding:0;
+      transition:background 0.25s, transform 0.25s;
+    }
+    .soc-camp-dot.on { background:white; transform:scale(1.35); }
+
+    /* ── Swipe hint ── */
+    .soc-hint {
+      font-family:'DM Sans',sans-serif; font-size:0.68rem;
+      letter-spacing:0.08em; color:rgba(255,255,255,0.28);
+      animation:hintPulse 2.5s ease-in-out infinite;
+    }
+    @keyframes hintPulse {
+      0%,100% { opacity:0.28; } 50% { opacity:0.7; }
+    }
+
+    @media (max-width:800px) {
+      .soc-layout { grid-template-columns:1fr; }
+      .ph-device   { margin:0 auto; }
+    }
+
   </style>
 </head>
 <body>
@@ -2269,261 +2425,102 @@
     <div class="section-line"></div>
   </div>
 
-  <!-- Building Peace -->
-  <div class="portfolio-spread reveal">
-  <div class="phone-wrap">
-    <div class="phone-frame">
-      <div class="phone-island"></div>
-      <div class="phone-status">
-        <span>9:41</span>
-        <div class="phone-status-icons">
-          <span>▲▲</span><span>◼◼◼</span>
-        </div>
-      </div>
-      <div class="phone-screen-inner">
-        <div class="phone-carousel">
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Building-peace1.webp" alt="Building Peace slide 1"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Building-peace-2.webp" alt="Building Peace slide 2"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Building-peace-3.webp" alt="Building Peace slide 3"></div>
-        </div>
-      </div>
-      <div class="phone-dots"><div class="phone-dot active"></div><div class="phone-dot"></div><div class="phone-dot"></div></div>
-      <div class="phone-home-bar"></div>
-    </div>
-  </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Building Peace One Family at a Time</div>
-      <div class="portfolio-desc-agency">IOM × UKAID · #WomentoWomen</div>
-      <div class="portfolio-desc-body">A three-part visual series exploring how lasting peace starts at home — produced for digital platforms as part of the #WomentoWomen campaign across Somalia.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Carousel</span>
-        <span class="portfolio-tag">#WomentoWomen</span>
-        <span class="portfolio-tag">Instagram</span>
-        <span class="portfolio-tag">Peacebuilding</span>
-      </div>
-    </div>
-  </div>
+  <div class="soc-layout reveal">
 
-  <div class="section-spread-divider"></div>
+    <!-- Phone mockup -->
+    <div class="ph-device">
+      <div class="ph-island"></div>
+      <div class="ph-status"><span>9:41</span><span>▲▲ ◼◼◼</span></div>
+      <div class="ph-screen">
+        <div class="ph-ig-bar">
+          <span class="ph-ig-back">←</span>
+          <span class="ph-ig-title">Explore</span>
+        </div>
+        <!-- Infinite-loop post carousel -->
+        <div class="ph-carousel" id="phCarousel">
+          <div class="ph-slide" data-campaign="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace1.webp" alt="Post 1"></div>
+          <div class="ph-slide" data-campaign="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-2.webp" alt="Post 2"></div>
+          <div class="ph-slide" data-campaign="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-3.webp" alt="Post 3"></div>
+          <div class="ph-slide" data-campaign="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety.webp" alt="Post 4"></div>
+          <div class="ph-slide" data-campaign="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-2.webp" alt="Post 5"></div>
+          <div class="ph-slide" data-campaign="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-3.webp" alt="Post 6"></div>
+          <div class="ph-slide" data-campaign="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol.webp" alt="Post 7"></div>
+          <div class="ph-slide" data-campaign="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol2.webp" alt="Post 8"></div>
+          <div class="ph-slide" data-campaign="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol3.webp" alt="Post 9"></div>
+          <div class="ph-slide" data-campaign="3" data-real="1"><img loading="lazy" src="Social-Design/Womens-day-1.jpeg" alt="Post 10"></div>
+          <div class="ph-slide" data-campaign="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-2.jpeg" alt="Post 11"></div>
+          <div class="ph-slide" data-campaign="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-3.jpeg" alt="Post 12"></div>
+          <div class="ph-slide" data-campaign="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-5.jpeg" alt="Post 13"></div>
+          <div class="ph-slide" data-campaign="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts.webp" alt="Post 14"></div>
+          <div class="ph-slide" data-campaign="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts3.webp" alt="Post 15"></div>
+          <div class="ph-slide" data-campaign="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts4.webp" alt="Post 16"></div>
+          <div class="ph-slide" data-campaign="5" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-WUF12-Flyer.webp" alt="Post 17"></div>
+          <div class="ph-slide" data-campaign="5" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-Green-Flyer.webp" alt="Post 18"></div>
+          <div class="ph-slide" data-campaign="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%201.webp" alt="Post 19"></div>
+          <div class="ph-slide" data-campaign="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%202.webp" alt="Post 20"></div>
+          <div class="ph-slide" data-campaign="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20%20-%20Page%203.webp" alt="Post 21"></div>
+        </div>
+        <div class="ph-ig-actions"><span>♡</span><span>💬</span><span>↗</span><span style="margin-left:auto">🔖</span></div>
+      </div>
+      <!-- Post progress indicator (thin line) -->
+      <div class="ph-progress-wrap"><div class="ph-progress-bar" id="phProgress"></div></div>
+      <div class="ph-bar"></div>
+    </div>
 
-  <!-- Guardians -->
-  <div class="portfolio-spread reveal">
-  <div class="phone-wrap">
-    <div class="phone-frame">
-      <div class="phone-island"></div>
-      <div class="phone-status">
-        <span>9:41</span>
-        <div class="phone-status-icons">
-          <span>▲▲</span><span>◼◼◼</span>
-        </div>
-      </div>
-      <div class="phone-screen-inner">
-        <div class="phone-carousel">
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety.webp" alt="Guardians slide 1"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-2.webp" alt="Guardians slide 2"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-3.webp" alt="Guardians slide 3"></div>
-        </div>
-      </div>
-      <div class="phone-dots"><div class="phone-dot active"></div><div class="phone-dot"></div><div class="phone-dot"></div></div>
-      <div class="phone-home-bar"></div>
+    <!-- Right column: campaign info (updates as you scroll posts) -->
+    <div class="soc-desc-col">
+      <div class="soc-info-wrap">
+    <div class="soc-info-panel active" data-campaign="0">
+      <div class="soc-title">Building Peace One Family at a Time</div>
+      <div class="soc-agency">IOM × UKAID · #WomentoWomen</div>
+      <div class="soc-body">A three-part visual series exploring how lasting peace starts at home — produced for digital platforms as part of the #WomentoWomen campaign across Somalia.</div>
+      <div class="portfolio-tag-row"><span class="portfolio-tag">Carousel</span><span class="portfolio-tag">#WomentoWomen</span><span class="portfolio-tag">Instagram</span><span class="portfolio-tag">Peacebuilding</span></div>
     </div>
-  </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Guardians of Their Own Safety</div>
-      <div class="portfolio-desc-agency">IOM Somalia · Baidoa Series</div>
-      <div class="portfolio-desc-body">Baidoa community safety series — spotlighting women as active agents in building secure environments for themselves and their families.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Carousel</span>
-        <span class="portfolio-tag">Community Safety</span>
-        <span class="portfolio-tag">Baidoa</span>
-        <span class="portfolio-tag">Instagram</span>
-      </div>
+    <div class="soc-info-panel" data-campaign="1">
+      <div class="soc-title">Guardians of Their Own Safety</div>
+      <div class="soc-agency">IOM Somalia · Baidoa Series</div>
+      <div class="soc-body">Baidoa community safety series — spotlighting women as active agents in building secure environments for themselves and their families.</div>
+      <div class="portfolio-tag-row"><span class="portfolio-tag">Carousel</span><span class="portfolio-tag">Community Safety</span><span class="portfolio-tag">Baidoa</span><span class="portfolio-tag">Instagram</span></div>
     </div>
-  </div>
+    <div class="soc-info-panel" data-campaign="2">
+      <div class="soc-title">Men &amp; Boys as Allies</div>
+      <div class="soc-agency">IOM Somalia · #WomentoWomen</div>
+      <div class="soc-body">Campaign positioning men and boys as essential partners in ending gender-based violence — part of the wider #WomentoWomen programme messaging.</div>
+      <div class="portfolio-tag-row"><span class="portfolio-tag">Carousel</span><span class="portfolio-tag">GBV Prevention</span><span class="portfolio-tag">#WomentoWomen</span><span class="portfolio-tag">Campaign</span></div>
+    </div>
+    <div class="soc-info-panel" data-campaign="3">
+      <div class="soc-title">International Women's Day Campaign</div>
+      <div class="soc-agency">IOM Somalia</div>
+      <div class="soc-body">Four-slide IWD campaign celebrating women's leadership in peace and security — designed for bold digital impact on 8 March.</div>
+      <div class="portfolio-tag-row"><span class="portfolio-tag">#IWD</span><span class="portfolio-tag">4-Slide Series</span><span class="portfolio-tag">Campaign</span><span class="portfolio-tag">Instagram</span></div>
+    </div>
+    <div class="soc-info-panel" data-campaign="4">
+      <div class="soc-title">16 Days of Activism</div>
+      <div class="soc-agency">IOM Somalia · End GBV</div>
+      <div class="soc-body">End GBV campaign for the 16 Days of Activism — raising awareness through bold visual storytelling across IOM Somalia's digital platforms.</div>
+      <div class="portfolio-tag-row"><span class="portfolio-tag">16 Days</span><span class="portfolio-tag">End GBV</span><span class="portfolio-tag">Activism</span><span class="portfolio-tag">Campaign</span></div>
+    </div>
+    <div class="soc-info-panel" data-campaign="5">
+      <div class="soc-title">World Urban Forum 12 — Dialogue 4</div>
+      <div class="soc-agency">UN-Habitat · WUF12</div>
+      <div class="soc-body">Event flyers designed for Dialogue 4 at the World Urban Forum 12 in Cairo — clean, conference-ready layouts in two colourways.</div>
+      <div class="portfolio-tag-row"><span class="portfolio-tag">Flyer Design</span><span class="portfolio-tag">WUF12</span><span class="portfolio-tag">UN-Habitat</span><span class="portfolio-tag">Event</span></div>
+    </div>
+    <div class="soc-info-panel" data-campaign="6">
+      <div class="soc-title">Women to Women — Programme Carousel</div>
+      <div class="soc-agency">IOM × UKAID · #WomentoWomen</div>
+      <div class="soc-body">Multi-slide Instagram carousel introducing the Women to Women programme — designed to be swiped as a narrative, building awareness slide by slide.</div>
+      <div class="portfolio-tag-row"><span class="portfolio-tag">Instagram Carousel</span><span class="portfolio-tag">#WomentoWomen</span><span class="portfolio-tag">Programme</span><span class="portfolio-tag">UKAID</span></div>
+    </div>
+      </div>
+      <!-- Campaign selector dots -->
+      <div class="soc-camp-dots">
+        <button class="soc-camp-dot on" data-camp="0" aria-label="Campaign 1"></button><button class="soc-camp-dot" data-camp="1" aria-label="Campaign 2"></button><button class="soc-camp-dot" data-camp="2" aria-label="Campaign 3"></button><button class="soc-camp-dot" data-camp="3" aria-label="Campaign 4"></button><button class="soc-camp-dot" data-camp="4" aria-label="Campaign 5"></button><button class="soc-camp-dot" data-camp="5" aria-label="Campaign 6"></button><button class="soc-camp-dot" data-camp="6" aria-label="Campaign 7"></button>
+      </div>
+      <!-- Swipe hint -->
+      <div class="soc-hint">← swipe posts inside the phone →</div>
+    </div>
 
-  <div class="section-spread-divider"></div>
-
-  <!-- Men & Boys -->
-  <div class="portfolio-spread reveal">
-  <div class="phone-wrap">
-    <div class="phone-frame">
-      <div class="phone-island"></div>
-      <div class="phone-status">
-        <span>9:41</span>
-        <div class="phone-status-icons">
-          <span>▲▲</span><span>◼◼◼</span>
-        </div>
-      </div>
-      <div class="phone-screen-inner">
-        <div class="phone-carousel">
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol.webp" alt="Men and Boys slide 1"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol2.webp" alt="Men and Boys slide 2"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol3.webp" alt="Men and Boys slide 3"></div>
-        </div>
-      </div>
-      <div class="phone-dots"><div class="phone-dot active"></div><div class="phone-dot"></div><div class="phone-dot"></div></div>
-      <div class="phone-home-bar"></div>
-    </div>
-  </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Men &amp; Boys as Allies</div>
-      <div class="portfolio-desc-agency">IOM Somalia · #WomentoWomen</div>
-      <div class="portfolio-desc-body">Campaign positioning men and boys as essential partners in ending gender-based violence — part of the wider #WomentoWomen programme messaging.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Carousel</span>
-        <span class="portfolio-tag">GBV Prevention</span>
-        <span class="portfolio-tag">#WomentoWomen</span>
-        <span class="portfolio-tag">Campaign</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- Women's Day -->
-  <div class="portfolio-spread reveal">
-  <div class="phone-wrap">
-    <div class="phone-frame">
-      <div class="phone-island"></div>
-      <div class="phone-status">
-        <span>9:41</span>
-        <div class="phone-status-icons">
-          <span>▲▲</span><span>◼◼◼</span>
-        </div>
-      </div>
-      <div class="phone-screen-inner">
-        <div class="phone-carousel">
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Womens-day-1.jpeg" alt="Women's Day slide 1"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/womens-day-2.jpeg" alt="Women's Day slide 2"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/womens-day-3.jpeg" alt="Women's Day slide 3"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/womens-day-5.jpeg" alt="Women's Day slide 4"></div>
-        </div>
-      </div>
-      <div class="phone-dots"><div class="phone-dot active"></div><div class="phone-dot"></div><div class="phone-dot"></div><div class="phone-dot"></div></div>
-      <div class="phone-home-bar"></div>
-    </div>
-  </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">International Women's Day Campaign</div>
-      <div class="portfolio-desc-agency">IOM Somalia</div>
-      <div class="portfolio-desc-body">Four-slide IWD campaign celebrating women's leadership in peace and security programming — designed for bold impact across social platforms on 8 March.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">#IWD</span>
-        <span class="portfolio-tag">4-Slide Series</span>
-        <span class="portfolio-tag">Campaign</span>
-        <span class="portfolio-tag">Instagram</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- 16 Days -->
-  <div class="portfolio-spread reveal">
-  <div class="phone-wrap">
-    <div class="phone-frame">
-      <div class="phone-island"></div>
-      <div class="phone-status">
-        <span>9:41</span>
-        <div class="phone-status-icons">
-          <span>▲▲</span><span>◼◼◼</span>
-        </div>
-      </div>
-      <div class="phone-screen-inner">
-        <div class="phone-carousel">
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts.webp" alt="16 Days slide 1"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts3.webp" alt="16 Days slide 2"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts4.webp" alt="16 Days slide 3"></div>
-        </div>
-      </div>
-      <div class="phone-dots"><div class="phone-dot active"></div><div class="phone-dot"></div><div class="phone-dot"></div></div>
-      <div class="phone-home-bar"></div>
-    </div>
-  </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">16 Days of Activism</div>
-      <div class="portfolio-desc-agency">IOM Somalia · End GBV</div>
-      <div class="portfolio-desc-body">End GBV campaign for the 16 Days of Activism — raising awareness through bold visual storytelling across IOM Somalia's digital platforms.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">16 Days</span>
-        <span class="portfolio-tag">End GBV</span>
-        <span class="portfolio-tag">Activism</span>
-        <span class="portfolio-tag">Campaign</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- WUF12 -->
-  <div class="portfolio-spread reveal">
-  <div class="phone-wrap">
-    <div class="phone-frame">
-      <div class="phone-island"></div>
-      <div class="phone-status">
-        <span>9:41</span>
-        <div class="phone-status-icons">
-          <span>▲▲</span><span>◼◼◼</span>
-        </div>
-      </div>
-      <div class="phone-screen-inner">
-        <div class="phone-carousel">
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Dialogue-4-WUF12-Flyer.webp" alt="WUF12 Flyer 1"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/Dialogue-4-Green-Flyer.webp" alt="WUF12 Flyer 2"></div>
-        </div>
-      </div>
-      <div class="phone-dots"><div class="phone-dot active"></div><div class="phone-dot"></div></div>
-      <div class="phone-home-bar"></div>
-    </div>
-  </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">World Urban Forum 12 — Dialogue 4 Flyers</div>
-      <div class="portfolio-desc-agency">UN-Habitat · WUF12</div>
-      <div class="portfolio-desc-body">Event flyers designed for Dialogue 4 at the World Urban Forum 12 in Cairo — clean, conference-ready layouts in two colourways.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Flyer Design</span>
-        <span class="portfolio-tag">WUF12</span>
-        <span class="portfolio-tag">UN-Habitat</span>
-        <span class="portfolio-tag">Event</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- W2W Carousel -->
-  <div class="portfolio-spread reveal">
-  <div class="phone-wrap">
-    <div class="phone-frame">
-      <div class="phone-island"></div>
-      <div class="phone-status">
-        <span>9:41</span>
-        <div class="phone-status-icons">
-          <span>▲▲</span><span>◼◼◼</span>
-        </div>
-      </div>
-      <div class="phone-screen-inner">
-        <div class="phone-carousel">
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%201.webp" alt="W2W Carousel slide 1"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%202.webp" alt="W2W Carousel slide 2"></div>
-          <div class="phone-slide"><img loading="lazy" src="Social-Design/W2W-Carasoul%20%20-%20Page%203.webp" alt="W2W Carousel slide 3"></div>
-        </div>
-      </div>
-      <div class="phone-dots"><div class="phone-dot active"></div><div class="phone-dot"></div><div class="phone-dot"></div></div>
-      <div class="phone-home-bar"></div>
-    </div>
-  </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Women to Women — Carousel</div>
-      <div class="portfolio-desc-agency">IOM × UKID · #WomentoWomen</div>
-      <div class="portfolio-desc-body">Multi-slide Instagram carousel introducing the Women to Women programme — designed to be swiped through as a narrative, building awareness slide by slide.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Instagram Carousel</span>
-        <span class="portfolio-tag">#WomentoWomen</span>
-        <span class="portfolio-tag">Programme</span>
-        <span class="portfolio-tag">UKID</span>
-      </div>
-    </div>
   </div>
 
 </section>
@@ -3618,21 +3615,112 @@
     }, { threshold: 0.4 });
     videoObserver.observe(screen);
   });
-
-  // ─── PHONE CAROUSEL: sync dot indicators with swipe ───
-  document.querySelectorAll('.phone-carousel').forEach(carousel => {
-    const frame = carousel.closest('.phone-frame');
-    const dots  = frame ? frame.querySelectorAll('.phone-dot') : [];
-    if (!dots.length) return;
-    const update = () => {
-      const idx = Math.round(carousel.scrollLeft / (carousel.clientWidth || 1));
-      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-    };
-    carousel.addEventListener('scroll', update, { passive: true });
     update();
   });
 
-  </script>
+  
+  // ─── SOCIAL MEDIA: infinite loop post carousel + campaign sync ───
+  (function () {
+    const carousel   = document.getElementById('phCarousel');
+    if (!carousel) return;
+
+    const realSlides = [...carousel.querySelectorAll('.ph-slide[data-real]')];
+    const n          = realSlides.length;
+    if (!n) return;
+
+    // ── 1. Clone all slides: prepend n clones, append n clones ──
+    // Append (end clones)
+    realSlides.forEach(s => {
+      const c = s.cloneNode(true);
+      c.removeAttribute('data-real');
+      carousel.appendChild(c);
+    });
+    // Prepend (start clones)
+    const allBeforeClone = [...carousel.querySelectorAll('.ph-slide[data-real]')];
+    allBeforeClone.slice().reverse().forEach(s => {
+      const c = s.cloneNode(true);
+      c.removeAttribute('data-real');
+      carousel.insertBefore(c, carousel.firstChild);
+    });
+
+    // ── 2. Start at first real slide (offset by n clone widths) ──
+    const slideW = () => carousel.clientWidth;
+    function startPos() { return n * slideW(); }
+    carousel.scrollLeft = startPos();
+
+    // ── 3. Progress bar + campaign description sync ──
+    const progressBar  = document.getElementById('phProgress');
+    const infoPanels   = document.querySelectorAll('.soc-info-panel');
+    const campDots     = document.querySelectorAll('.soc-camp-dot');
+
+    function getRealIdx() {
+      // current index within the real slides (0 to n-1)
+      const w = slideW();
+      if (!w) return 0;
+      const raw = Math.round(carousel.scrollLeft / w);
+      return ((raw - n) % n + n) % n;
+    }
+
+    function getCampaign(realIdx) {
+      const slide = realSlides[realIdx];
+      return slide ? parseInt(slide.dataset.campaign, 10) : 0;
+    }
+
+    function update() {
+      const idx  = getRealIdx();
+      const camp = getCampaign(idx);
+
+      // Progress bar
+      if (progressBar) {
+        progressBar.style.width = ((idx / (n - 1)) * 100).toFixed(1) + '%';
+      }
+
+      // Info panel crossfade
+      infoPanels.forEach((p, i) => p.classList.toggle('active', i === camp));
+
+      // Campaign dots
+      campDots.forEach((d, i) => d.classList.toggle('on', i === camp));
+    }
+
+    // ── 4. Infinite loop: jump when entering clone territory ──
+    let jumping = false;
+    carousel.addEventListener('scroll', () => {
+      if (jumping) return;
+      const w   = slideW();
+      const pos = carousel.scrollLeft;
+
+      // Entered prepended clones (before the real slides)
+      if (pos < n * w - w * 0.1) {
+        jumping = true;
+        carousel.scrollLeft = pos + n * w;
+        requestAnimationFrame(() => { jumping = false; });
+      }
+      // Entered appended clones (after the real slides)
+      else if (pos > 2 * n * w - w * 0.9) {
+        jumping = true;
+        carousel.scrollLeft = pos - n * w;
+        requestAnimationFrame(() => { jumping = false; });
+      }
+
+      update();
+    }, { passive: true });
+
+    // ── 5. Campaign dots → jump to first post of that campaign ──
+    campDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const targetCamp = parseInt(dot.dataset.camp, 10);
+        // Find first real slide of that campaign
+        const targetSlideIdx = realSlides.findIndex(s => parseInt(s.dataset.campaign, 10) === targetCamp);
+        if (targetSlideIdx < 0) return;
+        const w = slideW();
+        carousel.scrollTo({ left: (n + targetSlideIdx) * w, behavior: 'smooth' });
+      });
+    });
+
+    update();
+  })();
+
+</script>
 </body>
 </html>
 
