@@ -1740,299 +1740,1251 @@
     }
 
 
+
+
     /* ════════════════════════════════════════
-       SOCIAL MEDIA — PHONE MOCKUP CAROUSEL
+       SOCIAL MEDIA — RIVER + PHONE BEZEL
     ════════════════════════════════════════ */
-    #social-content .portfolio-spread {
-      grid-template-columns: 320px 1fr;
-    }
 
-    .phone-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-    }
-
-    .phone-frame {
-      width: 260px;
-      background: linear-gradient(160deg, #1c1c2e 0%, #0a0a18 100%);
-      border-radius: 44px;
-      border: 2px solid rgba(255,255,255,0.1);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.04),
-        12px 24px 70px rgba(0,0,0,0.75),
-        inset 0 1px 0 rgba(255,255,255,0.1);
-      padding: 14px 10px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
+    /* Flowing river container */
+    .soc-river {
       position: relative;
-      transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
-      transition: transform 0.5s cubic-bezier(.22,1,.36,1);
+      width: 100%;
+      height: 600px;
+      overflow: hidden;
+      border-radius: 16px;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%,
+        rgba(255,60,120,0.10) 0%, transparent 75%);
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
     }
-    .phone-frame:hover {
-      transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+    .soc-river.dragging { cursor: grabbing; }
+
+    /* Infinite post strip — left position driven by JS */
+    .soc-strip {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      will-change: left;
     }
 
-    /* Volume buttons (left side) */
-    .phone-frame::before {
-      content: '';
-      position: absolute;
-      left: -4px; top: 72px;
-      width: 3px; height: 28px;
-      background: rgba(255,255,255,0.18);
-      border-radius: 2px 0 0 2px;
-      box-shadow: 0 38px 0 rgba(255,255,255,0.18), 0 72px 0 rgba(255,255,255,0.18);
+    /* Each post card */
+    .soc-post {
+      flex-shrink: 0;
+      width: 320px;
+      height: 400px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow:
+        0 4px 20px rgba(0,0,0,0.5),
+        0 1px 4px rgba(0,0,0,0.35);
     }
-    /* Power button (right side) */
-    .phone-frame::after {
+    .soc-post img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      -webkit-user-drag: none;
+    }
+
+    /* ── Phone bezel overlay ──────────────────
+       The key trick:
+       - border: solid dark = phone side rails
+       - background gradient: dark top/bottom bars, TRANSPARENT middle = screen area
+       - posts show through the transparent center
+    ─────────────────────────────────────────── */
+    .soc-bezel {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      pointer-events: none;
+
+      /* Outer phone dimensions */
+      /* post(320) + 2×border(16) = 352 wide */
+      /* top-bar(62) + post-h(400) + bot-bar(60) + 2×border(16) = 554 tall */
+      width:  352px;
+      height: 554px;
+
+      /* Solid dark border = phone side/top/bottom rails */
+      border: 16px solid #0a0a1c;
+      border-radius: 52px;
+
+      /* Gradient paints top/bottom bar areas; middle stays TRANSPARENT */
+      background: linear-gradient(
+        to bottom,
+        #0a0a1c 62px,
+        transparent 62px,
+        transparent calc(100% - 60px),
+        #0a0a1c calc(100% - 60px)
+      );
+
+      /* Depth shadows */
+      box-shadow:
+        0 0 0 1.5px rgba(255,255,255,0.13),
+        0 0 0 3px rgba(255,255,255,0.04),
+        inset 0 0 0 1px rgba(255,255,255,0.07),
+        28px 56px 140px rgba(0,0,0,0.92),
+        -12px 20px 80px rgba(0,0,0,0.55);
+    }
+
+    /* Volume buttons (left) */
+    .soc-bezel::before {
       content: '';
       position: absolute;
-      right: -4px; top: 96px;
-      width: 3px; height: 55px;
-      background: rgba(255,255,255,0.18);
+      left: -20px;
+      top: 88px;
+      width: 4px;
+      height: 26px;
+      background: rgba(255,255,255,0.14);
+      border-radius: 2px 0 0 2px;
+      box-shadow: 0 42px 0 rgba(255,255,255,0.14);
+    }
+
+    /* Power button (right) */
+    .soc-bezel::after {
+      content: '';
+      position: absolute;
+      right: -20px;
+      top: 114px;
+      width: 4px;
+      height: 56px;
+      background: rgba(255,255,255,0.14);
       border-radius: 0 2px 2px 0;
     }
 
-    /* Dynamic Island */
-    .phone-island {
-      width: 88px; height: 22px;
-      background: #000;
-      border-radius: 20px;
-      flex-shrink: 0;
-    }
-
-    /* Status bar */
-    .phone-status {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.6);
-      flex-shrink: 0;
-      margin-top: -4px;
-    }
-    .phone-status-icons {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-      font-size: 0.55rem;
-    }
-
-    /* The inner screen area */
-    .phone-screen-inner {
-      width: 100%;
-      border-radius: 20px;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    /* Swipeable carousel */
-    .phone-carousel {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .phone-carousel::-webkit-scrollbar { display: none; }
-
-    .phone-slide {
-      flex: 0 0 100%;
-      scroll-snap-align: start;
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-    }
-    .phone-slide img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-    }
-
-    /* Dot indicators */
-    .phone-dots {
-      display: flex;
-      gap: 5px;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .phone-dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      transition: background 0.25s ease, transform 0.25s ease;
-    }
-    .phone-dot.active {
-      background: white;
-      transform: scale(1.35);
-    }
-
-    /* Home indicator bar */
-    .phone-home-bar {
-      width: 76px; height: 4px;
-      background: rgba(255,255,255,0.25);
-      border-radius: 2px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-
-    /* ═══════════════════════════════════════
-       SOCIAL: phone + infinite swipe layout
-    ═══════════════════════════════════════ */
-    .soc-layout {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-
-    /* ── Phone device ── */
-    .ph-device {
-      width: 265px;
-      background: linear-gradient(160deg, #1c1c2e 0%, #0a0a18 100%);
-      border-radius: 44px;
-      border: 2px solid rgba(255,255,255,0.1);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.04),
-        10px 20px 70px rgba(0,0,0,0.75),
-        inset 0 1px 0 rgba(255,255,255,0.1);
-      padding: 14px 10px 10px;
+    /* Top bar: dynamic island + status */
+    .soc-bezel-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 62px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 7px;
+      justify-content: flex-end;
+      gap: 3px;
+      padding-bottom: 5px;
+    }
+
+    .soc-b-island {
+      width: 90px;
+      height: 22px;
+      background: #000;
+      border-radius: 20px;
+    }
+
+    .soc-b-status {
+      width: 100%;
+      padding: 0 14px;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.02em;
+    }
+
+    /* Bottom bar: home indicator */
+    .soc-bezel-btm {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 12px;
+    }
+
+    .soc-b-home {
+      width: 90px;
+      height: 5px;
+      background: rgba(255,255,255,0.28);
+      border-radius: 3px;
+    }
+
+    /* ── Description section below river ── */
+    .soc-meta {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      text-align: center;
+    }
+
+    .soc-info-panels {
       position: relative;
-      transition: transform 0.4s cubic-bezier(.22,1,.36,1);
+      width: 100%;
+      height: 155px;
+    }
+
+    .soc-info-panel-new {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      pointer-events: none;
+    }
+    .soc-info-panel-new.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .soc-info-panel-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1rem, 2.2vw, 1.45rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .soc-info-panel-agency {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .soc-info-panel-body {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.62);
+      max-width: 580px;
+      line-height: 1.65;
+    }
+
+    .soc-info-panel-tags {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .soc-info-panel-tag {
+      padding: 0.22rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,80,130,0.35);
+      color: rgba(255,110,160,0.85);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    /* Campaign navigation dots */
+    .soc-camp-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .soc-camp-dot-new {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.18);
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+      padding: 0;
+    }
+    .soc-camp-dot-new.active {
+      background: #ff3c78;
+      transform: scale(1.5);
+    }
+    .soc-camp-dot-new:hover {
+      background: rgba(255,60,120,0.55);
+    }
+
+    .soc-river-hint {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.22);
+      letter-spacing: 0.06em;
+    }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+      .soc-river   { height: 440px; }
+      .soc-bezel   { transform: translate(-50%, -50%) scale(0.72); }
+      .soc-post    { width: 240px; height: 300px; }
+    }
+
+
+
+
+    /* ── Infosheet full-width image ── */
+    .info-full-wrap {
+      width: calc(100% + 8rem);
+      margin-left: -4rem;
+      overflow: visible;
+    }
+
+    .info-full-img {
+      width: 100%;
+      display: block;
+      border-radius: 0;
+      transition: transform 0.45s cubic-bezier(.22,1,.36,1);
+      cursor: default;
+      filter: drop-shadow(0 16px 48px rgba(0,0,0,0.55));
+    }
+
+    .info-full-img:hover {
+      transform: translateY(-12px) scale(1.02);
+      filter: drop-shadow(0 32px 80px rgba(0,0,0,0.7));
+    }
+
+    .info-dl-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .info-dl-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      max-width: 500px;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+
+    /* ════════════════════════════════════════
+       PPT — MONITOR RIVER
+    ════════════════════════════════════════ */
+
+    /* River container — clips horizontal overflow, lets stand peek below */
+    .ppt-river {
+      position: relative;
+      width: 100%;
+      height: 460px;
+      overflow-x: hidden;
+      overflow-y: visible;
+      background: radial-gradient(ellipse 70% 60% at 50% 45%,
+        rgba(120,80,220,0.09) 0%, transparent 75%);
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .ppt-river.dragging { cursor: grabbing; }
+
+    /* Slide strip */
+    .ppt-strip {
+      position: absolute;
+      top: 50%;
+      /* height offset: centre on monitor screen, not the whole monitor
+         monitor screen top = border(12) + top-bar(22) = 34px from monitor top
+         monitor outer height = 341px, so screen centre from top = 34 + 281/2 = 174.5px
+         monitor is centred at river_h/2 = 230px from river top
+         screen centre in river = 230 - 341/2 + 174.5 = 230 - 170.5 + 174.5 = 234px from top
+         so strip centre should be at 234px - so translateY(-50%) with top: 234px/460px = 50.9% ≈ 51%
+         Simpler: just use 50% and accept the 4px visual offset (negligible) */
+      transform: translateY(-50%);
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      will-change: left;
+    }
+
+    /* Individual slide card */
+    .ppt-slide {
+      flex-shrink: 0;
+      width: 500px;
+      height: 281px;   /* 16:9 */
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+    }
+    .ppt-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      -webkit-user-drag: none;
+    }
+
+    /* ── Monitor bezel overlay ────────────────
+       border = monitor chassis sides
+       gradient = top/bottom bezels, transparent = screen
+    ─────────────────────────────────────────── */
+    .ppt-monitor {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      pointer-events: none;
+
+      /* slide(500) + 2×border(12) = 524 wide */
+      /* top-bar(22) + slide-h(281) + bot-bar(14) + 2×border(12) = 341 tall */
+      width:  524px;
+      height: 341px;
+
+      border: 12px solid #0a0a1a;
+      border-radius: 10px;
+
+      background: linear-gradient(
+        to bottom,
+        #0a0a1a 22px,
+        transparent 22px,
+        transparent calc(100% - 14px),
+        #0a0a1a calc(100% - 14px)
+      );
+
+      box-shadow:
+        0 0 0 1.5px rgba(255,255,255,0.1),
+        0 0 0 3px rgba(255,255,255,0.03),
+        inset 0 0 0 1px rgba(255,255,255,0.06),
+        20px 40px 100px rgba(0,0,0,0.85),
+        -8px 16px 60px rgba(0,0,0,0.5);
+    }
+
+    /* Camera dot in top bezel */
+    .ppt-monitor-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ppt-monitor-cam {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      box-shadow: 0 0 0 1.5px rgba(255,255,255,0.08);
+    }
+
+    /* Brand text in bottom bezel */
+    .ppt-monitor-btm {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ppt-monitor-brand {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.45rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.18);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* Monitor stand */
+    .ppt-stand {
+      position: absolute;
+      /* sits just below the monitor frame */
+      top: calc(50% + 341px / 2 - 12px);  /* bottom border of monitor */
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      z-index: 9;
+    }
+    .ppt-stand-neck {
+      width: 5px;
+      height: 38px;
+      background: linear-gradient(to bottom, #1a1a30, #12121e);
+      border-radius: 0 0 3px 3px;
+    }
+    .ppt-stand-base {
+      width: 140px;
+      height: 10px;
+      background: linear-gradient(to bottom, #1e1e32, #0e0e1c);
+      border-radius: 6px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    }
+
+    /* ── Description ── */
+    .ppt-meta {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      text-align: center;
+    }
+
+    .ppt-info-panels {
+      position: relative;
+      width: 100%;
+      height: 150px;
+    }
+
+    .ppt-info-panel {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      pointer-events: none;
+    }
+    .ppt-info-panel.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .ppt-info-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1rem, 2.2vw, 1.4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .ppt-info-agency {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .ppt-info-body {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      line-height: 1.65;
+    }
+    .ppt-info-tags {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .ppt-info-tag {
+      padding: 0.22rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(150,100,255,0.35);
+      color: rgba(170,130,255,0.85);
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .ppt-camp-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .ppt-camp-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.18);
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+      padding: 0;
+    }
+    .ppt-camp-dot.active {
+      background: #9b6dff;
+      transform: scale(1.5);
+    }
+    .ppt-camp-dot:hover { background: rgba(155,109,255,0.55); }
+
+    .ppt-river-hint {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.22);
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 720px) {
+      .ppt-river  { height: 320px; }
+      .ppt-monitor { transform: translate(-50%, -50%) scale(0.6); }
+      .ppt-slide  { width: 360px; height: 203px; }
+    }
+
+
+    /* ── Brand Guidelines screenshots ── */
+    .brand-shots {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      width: 100%;
+    }
+
+    .brand-shot {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.42s cubic-bezier(.22,1,.36,1), filter 0.42s ease;
+      cursor: default;
+    }
+
+    .brand-shot img {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+      /* multiply makes white areas absorb the dark background, dissolving the white bg */
+      mix-blend-mode: multiply;
+      transition: transform 0.42s cubic-bezier(.22,1,.36,1);
+    }
+
+    .brand-shot:hover img {
+      transform: translateY(-10px) scale(1.02);
+    }
+
+    /* Soft shadow behind each card */
+    .brand-shot::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .brand-desc {
+      margin-top: 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 640px) {
+      .brand-shots { grid-template-columns: 1fr; }
+    }
+
+
+    /* ════════════════════════════════════════
+       WEBSITES — BROWSER CARD RIVER
+    ════════════════════════════════════════ */
+
+    .web-river {
+      position: relative;
+      width: 100%;
+      height: 430px;
+      overflow-x: hidden;
+      overflow-y: visible;
+      background: radial-gradient(ellipse 65% 55% at 50% 48%,
+        rgba(80,200,120,0.07) 0%, transparent 75%);
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .web-river.dragging { cursor: grabbing; }
+
+    /* Flowing strip of browser cards */
+    .web-strip {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      will-change: left;
+    }
+
+    /* Browser window card */
+    .web-card {
+      flex-shrink: 0;
+      width: 540px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #12121e;
+      box-shadow:
+        0 6px 28px rgba(0,0,0,0.55),
+        0 2px 6px rgba(0,0,0,0.4);
+      transition: box-shadow 0.35s ease;
+    }
+
+    /* Browser chrome bar */
+    .web-card-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+      height: 34px;
+      background: #1c1c2e;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       flex-shrink: 0;
     }
-    .ph-device:hover { transform: scale(1.02); }
+    .web-card-dots {
+      display: flex;
+      gap: 5px;
+    }
+    .web-card-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .web-card-dot:nth-child(1) { background: #ff5f57; }
+    .web-card-dot:nth-child(2) { background: #febc2e; }
+    .web-card-dot:nth-child(3) { background: #28c840; }
 
-    /* Hardware buttons */
-    .ph-device::before {
-      content:''; position:absolute; left:-4px; top:70px;
-      width:3px; height:26px; background:rgba(255,255,255,0.2);
-      border-radius:2px 0 0 2px;
-      box-shadow:0 36px 0 rgba(255,255,255,0.2), 0 70px 0 rgba(255,255,255,0.2);
-    }
-    .ph-device::after {
-      content:''; position:absolute; right:-4px; top:90px;
-      width:3px; height:52px; background:rgba(255,255,255,0.2);
-      border-radius:0 2px 2px 0;
-    }
-
-    .ph-island {
-      width:88px; height:22px; background:#000;
-      border-radius:20px; flex-shrink:0;
-    }
-    .ph-status {
-      width:100%; display:flex; justify-content:space-between;
-      padding:0 8px; font-size:0.58rem; font-weight:600;
-      color:rgba(255,255,255,0.6); flex-shrink:0;
-      font-family:'DM Sans',sans-serif;
-    }
-    .ph-screen {
-      width:100%; border-radius:18px; overflow:hidden;
-      background:#000; flex-shrink:0;
-    }
-    .ph-ig-bar {
-      display:flex; align-items:center; gap:0.5rem;
-      padding:0.45rem 0.75rem; background:#111;
-      border-bottom:1px solid rgba(255,255,255,0.08);
-    }
-    .ph-ig-back  { font-size:0.75rem; color:rgba(255,255,255,0.5); }
-    .ph-ig-title { font-size:0.7rem; font-weight:700; font-family:'Nunito',sans-serif; color:rgba(255,255,255,0.9); }
-
-    /* ── Infinite-loop carousel inside phone ── */
-    .ph-carousel {
-      display:flex;
-      overflow-x:auto;
-      scroll-snap-type:x mandatory;
-      scrollbar-width:none;
-      -webkit-overflow-scrolling:touch;
-    }
-    .ph-carousel::-webkit-scrollbar { display:none; }
-    .ph-slide {
-      flex:0 0 100%;
-      scroll-snap-align:start;
-      aspect-ratio:1/1;
-    }
-    .ph-slide img { width:100%; height:100%; object-fit:cover; display:block; }
-
-    .ph-ig-actions {
-      display:flex; align-items:center; gap:0.7rem;
-      padding:0.4rem 0.7rem; background:#111;
-      border-top:1px solid rgba(255,255,255,0.06); font-size:0.85rem;
+    .web-card-url {
+      flex: 1;
+      background: rgba(255,255,255,0.07);
+      border-radius: 5px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.02em;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
-    /* Thin post progress bar (replaces dots for 20+ slides) */
-    .ph-progress-wrap {
-      width:calc(100% - 20px); height:3px;
-      background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden; flex-shrink:0;
+    /* Video area */
+    .web-card-screen {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #000;
     }
-    .ph-progress-bar {
-      height:100%; background:white; border-radius:2px;
-      width:0%; transition:width 0.3s ease;
-    }
-    .ph-bar {
-      width:76px; height:4px; background:rgba(255,255,255,0.25);
-      border-radius:2px; flex-shrink:0; margin-top:2px;
-    }
-
-    /* ── Description column ── */
-    .soc-desc-col {
-      display:grid; gap:1.5rem; align-content:start; padding-top:0.5rem;
-    }
-    .soc-info-wrap { position:relative; min-height:220px; }
-    .soc-info-panel {
-      position:absolute; inset:0;
-      opacity:0; transform:translateY(10px);
-      transition:opacity 0.45s ease, transform 0.45s ease;
-      pointer-events:none;
-      display:grid; gap:0.9rem; align-content:start;
-    }
-    .soc-info-panel.active {
-      opacity:1; transform:translateY(0); pointer-events:auto;
-    }
-    .soc-title {
-      font-family:'Nunito',sans-serif; font-weight:900; font-size:1.3rem;
-      color:white; line-height:1.2;
-      border-bottom:1px solid rgba(255,255,255,0.12); padding-bottom:0.45rem;
-    }
-    .soc-agency {
-      font-size:0.71rem; font-weight:700; letter-spacing:0.1em;
-      text-transform:uppercase; color:rgba(255,255,255,0.4);
-    }
-    .soc-body {
-      font-family:'DM Sans',sans-serif; font-size:0.88rem;
-      line-height:1.78; color:rgba(255,255,255,0.62);
+    .web-card-screen video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    /* ── Campaign selector dots ── */
-    .soc-camp-dots { display:flex; gap:0.55rem; flex-wrap:wrap; }
-    .soc-camp-dot {
-      width:8px; height:8px; border-radius:50%;
-      background:rgba(255,255,255,0.2); border:none; cursor:pointer; padding:0;
-      transition:background 0.25s, transform 0.25s;
-    }
-    .soc-camp-dot.on { background:white; transform:scale(1.35); }
-
-    /* ── Swipe hint ── */
-    .soc-hint {
-      font-family:'DM Sans',sans-serif; font-size:0.68rem;
-      letter-spacing:0.08em; color:rgba(255,255,255,0.28);
-      animation:hintPulse 2.5s ease-in-out infinite;
-    }
-    @keyframes hintPulse {
-      0%,100% { opacity:0.28; } 50% { opacity:0.7; }
+    /* ── Description ── */
+    .web-meta {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      text-align: center;
     }
 
-    @media (max-width:800px) {
-      .soc-layout { grid-template-columns:1fr; }
-      .ph-device   { margin:0 auto; }
+    .web-info-panels {
+      position: relative;
+      width: 100%;
+      height: 150px;
+    }
+
+    .web-info-panel {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      pointer-events: none;
+    }
+    .web-info-panel.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .web-info-title  { font-family:'Syne',sans-serif; font-size:clamp(1rem,2.2vw,1.4rem); font-weight:700; color:#fff; line-height:1.2; }
+    .web-info-agency { font-size:0.78rem; font-weight:500; color:rgba(255,255,255,0.45); letter-spacing:0.06em; text-transform:uppercase; }
+    .web-info-body   { font-size:0.88rem; color:rgba(255,255,255,0.6); max-width:580px; line-height:1.65; }
+
+    .web-info-tags { display:flex; gap:0.45rem; flex-wrap:wrap; justify-content:center; }
+    .web-info-tag  {
+      padding:0.22rem 0.7rem; border-radius:999px;
+      border:1px solid rgba(80,200,120,0.35);
+      color:rgba(100,220,140,0.85);
+      font-size:0.7rem; font-weight:500;
+    }
+
+    .web-camp-nav { display:flex; gap:8px; align-items:center; }
+    .web-camp-dot {
+      width:8px; height:8px; border-radius:50%; border:none;
+      background:rgba(255,255,255,0.18); cursor:pointer;
+      transition:background 0.25s, transform 0.25s; padding:0;
+    }
+    .web-camp-dot.active { background:#50c878; transform:scale(1.5); }
+    .web-camp-dot:hover  { background:rgba(80,200,120,0.5); }
+
+    .web-river-hint { font-size:0.72rem; color:rgba(255,255,255,0.22); letter-spacing:0.06em; }
+
+    @media (max-width:700px) {
+      .web-river { height:300px; }
+      .web-card  { width:380px; }
+    }
+
+
+    /* ════════════════════════════════════════
+       APP DESIGN — DUAL PHONE RIVER
+    ════════════════════════════════════════ */
+
+    .app-stage {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 5rem;
+      padding: 2rem 0 3rem;
+    }
+
+    /* One phone + label unit */
+    .app-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    /* The whole phone body */
+    .app-phone {
+      position: relative;
+      width: 224px;
+      /* inner screen: 200px × 432px  →  outer: 224 × (432+46+36+24)=538 */
+      height: 538px;
+      background: #0a0a1c;
+      border-radius: 44px;
+      border: 12px solid #0a0a1c;
+      box-shadow:
+        0 0 0 1.5px rgba(255,255,255,0.12),
+        0 0 0 3px rgba(255,255,255,0.04),
+        inset 0 0 0 1px rgba(255,255,255,0.07),
+        20px 40px 100px rgba(0,0,0,0.8);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* Float animations — two phases so phones bob out of sync */
+    .app-unit:nth-child(1) .app-phone {
+      animation: appFloat 4.2s ease-in-out infinite;
+      transform: rotate(-2deg);
+      transition: transform 0.4s ease;
+    }
+    .app-unit:nth-child(2) .app-phone {
+      animation: appFloat 3.8s ease-in-out infinite;
+      animation-delay: -1.9s;
+      transform: rotate(2deg) translateY(28px);
+      transition: transform 0.4s ease;
+    }
+    .app-unit:nth-child(1) .app-phone:hover { transform: rotate(0deg) scale(1.02); }
+    .app-unit:nth-child(2) .app-phone:hover { transform: rotate(0deg) translateY(28px) scale(1.02); }
+
+    @keyframes appFloat {
+      0%,100% { margin-top: 0px; }
+      50%      { margin-top: -14px; }
+    }
+
+    /* Hardware side buttons */
+    .app-phone::before {
+      content: '';
+      position: absolute;
+      left: -16px; top: 80px;
+      width: 4px; height: 24px;
+      background: rgba(255,255,255,0.13);
+      border-radius: 2px 0 0 2px;
+      box-shadow: 0 38px 0 rgba(255,255,255,0.13);
+    }
+    .app-phone::after {
+      content: '';
+      position: absolute;
+      right: -16px; top: 100px;
+      width: 4px; height: 50px;
+      background: rgba(255,255,255,0.13);
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* Top status bar (sits above screen) */
+    .app-ph-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 46px;
+      background: inherit;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 3px;
+      padding-bottom: 4px;
+    }
+    .app-ph-island {
+      width: 80px; height: 20px;
+      background: #000;
+      border-radius: 18px;
+    }
+    .app-ph-status {
+      width: 100%; padding: 0 10px;
+      display: flex; justify-content: space-between;
+      font-family: 'DM Sans',sans-serif;
+      font-size: 0.55rem; font-weight: 600;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Scrollable screen area */
+    .app-ph-screen {
+      position: absolute;
+      top: 46px; left: 0; right: 0;
+      bottom: 36px;
+      overflow: hidden;
+    }
+
+    /* Horizontal strip of all screens */
+    .app-ph-strip {
+      display: flex;
+      height: 100%;
+      transition: transform 0.55s cubic-bezier(.22,1,.36,1);
+      will-change: transform;
+    }
+    .app-ph-strip img {
+      flex-shrink: 0;
+      width: 200px;  /* inner screen width */
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      -webkit-user-drag: none;
+    }
+
+    /* Bottom home bar */
+    .app-ph-bottom {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 36px;
+      background: inherit;
+      z-index: 5;
+      display: flex; align-items: center; justify-content: center;
+      padding-bottom: 8px;
+    }
+    .app-ph-home {
+      width: 70px; height: 4px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 2px;
+    }
+
+    /* Tap ripple effect */
+    .app-tap-ripple {
+      position: absolute;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+      z-index: 8;
+      animation: tapRipple 0.65s ease-out forwards;
+    }
+    @keyframes tapRipple {
+      0%   { transform: translate(-50%,-50%) scale(0); opacity:0.8; }
+      100% { transform: translate(-50%,-50%) scale(3.5); opacity:0; }
+    }
+
+    /* Dot indicators under the screen */
+    .app-dot-row {
+      display: flex; gap: 5px; justify-content: center;
+      position: absolute;
+      bottom: 44px; left: 0; right: 0;
+      z-index: 6;
+    }
+    .app-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      transition: background 0.25s, transform 0.25s;
+    }
+    .app-dot.active {
+      background: rgba(255,255,255,0.75);
+      transform: scale(1.4);
+    }
+
+    /* Label below each phone */
+    .app-unit-label {
+      display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+      text-align: center;
+    }
+    .app-status-live    { font-size:0.7rem; font-weight:600; color:#3ecf8e; letter-spacing:0.05em; }
+    .app-status-proposal{ font-size:0.7rem; font-weight:600; color:#60a5fa; letter-spacing:0.05em; }
+    .app-unit-name  { font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:700; color:#fff; }
+    .app-unit-sub   { font-size:0.75rem; color:rgba(255,255,255,0.4); }
+
+    /* Description rows below both phones */
+    .app-desc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 1rem;
+    }
+    .app-desc-col { display:flex; flex-direction:column; gap:0.75rem; }
+    .app-desc-agency {
+      font-size:0.78rem; font-weight:500;
+      color:rgba(255,255,255,0.4);
+      letter-spacing:0.06em; text-transform:uppercase;
+    }
+    .app-desc-body {
+      font-size:0.88rem; color:rgba(255,255,255,0.6); line-height:1.7;
+    }
+    .app-desc-tags { display:flex; gap:0.4rem; flex-wrap:wrap; }
+    .app-desc-tag {
+      padding:0.2rem 0.65rem; border-radius:999px; font-size:0.68rem; font-weight:500;
+    }
+    .app-desc-tag.cyan { border:1px solid rgba(62,207,142,0.35); color:rgba(80,220,160,0.85); }
+    .app-desc-tag.blue { border:1px solid rgba(96,165,250,0.35); color:rgba(120,180,255,0.85); }
+
+    @media (max-width:700px) {
+      .app-stage       { gap:2.5rem; }
+      .app-phone       { width:170px; height:408px; }
+      .app-ph-strip img{ width:146px; }
+      .app-desc-grid   { grid-template-columns:1fr; }
+    }
+
+
+    /* ── Report cover slideshow ── */
+    .rcover-wrap {
+      position: relative;
+      width: calc(100% + 8rem);
+      margin-left: -4rem;
+      border-radius: 0;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .rcover-img {
+      width: 100%;
+      display: block;
+      border-radius: 0;
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0;
+      transition: opacity 0.7s ease, transform 0.45s cubic-bezier(.22,1,.36,1);
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .rcover-img.active {
+      opacity: 1;
+      position: relative; /* takes up space */
+      pointer-events: auto;
+    }
+    .rcover-wrap:hover .rcover-img.active {
+      transform: translateY(-10px) scale(1.012);
+    }
+
+    /* Dot nav */
+    .rcover-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 1.25rem;
+    }
+    .rcover-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+      padding: 0;
+    }
+    .rcover-dot.active {
+      background: #4ade80;
+      transform: scale(1.5);
+    }
+
+
+    /* ════════════════════════════════════════
+       SECTION LAUNCHERS — page 2 tagline
+    ════════════════════════════════════════ */
+
+    /* Two-column layout: left = tagline text + buttons, right = tools */
+    #tagline {
+      display: grid;
+      grid-template-columns: 1fr 210px;
+      grid-template-areas:
+        "text  tools"
+        "launch tools";
+      column-gap: 4rem;
+      align-items: start;
+    }
+
+    .tagline-inner    { grid-area: text; }
+    .section-launchers { grid-area: launch; margin-top: 2rem; }
+
+    /* Restore tools-corner to right column, right-aligned */
+    .tools-corner {
+      grid-area: tools !important;
+      position: static !important;
+      bottom: auto !important;
+      right: auto !important;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      align-items: flex-end;
+      align-self: start;
+      padding-top: 1rem;
+    }
+    .tools-group  { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end; }
+    .tools-badge  { align-self: flex-end; }
+
+    /* ─── Launcher grid ─── */
+    .launcher-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+    }
+
+    .launcher-btn {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto auto;
+      column-gap: 0.65rem;
+      align-items: start;
+      padding: 0.6rem 0.8rem;
+      background: #ffffff;
+      border: 1.5px solid rgba(255,255,255,0.9);
+      border-radius: 10px;
+      cursor: pointer;
+      transition:
+        transform 0.28s cubic-bezier(.22,1,.36,1),
+        box-shadow 0.28s ease;
+      text-align: left;
+    }
+
+    .launcher-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(10,10,28,0.2);
+    }
+    .launcher-btn:active { transform: translateY(-1px); }
+
+    .launcher-num {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: rgba(10,10,28,0.13);
+      align-self: center;
+      transition: color 0.25s;
+      letter-spacing: 0.02em;
+    }
+    .launcher-btn:hover .launcher-num { color: rgba(10,10,28,0.35); }
+
+    .launcher-title {
+      grid-column: 2;
+      grid-row: 1;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #0a0a1c;
+      line-height: 1.15;
+    }
+
+    .launcher-desc {
+      grid-column: 2;
+      grid-row: 2;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6rem;
+      color: rgba(10,10,28,0.44);
+      line-height: 1.35;
+      padding-top: 0.12rem;
+    }
+
+    .launcher-arrow {
+      grid-column: 3;
+      grid-row: 1 / 3;
+      font-size: 0.82rem;
+      color: rgba(10,10,28,0.2);
+      align-self: center;
+      transition: transform 0.25s cubic-bezier(.22,1,.36,1), color 0.25s;
+    }
+    .launcher-btn:hover .launcher-arrow {
+      transform: translateX(4px);
+      color: #0a0a1c;
+    }
+
+    /* ════════════════════════════════════════
+       SECTION MODAL
+    ════════════════════════════════════════ */
+
+    #section-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #0a0a1c;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.38s ease;
+    }
+    #section-modal.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #modal-close {
+      position: fixed;
+      top: 1.4rem;
+      right: 1.6rem;
+      z-index: 10001;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.85);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s, transform 0.25s;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    #modal-close:hover {
+      background: rgba(255,255,255,0.16);
+      border-color: rgba(255,255,255,0.55);
+      transform: rotate(90deg);
+    }
+
+    #modal-body { min-height: 100vh; }
+    #section-store { display: none; }
+
+    .modal-open .back-to-top { opacity: 0 !important; pointer-events: none !important; }
+
+    .tools-badge.green { background: var(--cyan); color: var(--dark); }
+    .tool-item.pm {
+      border-color: rgba(0,180,140,0.4);
+      color: rgba(0,200,160,0.9);
+    }
+
+    @media (max-width: 900px) {
+      #tagline {
+        grid-template-columns: 1fr;
+        grid-template-areas: "text" "launch" "tools";
+      }
+      .tools-corner {
+        text-align: left;
+        align-items: flex-start;
+        padding-top: 2rem;
+      }
+      .tools-group  { align-items: flex-start; }
+      .tools-badge  { align-self: flex-start; }
+      .launcher-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .launcher-grid { grid-template-columns: 1fr; }
+      #modal-close { top: 1rem; right: 1rem; width: 40px; height: 40px; font-size: 1rem; }
     }
 
   </style>
@@ -2046,19 +2998,7 @@
   <a class="back-to-top" id="back-to-top" href="#hero">↑ Top</a>
 
   <!-- NAV -->
-  <nav>
-    <span class="nav-name">Jagnoor Hunjan</span>
-    <ul class="nav-sections">
-      <li><a href="#reports-divider">Reports</a></li>
-      <li><a href="#social-divider">Social</a></li>
-      <li><a href="#info-divider">Infosheets</a></li>
-      <li><a href="#ppt-divider">Powerpoints</a></li>
-      <li><a href="#brand-divider">Brand</a></li>
-      <li><a href="#web-divider">Websites</a></li>
-      <li><a href="#app-divider">Apps</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+  
 
   <!-- ══ HERO ══ -->
   <section id="hero">
@@ -2073,11 +3013,12 @@
         <span class="hero-jagnoor">Jagnoor</span>
         <span class="hero-hunjan">Hunjan.</span>
         <p class="hero-bio">
-          Communications and reporting professional with 4+ years of experience
-          across UN agencies (IOM, UN-Habitat, UNHCR, UNDP, UNFPA, UNITAR)
-          supporting humanitarian programmes in East Africa and globally.
-          Expertise in donor reporting, digital communications, stakeholder
-          engagement, and visual storytelling.
+          Programme support and communications professional with 4+ years across
+          UN agencies (IOM, UN-Habitat, UNHCR, UNDP, UNFPA, UNITAR). I write
+          and design donor reports, craft strategic comms plans and visual
+          workplans, and translate complex programme data into compelling
+          narratives. Having partnered with many organisations and donors,
+          I know what works — and every design I produce is different from the last.
         </p>
       </div>
 
@@ -2108,6 +3049,61 @@
       <span class="tagline-line accent reveal reveal-delay-4">the one before.</span>
     </div>
 
+    <div class="section-launchers reveal">
+      <div class="launcher-grid">
+
+        <button class="launcher-btn" data-section="reports">
+          <span class="launcher-num">01</span>
+          <span class="launcher-title">Reports</span>
+          <span class="launcher-desc">Donor reports, programme briefs &amp; policy publications</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="social">
+          <span class="launcher-num">02</span>
+          <span class="launcher-title">Social Media</span>
+          <span class="launcher-desc">Strategic content across platforms for UN agencies</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="info">
+          <span class="launcher-num">03</span>
+          <span class="launcher-title">Infosheets</span>
+          <span class="launcher-desc">Visual fact sheets, briefing packs &amp; one-pagers</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="ppt">
+          <span class="launcher-num">04</span>
+          <span class="launcher-title">Powerpoints</span>
+          <span class="launcher-desc">Campaign decks, donor pitches &amp; training materials</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="brand">
+          <span class="launcher-num">05</span>
+          <span class="launcher-title">Brand Guidelines</span>
+          <span class="launcher-desc">Identity systems, typography &amp; logo usage rules</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="web">
+          <span class="launcher-num">06</span>
+          <span class="launcher-title">Websites</span>
+          <span class="launcher-desc">UI/UX design, full-stack builds &amp; digital platforms</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="app">
+          <span class="launcher-num">07</span>
+          <span class="launcher-title">App Design</span>
+          <span class="launcher-desc">Mobile-first interface design for field &amp; conservation tools</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+      </div>
+    </div>
+
     <div class="tools-corner reveal">
 
       <!-- Design Tools -->
@@ -2122,16 +3118,28 @@
         </div>
       </div>
 
+      <!-- Programme Management -->
+      <div class="tools-group">
+        <div class="tools-badge green">Programme</div>
+        <div class="tools-items">
+          <span class="tool-item pm">Donor Reporting</span>
+          <span class="tool-item pm">M&amp;E Frameworks</span>
+          <span class="tool-item pm">Workplanning</span>
+          <span class="tool-item pm">Stakeholder Comms</span>
+          <span class="tool-item pm">Strategic Planning</span>
+        </div>
+      </div>
+
       <!-- Skills -->
       <div class="tools-group">
         <div class="tools-badge navy">Skills</div>
         <div class="tools-items">
           <span class="tool-item skill">Visual Design</span>
-          <span class="tool-item skill">Illustration</span>
           <span class="tool-item skill">Brand Identity</span>
-          <span class="tool-item skill">Donor Reporting</span>
-          <span class="tool-item skill">Digital Comms</span>
           <span class="tool-item skill">Visual Storytelling</span>
+          <span class="tool-item skill">Report Writing</span>
+          <span class="tool-item skill">Comms Strategy</span>
+          <span class="tool-item skill">SitReps &amp; Briefs</span>
         </div>
       </div>
 
@@ -2147,6 +3155,7 @@
 
     </div>
   </section>
+
 
 
   <!-- ══════════════════════════════════════ -->
@@ -2184,205 +3193,26 @@
       <div class="section-line"></div>
     </div>
 
-    <!-- ── REPORT 1: Context Analysis ── -->
-    <div class="report-spread report-pdf-only reveal">
-      <div class="report-pdf-frame">
-        <iframe src="Report-Design/Context-analysis-report-final-draft-JH.pdf" title="Context Analysis Report"></iframe>
-      </div>
-      <div class="report-desc">
-        <div class="report-desc-left">
-          <div class="report-desc-title">Context Analysis Report</div>
-          <div class="report-desc-agency">IOM UN Migration × UK International Development</div>
-        </div>
-        <div class="report-desc-body">
-          Women in Southwest and Galmudug, Somalia play key roles in peacebuilding and community safety but remain excluded from formal systems. Structural barriers limit their political participation and access to justice, especially in GBV cases. The report calls for inclusive governance, survivor-centered justice, and stronger support for women-led initiatives.
-        </div>
-        <div class="report-desc-tag">IOM · Somalia · UKID</div>
-        <button class="report-view-pdf" data-pdf="Report-Design/Context-analysis-report-final-draft-JH.pdf" data-title="Context Analysis Report">↗ View Full Report</button>
-      </div>
+    <div class="rcover-wrap reveal" id="rcoverWrap">
+      <img class="rcover-img active" id="rcImg0" loading="lazy" src="Report-Cover/1.png" alt="Report covers — IOM Somalia">
+      <img class="rcover-img"        id="rcImg1" loading="lazy" src="Report-Cover/2.png" alt="Report covers — UN-Habitat Urban Lab">
     </div>
 
-    <div class="report-divider-line"></div>
-
-    <!-- ── REPORT 2: GESI ── -->
-    <div class="report-spread report-pdf-only reveal">
-      <div class="report-pdf-frame">
-        <iframe src="Report-Design/GESI-PROGRESS-REPORT.pdf" title="GESI Progress Report"></iframe>
-      </div>
-      <div class="report-desc">
-        <div class="report-desc-left">
-          <div class="report-desc-title">Gender Equality & Social Inclusion — Progress Report</div>
-          <div class="report-desc-agency">IOM UN Migration × UK International Development</div>
-        </div>
-        <div class="report-desc-body">Quarterly progress report tracking women's participation and inclusion across IOM's peace and security programmes in Somalia. Documents frontline impact across Baidoa and Dhusamareb, from dialogue sessions to grant management training.</div>
-        <div class="report-desc-tag">IOM · GESI · Jan 2026</div>
-        <button class="report-view-pdf" data-pdf="Report-Design/GESI-PROGRESS-REPORT.pdf" data-title="GESI Progress Report">↗ View Full Report</button>
-      </div>
+    <div class="rcover-dots">
+      <button class="rcover-dot active" data-rc="0"></button>
+      <button class="rcover-dot"        data-rc="1"></button>
     </div>
 
-    <div class="report-divider-line"></div>
-
-    <!-- ── REPORT 3: CSSF Baseline ── -->
-    <div class="report-spread report-pdf-only reveal">
-      <div class="report-pdf-frame">
-        <iframe src="Report-Design/CSSF-Baseline-Report-Final-Draft-Print.pdf" title="CSSF Baseline Report"></iframe>
-      </div>
-      <div class="report-desc">
-        <div class="report-desc-left">
-          <div class="report-desc-title">Community Perceptions of Safety & Security — CSSF Baseline</div>
-          <div class="report-desc-agency">IOM UN Migration · Somalia</div>
-        </div>
-        <div class="report-desc-body">Baseline assessment capturing how communities in Bahdo, Harardheere, and Wisil experience safety and security. Mixed-methods survey of 350 respondents, exploring trust in law enforcement, crime reporting barriers, and community-led safety solutions.</div>
-        <div class="report-desc-tag">IOM · CSSF · Baseline</div>
-        <button class="report-view-pdf" data-pdf="Report-Design/CSSF-Baseline-Report-Final-Draft-Print.pdf" data-title="CSSF Baseline Report">↗ View Full Report</button>
-      </div>
-    </div>
-
-    <div class="report-divider-line"></div>
-
-    <!-- ── REPORT 4: Co-Funding SOP ── -->
-    <div class="report-spread report-pdf-only reveal">
-      <div class="report-pdf-frame">
-        <iframe src="Report-Design/Co-Funding%20Mechanism%20SOP%20-%20Final%20Draft.pdf" title="Co-Funding SOP"></iframe>
-      </div>
-      <div class="report-desc">
-        <div class="report-desc-left">
-          <div class="report-desc-title">Co-Funding System — Standard Operating Procedure</div>
-          <div class="report-desc-agency">IOM UN Migration · Somalia</div>
-        </div>
-        <div class="report-desc-body">Step-by-step SOP guiding communities and local governments through IOM's Co-Funding System — from project ideation to fundraising, procurement, and implementation. Designed to make a complex process feel approachable.</div>
-        <div class="report-desc-tag">IOM · SOP · CFS</div>
-        <button class="report-view-pdf" data-pdf="Report-Design/Co-Funding%20Mechanism%20SOP%20-%20Final%20Draft.pdf" data-title="Co-Funding System SOP">↗ View Full Report</button>
-      </div>
-    </div>
-
-    <div class="report-divider-line"></div>
-
-    <!-- ── REPORT 4b: Co-Funding Evaluation ── -->
-    <div class="report-spread report-pdf-only reveal">
-      <div class="report-pdf-frame">
-        <iframe src="https://somalia.iom.int/sites/g/files/tmzbdl1041/files/documents/2025-10/cofunding-mechanism-internal-evaluation-report.pdf" title="Co-Funding Mechanism Evaluation Report"></iframe>
-      </div>
-      <div class="report-desc">
-        <div class="report-desc-left">
-          <div class="report-desc-title">Co-Funding Mechanism — Internal Evaluation Report</div>
-          <div class="report-desc-agency">IOM UN Migration · Somalia</div>
-        </div>
-        <div class="report-desc-body">Internal evaluation of IOM Somalia's Co-Funding Mechanism — assessing effectiveness, community ownership, and lessons learned across programme cycles to strengthen future implementation.</div>
-        <div class="report-desc-tag">IOM · CFS · Evaluation</div>
-        <a class="report-view-pdf" href="https://somalia.iom.int/sites/g/files/tmzbdl1041/files/documents/2025-10/cofunding-mechanism-internal-evaluation-report.pdf" target="_blank" rel="noopener">↗ View Full Report</a>
-      </div>
-    </div>
-
-    <div class="report-divider-line"></div>
-
-    <!-- ── REPORT 5: W2W Inception ── -->
-    <div class="report-spread report-pdf-only reveal">
-      <div class="report-pdf-frame">
-        <iframe src="Report-Design/W2W-Inception%20Report.pdf" title="W2W Inception Report"></iframe>
-      </div>
-      <div class="report-desc">
-        <div class="report-desc-left">
-          <div class="report-desc-title">Women to Women — Inception Report</div>
-          <div class="report-desc-agency">IOM UN Migration · Somalia</div>
-        </div>
-        <div class="report-desc-body">The founding document for the Women to Women programme — setting out the vision, methodology, and roadmap for strengthening women's roles in peace and security governance across Somalia.</div>
-        <div class="report-desc-tag">IOM · W2W · Inception</div>
-        <button class="report-view-pdf" data-pdf="Report-Design/W2W-Inception%20Report.pdf" data-title="W2W Inception Report">↗ View Full Report</button>
-      </div>
-    </div>
-
-    <div class="report-divider-line"></div>
-
-    <!-- ── REPORT 6: Dialogue Guide ── -->
-    <div class="report-spread report-pdf-only reveal">
-      <div class="report-pdf-frame">
-        <iframe src="Report-Design/Dialogue%20Guide%20Report.pdf" title="Dialogue Guide Report"></iframe>
-      </div>
-      <div class="report-desc">
-        <div class="report-desc-left">
-          <div class="report-desc-title">Dialogue Guide Report</div>
-          <div class="report-desc-agency">IOM UN Migration · Somalia</div>
-        </div>
-        <div class="report-desc-body">A practical facilitation guide for running community safety dialogues across Somalia — structured to bridge women, IDPs, minority groups, and local authorities around shared security priorities.</div>
-        <div class="report-desc-tag">IOM · Dialogue · Somalia</div>
-        <button class="report-view-pdf" data-pdf="Report-Design/Dialogue%20Guide%20Report.pdf" data-title="Dialogue Guide Report">↗ View Full Report</button>
-      </div>
-    </div>
-
-    <div class="report-divider-line"></div>
-
-    <!-- ── REPORT 7: Conflict Trends in Somalia 2025 ── -->
-    <div class="report-spread report-pdf-only reveal">
-      <div class="report-pdf-frame">
-        <iframe src="Report-Design/Conflict%20Trends%20in%20Somalia%20in%202025%20-%20Final%20Draft%20-%20JH.pdf" title="Conflict Trends in Somalia in 2025"></iframe>
-      </div>
-      <div class="report-desc">
-        <div class="report-desc-left">
-          <div class="report-desc-title">Conflict Trends in Somalia in 2025</div>
-          <div class="report-desc-agency">IOM UN Migration · Somalia</div>
-        </div>
-        <div class="report-desc-body">An analysis of evolving conflict dynamics across Somalia in 2025 — mapping key drivers, emerging patterns, and their implications for humanitarian response and peacebuilding programming.</div>
-        <div class="report-desc-tag">IOM · Conflict · Somalia · 2025</div>
-        <button class="report-view-pdf" data-pdf="Report-Design/Conflict%20Trends%20in%20Somalia%20in%202025%20-%20Final%20Draft%20-%20JH.pdf" data-title="Conflict Trends in Somalia in 2025">↗ View Full Report</button>
-      </div>
-    </div>
-
-    <div class="report-divider-line"></div>
-
-    <!-- ── REPORT 8: CSSF Mortar Comic ── -->
-    <div class="report-spread report-pdf-only reveal">
-      <div class="report-pdf-frame">
-        <iframe src="Report-Design/CSSF-MORTAR-COMIC-Final-Draft.pdf" title="CSSF Mortar Comic"></iframe>
-      </div>
-      <div class="report-desc">
-        <div class="report-desc-left">
-          <div class="report-desc-title">Mortar — Community Safety Comic Book</div>
-          <div class="report-desc-agency">CSSF · Somalia</div>
-        </div>
-        <div class="report-desc-body">A comic book designed to communicate community safety and security concepts in an accessible, visual format — translating complex programme messages into storytelling that reaches a broader audience across Somalia.</div>
-        <div class="report-desc-tag">CSSF · Comic · Community Safety</div>
-        <button class="report-view-pdf" data-pdf="Report-Design/CSSF-MORTAR-COMIC-Final-Draft.pdf" data-title="Mortar — Community Safety Comic Book">↗ View Full Report</button>
-      </div>
-    </div>
-
-    <div class="report-divider-line"></div>
-
-    <!-- ── REPORT 9: CAPs Reports (grouped) ── -->
-    <div class="report-spread report-pdf-only reveal">
-      <div class="caps-group">
-        <div class="caps-item">
-          <div class="report-pdf-frame">
-            <iframe src="Report-Design/CAPs%20Report%20-%20Awdhegle.pdf" title="CAPs Awdhegle"></iframe>
-          </div>
-          <div class="caps-label">CAPs Report — Awdhegle</div>
-          <div class="caps-meta">IOM · Community Action Plan</div>
-          <button class="report-view-pdf" data-pdf="Report-Design/CAPs%20Report%20-%20Awdhegle.pdf" data-title="CAPs Report — Awdhegle">↗ View Full</button>
-        </div>
-        <div class="caps-item">
-          <div class="report-pdf-frame">
-            <iframe src="Report-Design/CAPs%20Report%20-%20Barire.pdf" title="CAPs Barire"></iframe>
-          </div>
-          <div class="caps-label">CAPs Report — Barire</div>
-          <div class="caps-meta">IOM · Community Action Plan</div>
-          <button class="report-view-pdf" data-pdf="Report-Design/CAPs%20Report%20-%20Barire.pdf" data-title="CAPs Report — Barire">↗ View Full</button>
-        </div>
-        <div class="caps-item">
-          <div class="report-pdf-frame">
-            <iframe src="Report-Design/CAPs%20Report%20-%20Sabid.pdf" title="CAPs Sabid"></iframe>
-          </div>
-          <div class="caps-label">CAPs Report — Sabid</div>
-          <div class="caps-meta">IOM · Community Action Plan</div>
-          <button class="report-view-pdf" data-pdf="Report-Design/CAPs%20Report%20-%20Sabid.pdf" data-title="CAPs Report — Sabid">↗ View Full</button>
-        </div>
-      </div>
-      <div class="report-desc" style="margin-top:1.5rem;">
-        <div class="report-desc-left">
-          <div class="report-desc-title">Community Action Plans — Awdhegle · Barire · Sabid</div>
-          <div class="report-desc-agency">IOM UN Migration · Somalia</div>
-        </div>
-        <div class="report-desc-body">Community Action Plans developed for three districts — Awdhegle, Barire, and Sabid — translating community-identified priorities into actionable, funded project proposals for local infrastructure and services.</div>
-        <div class="report-desc-tag">IOM · CAPs · Somalia</div>
+    <div class="brand-desc reveal">
+      <div class="portfolio-desc-title">Report &amp; Publication Design</div>
+      <div class="portfolio-desc-agency">IOM Somalia · UN-Habitat Urban Lab · UKAID</div>
+      <div class="portfolio-desc-body" style="max-width:640px;line-height:1.65;color:rgba(255,255,255,0.6);font-size:0.9rem;">A collection of reports, programme briefs and policy publications — from conflict analysis and baseline assessments to annual highlights and Women to Women programme documentation. Each designed for clarity, donor visibility and impact.</div>
+      <div class="portfolio-tag-row" style="justify-content:center">
+        <span class="portfolio-tag">Report Design</span>
+        <span class="portfolio-tag">IOM Somalia</span>
+        <span class="portfolio-tag">UN-Habitat</span>
+        <span class="portfolio-tag">Publications</span>
+        <span class="portfolio-tag">Donor Reporting</span>
       </div>
     </div>
 
@@ -2425,102 +3255,105 @@
     <div class="section-line"></div>
   </div>
 
-  <div class="soc-layout reveal">
+  <!-- Posts flow as a continuous strip behind the phone bezel -->
+  <div class="soc-river reveal" id="socRiver">
 
-    <!-- Phone mockup -->
-    <div class="ph-device">
-      <div class="ph-island"></div>
-      <div class="ph-status"><span>9:41</span><span>▲▲ ◼◼◼</span></div>
-      <div class="ph-screen">
-        <div class="ph-ig-bar">
-          <span class="ph-ig-back">←</span>
-          <span class="ph-ig-title">Explore</span>
+    <!-- Post strip: real posts + clones for infinite loop (clones added by JS) -->
+    <div class="soc-strip" id="socStrip">
+          <div class="soc-post" data-camp="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace1.webp" alt="Post 1"></div>
+          <div class="soc-post" data-camp="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-2.webp" alt="Post 2"></div>
+          <div class="soc-post" data-camp="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-3.webp" alt="Post 3"></div>
+          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety.webp" alt="Post 4"></div>
+          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-2.webp" alt="Post 5"></div>
+          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-3.webp" alt="Post 6"></div>
+          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol.webp" alt="Post 7"></div>
+          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol2.webp" alt="Post 8"></div>
+          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol3.webp" alt="Post 9"></div>
+          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/Womens-day-1.jpeg" alt="Post 10"></div>
+          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-2.jpeg" alt="Post 11"></div>
+          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-3.jpeg" alt="Post 12"></div>
+          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-5.jpeg" alt="Post 13"></div>
+          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts.webp" alt="Post 14"></div>
+          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts3.webp" alt="Post 15"></div>
+          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts4.webp" alt="Post 16"></div>
+          <div class="soc-post" data-camp="5" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-WUF12-Flyer.webp" alt="Post 17"></div>
+          <div class="soc-post" data-camp="5" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-Green-Flyer.webp" alt="Post 18"></div>
+          <div class="soc-post" data-camp="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%201.webp" alt="Post 19"></div>
+          <div class="soc-post" data-camp="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%202.webp" alt="Post 20"></div>
+          <div class="soc-post" data-camp="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20%20-%20Page%203.webp" alt="Post 21"></div>
+    </div>
+
+    <!-- Phone bezel overlay: transparent screen area lets posts show through -->
+    <div class="soc-bezel" id="socBezel">
+      <div class="soc-bezel-top">
+        <div class="soc-b-island"></div>
+        <div class="soc-b-status">
+          <span>9:41</span>
+          <span>▲▲ ◼◼◼</span>
         </div>
-        <!-- Infinite-loop post carousel -->
-        <div class="ph-carousel" id="phCarousel">
-          <div class="ph-slide" data-campaign="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace1.webp" alt="Post 1"></div>
-          <div class="ph-slide" data-campaign="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-2.webp" alt="Post 2"></div>
-          <div class="ph-slide" data-campaign="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-3.webp" alt="Post 3"></div>
-          <div class="ph-slide" data-campaign="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety.webp" alt="Post 4"></div>
-          <div class="ph-slide" data-campaign="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-2.webp" alt="Post 5"></div>
-          <div class="ph-slide" data-campaign="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-3.webp" alt="Post 6"></div>
-          <div class="ph-slide" data-campaign="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol.webp" alt="Post 7"></div>
-          <div class="ph-slide" data-campaign="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol2.webp" alt="Post 8"></div>
-          <div class="ph-slide" data-campaign="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol3.webp" alt="Post 9"></div>
-          <div class="ph-slide" data-campaign="3" data-real="1"><img loading="lazy" src="Social-Design/Womens-day-1.jpeg" alt="Post 10"></div>
-          <div class="ph-slide" data-campaign="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-2.jpeg" alt="Post 11"></div>
-          <div class="ph-slide" data-campaign="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-3.jpeg" alt="Post 12"></div>
-          <div class="ph-slide" data-campaign="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-5.jpeg" alt="Post 13"></div>
-          <div class="ph-slide" data-campaign="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts.webp" alt="Post 14"></div>
-          <div class="ph-slide" data-campaign="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts3.webp" alt="Post 15"></div>
-          <div class="ph-slide" data-campaign="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts4.webp" alt="Post 16"></div>
-          <div class="ph-slide" data-campaign="5" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-WUF12-Flyer.webp" alt="Post 17"></div>
-          <div class="ph-slide" data-campaign="5" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-Green-Flyer.webp" alt="Post 18"></div>
-          <div class="ph-slide" data-campaign="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%201.webp" alt="Post 19"></div>
-          <div class="ph-slide" data-campaign="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%202.webp" alt="Post 20"></div>
-          <div class="ph-slide" data-campaign="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20%20-%20Page%203.webp" alt="Post 21"></div>
-        </div>
-        <div class="ph-ig-actions"><span>♡</span><span>💬</span><span>↗</span><span style="margin-left:auto">🔖</span></div>
       </div>
-      <!-- Post progress indicator (thin line) -->
-      <div class="ph-progress-wrap"><div class="ph-progress-bar" id="phProgress"></div></div>
-      <div class="ph-bar"></div>
+      <div class="soc-bezel-btm">
+        <div class="soc-b-home"></div>
+      </div>
     </div>
+  </div>
 
-    <!-- Right column: campaign info (updates as you scroll posts) -->
-    <div class="soc-desc-col">
-      <div class="soc-info-wrap">
-    <div class="soc-info-panel active" data-campaign="0">
-      <div class="soc-title">Building Peace One Family at a Time</div>
-      <div class="soc-agency">IOM × UKAID · #WomentoWomen</div>
-      <div class="soc-body">A three-part visual series exploring how lasting peace starts at home — produced for digital platforms as part of the #WomentoWomen campaign across Somalia.</div>
-      <div class="portfolio-tag-row"><span class="portfolio-tag">Carousel</span><span class="portfolio-tag">#WomentoWomen</span><span class="portfolio-tag">Instagram</span><span class="portfolio-tag">Peacebuilding</span></div>
-    </div>
-    <div class="soc-info-panel" data-campaign="1">
-      <div class="soc-title">Guardians of Their Own Safety</div>
-      <div class="soc-agency">IOM Somalia · Baidoa Series</div>
-      <div class="soc-body">Baidoa community safety series — spotlighting women as active agents in building secure environments for themselves and their families.</div>
-      <div class="portfolio-tag-row"><span class="portfolio-tag">Carousel</span><span class="portfolio-tag">Community Safety</span><span class="portfolio-tag">Baidoa</span><span class="portfolio-tag">Instagram</span></div>
-    </div>
-    <div class="soc-info-panel" data-campaign="2">
-      <div class="soc-title">Men &amp; Boys as Allies</div>
-      <div class="soc-agency">IOM Somalia · #WomentoWomen</div>
-      <div class="soc-body">Campaign positioning men and boys as essential partners in ending gender-based violence — part of the wider #WomentoWomen programme messaging.</div>
-      <div class="portfolio-tag-row"><span class="portfolio-tag">Carousel</span><span class="portfolio-tag">GBV Prevention</span><span class="portfolio-tag">#WomentoWomen</span><span class="portfolio-tag">Campaign</span></div>
-    </div>
-    <div class="soc-info-panel" data-campaign="3">
-      <div class="soc-title">International Women's Day Campaign</div>
-      <div class="soc-agency">IOM Somalia</div>
-      <div class="soc-body">Four-slide IWD campaign celebrating women's leadership in peace and security — designed for bold digital impact on 8 March.</div>
-      <div class="portfolio-tag-row"><span class="portfolio-tag">#IWD</span><span class="portfolio-tag">4-Slide Series</span><span class="portfolio-tag">Campaign</span><span class="portfolio-tag">Instagram</span></div>
-    </div>
-    <div class="soc-info-panel" data-campaign="4">
-      <div class="soc-title">16 Days of Activism</div>
-      <div class="soc-agency">IOM Somalia · End GBV</div>
-      <div class="soc-body">End GBV campaign for the 16 Days of Activism — raising awareness through bold visual storytelling across IOM Somalia's digital platforms.</div>
-      <div class="portfolio-tag-row"><span class="portfolio-tag">16 Days</span><span class="portfolio-tag">End GBV</span><span class="portfolio-tag">Activism</span><span class="portfolio-tag">Campaign</span></div>
-    </div>
-    <div class="soc-info-panel" data-campaign="5">
-      <div class="soc-title">World Urban Forum 12 — Dialogue 4</div>
-      <div class="soc-agency">UN-Habitat · WUF12</div>
-      <div class="soc-body">Event flyers designed for Dialogue 4 at the World Urban Forum 12 in Cairo — clean, conference-ready layouts in two colourways.</div>
-      <div class="portfolio-tag-row"><span class="portfolio-tag">Flyer Design</span><span class="portfolio-tag">WUF12</span><span class="portfolio-tag">UN-Habitat</span><span class="portfolio-tag">Event</span></div>
-    </div>
-    <div class="soc-info-panel" data-campaign="6">
-      <div class="soc-title">Women to Women — Programme Carousel</div>
-      <div class="soc-agency">IOM × UKAID · #WomentoWomen</div>
-      <div class="soc-body">Multi-slide Instagram carousel introducing the Women to Women programme — designed to be swiped as a narrative, building awareness slide by slide.</div>
-      <div class="portfolio-tag-row"><span class="portfolio-tag">Instagram Carousel</span><span class="portfolio-tag">#WomentoWomen</span><span class="portfolio-tag">Programme</span><span class="portfolio-tag">UKAID</span></div>
-    </div>
+  <!-- Description + campaign nav below the river -->
+  <div class="soc-meta">
+    <div class="soc-info-panels">
+      <div class="soc-info-panel-new active" data-camp="0">
+        <div class="soc-info-panel-title">Building Peace One Family at a Time</div>
+        <div class="soc-info-panel-agency">IOM × UKAID · #WomentoWomen</div>
+        <div class="soc-info-panel-body">A three-part visual series exploring how lasting peace starts at home — produced for digital platforms as part of the #WomentoWomen campaign across Somalia.</div>
+        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Carousel</span><span class="soc-info-panel-tag">#WomentoWomen</span><span class="soc-info-panel-tag">Instagram</span><span class="soc-info-panel-tag">Peacebuilding</span></div>
       </div>
-      <!-- Campaign selector dots -->
-      <div class="soc-camp-dots">
-        <button class="soc-camp-dot on" data-camp="0" aria-label="Campaign 1"></button><button class="soc-camp-dot" data-camp="1" aria-label="Campaign 2"></button><button class="soc-camp-dot" data-camp="2" aria-label="Campaign 3"></button><button class="soc-camp-dot" data-camp="3" aria-label="Campaign 4"></button><button class="soc-camp-dot" data-camp="4" aria-label="Campaign 5"></button><button class="soc-camp-dot" data-camp="5" aria-label="Campaign 6"></button><button class="soc-camp-dot" data-camp="6" aria-label="Campaign 7"></button>
+      <div class="soc-info-panel-new" data-camp="1">
+        <div class="soc-info-panel-title">Guardians of Their Own Safety</div>
+        <div class="soc-info-panel-agency">IOM Somalia · Baidoa Series</div>
+        <div class="soc-info-panel-body">Baidoa community safety series — spotlighting women as active agents in building secure environments for themselves and their families.</div>
+        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Carousel</span><span class="soc-info-panel-tag">Community Safety</span><span class="soc-info-panel-tag">Baidoa</span><span class="soc-info-panel-tag">Instagram</span></div>
       </div>
-      <!-- Swipe hint -->
-      <div class="soc-hint">← swipe posts inside the phone →</div>
+      <div class="soc-info-panel-new" data-camp="2">
+        <div class="soc-info-panel-title">Men &amp; Boys as Allies</div>
+        <div class="soc-info-panel-agency">IOM Somalia · #WomentoWomen</div>
+        <div class="soc-info-panel-body">Campaign positioning men and boys as essential partners in ending gender-based violence — part of the wider #WomentoWomen programme messaging.</div>
+        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Carousel</span><span class="soc-info-panel-tag">GBV Prevention</span><span class="soc-info-panel-tag">#WomentoWomen</span><span class="soc-info-panel-tag">Campaign</span></div>
+      </div>
+      <div class="soc-info-panel-new" data-camp="3">
+        <div class="soc-info-panel-title">International Women's Day Campaign</div>
+        <div class="soc-info-panel-agency">IOM Somalia</div>
+        <div class="soc-info-panel-body">Four-slide IWD campaign celebrating women's leadership in peace and security — designed for bold impact across social platforms on 8 March.</div>
+        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">#IWD</span><span class="soc-info-panel-tag">4-Slide Series</span><span class="soc-info-panel-tag">Campaign</span><span class="soc-info-panel-tag">Instagram</span></div>
+      </div>
+      <div class="soc-info-panel-new" data-camp="4">
+        <div class="soc-info-panel-title">16 Days of Activism</div>
+        <div class="soc-info-panel-agency">IOM Somalia · End GBV</div>
+        <div class="soc-info-panel-body">End GBV campaign for the 16 Days of Activism — raising awareness through bold visual storytelling across digital platforms.</div>
+        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">16 Days</span><span class="soc-info-panel-tag">End GBV</span><span class="soc-info-panel-tag">Activism</span><span class="soc-info-panel-tag">Campaign</span></div>
+      </div>
+      <div class="soc-info-panel-new" data-camp="5">
+        <div class="soc-info-panel-title">World Urban Forum 12 — Dialogue 4</div>
+        <div class="soc-info-panel-agency">UN-Habitat · WUF12</div>
+        <div class="soc-info-panel-body">Event flyers for Dialogue 4 at the World Urban Forum 12 in Cairo — clean, conference-ready layouts in two colourways.</div>
+        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Flyer Design</span><span class="soc-info-panel-tag">WUF12</span><span class="soc-info-panel-tag">UN-Habitat</span><span class="soc-info-panel-tag">Event</span></div>
+      </div>
+      <div class="soc-info-panel-new" data-camp="6">
+        <div class="soc-info-panel-title">Women to Women — Carousel</div>
+        <div class="soc-info-panel-agency">IOM × UKID · #WomentoWomen</div>
+        <div class="soc-info-panel-body">Multi-slide Instagram carousel introducing the Women to Women programme — designed to be swiped through as a narrative, building awareness slide by slide.</div>
+        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Instagram Carousel</span><span class="soc-info-panel-tag">#WomentoWomen</span><span class="soc-info-panel-tag">Programme</span><span class="soc-info-panel-tag">UKID</span></div>
+      </div>
     </div>
-
+    <div class="soc-camp-nav">
+      <button class="soc-camp-dot-new active" data-camp="0" aria-label="Campaign 1"></button>
+      <button class="soc-camp-dot-new" data-camp="1" aria-label="Campaign 2"></button>
+      <button class="soc-camp-dot-new" data-camp="2" aria-label="Campaign 3"></button>
+      <button class="soc-camp-dot-new" data-camp="3" aria-label="Campaign 4"></button>
+      <button class="soc-camp-dot-new" data-camp="4" aria-label="Campaign 5"></button>
+      <button class="soc-camp-dot-new" data-camp="5" aria-label="Campaign 6"></button>
+      <button class="soc-camp-dot-new" data-camp="6" aria-label="Campaign 7"></button>
+    </div>
+    <div class="soc-river-hint">posts flow automatically · drag to explore</div>
   </div>
 
 </section>
@@ -2562,85 +3395,18 @@
     <div class="section-line"></div>
   </div>
 
-  <!-- W2W December 2025 -->
-  <div class="portfolio-spread reveal">
-    <div class="infosheet-doc-frame">
-      <iframe src="Infosheet-Design/December%202025%20-%20Infosheet.pdf" title="December 2025 Infosheet"></iframe>
-    </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Women to Women — December 2025 Infosheet</div>
-      <div class="portfolio-desc-agency">IOM Somalia · December 2025</div>
-      <div class="portfolio-desc-body">Monthly programme infosheet tracking Women to Women activities and outcomes — designed for donor visibility and stakeholder reporting.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Infosheet</span>
-        <span class="portfolio-tag">W2W</span>
-        <span class="portfolio-tag">Donor Reporting</span>
-        <span class="portfolio-tag">Dec 2025</span>
-      </div>
-      <a class="infosheet-dl-btn" href="Infosheet-Design/December%202025%20-%20Infosheet.pdf" download>↓ Download PDF</a>
-    </div>
+  <div class="info-full-wrap reveal">
+    <img
+      class="info-full-img"
+      src="Infosheet-Design/infosheet-no%20bg.png"
+      alt="Infosheet collection — IOM Somalia"
+      loading="lazy"
+    >
   </div>
 
-  <div class="section-spread-divider"></div>
-
-  <!-- Co-Funding -->
-  <div class="portfolio-spread reveal">
-    <div class="infosheet-doc-frame">
-      <iframe src="Infosheet-Design/Co-Funding%20System%20Infosheet%20IOM%20Somalia%20-%20JH.pdf" title="Co-Funding System Infosheet"></iframe>
-    </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Co-Funding System — IOM Somalia</div>
-      <div class="portfolio-desc-agency">IOM UN Migration · CFS Programme</div>
-      <div class="portfolio-desc-body">One-page visual explainer of IOM Somalia's Co-Funding System — designed to make a complex mechanism immediately understandable for communities and partners.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Infosheet</span>
-        <span class="portfolio-tag">Co-Funding</span>
-        <span class="portfolio-tag">Community</span>
-        <span class="portfolio-tag">CFS</span>
-      </div>
-      <a class="infosheet-dl-btn" href="Infosheet-Design/Co-Funding%20System%20Infosheet%20IOM%20Somalia%20-%20JH.pdf" download>↓ Download PDF</a>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- ED Infosheet -->
-  <div class="portfolio-spread reveal">
-    <div class="infosheet-doc-frame">
-      <iframe src="Infosheet-Design/Infosheet%20-%20ED.pdf" title="ED Infosheet"></iframe>
-    </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Infosheet — ED</div>
-      <div class="portfolio-desc-agency">IOM Somalia</div>
-      <div class="portfolio-desc-body">Executive Director infosheet — a concise programme brief distilling key data and outcomes for senior leadership and high-level stakeholder meetings.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Infosheet</span>
-        <span class="portfolio-tag">Executive Brief</span>
-        <span class="portfolio-tag">Leadership</span>
-      </div>
-      <a class="infosheet-dl-btn" href="Infosheet-Design/Infosheet%20-%20ED.pdf" download>↓ Download PDF</a>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- 2-Pager -->
-  <div class="portfolio-spread reveal">
-    <div class="infosheet-doc-frame">
-      <iframe src="Infosheet-Design/241003_2PAGER.pdf" title="2-Pager Infosheet"></iframe>
-    </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">2-Pager Brief</div>
-      <div class="portfolio-desc-agency">IOM Somalia · October 2024</div>
-      <div class="portfolio-desc-body">Two-page programme brief summarising key outcomes and data points — designed for external reporting and partner engagement in October 2024.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">2-Pager</span>
-        <span class="portfolio-tag">Programme Brief</span>
-        <span class="portfolio-tag">Oct 2024</span>
-        <span class="portfolio-tag">Partner Reporting</span>
-      </div>
-      <a class="infosheet-dl-btn" href="Infosheet-Design/241003_2PAGER.pdf" download>↓ Download PDF</a>
-    </div>
+  <div class="info-dl-row reveal">
+    <p class="info-dl-desc">One and two-page infosheets designed for donor reporting, partner briefings and community communication — spanning the Women to Women programme, Co-Funding System, Early Recovery Initiative, and more.</p>
+    <a class="infosheet-dl-btn" href="Infosheet-Design/Infosheets.pdf" download>↓ Download PDF Collection</a>
   </div>
 
 </section>
@@ -2682,114 +3448,80 @@
     <div class="section-line"></div>
   </div>
 
-  <!-- CS Summit -->
-  <div class="portfolio-spread reveal">
-    <div>
-      <div class="ppt-main-frame">
-        <img loading="lazy" src="Powerpoints/ppt-summit1.webp" alt="CS Summit slide 1">
-        <div class="ppt-slide-badge">4 Slides</div>
+  <div class="ppt-river reveal" id="pptRiver">
+
+    <!-- Slide strip — clones added by JS for infinite loop -->
+    <div class="ppt-strip" id="pptStrip">
+      <div class="ppt-slide" data-camp="0" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit1.webp" alt="Slide 1"></div>
+      <div class="ppt-slide" data-camp="0" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit2.webp" alt="Slide 2"></div>
+      <div class="ppt-slide" data-camp="0" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit3.webp" alt="Slide 3"></div>
+      <div class="ppt-slide" data-camp="0" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit4.webp" alt="Slide 4"></div>
+      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec1.webp" alt="Slide 5"></div>
+      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec2.webp" alt="Slide 6"></div>
+      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec3.webp" alt="Slide 7"></div>
+      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec4.webp" alt="Slide 8"></div>
+      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update.webp" alt="Slide 9"></div>
+      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update-2.webp" alt="Slide 10"></div>
+      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update-3.webp" alt="Slide 11"></div>
+      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update-4.webp" alt="Slide 12"></div>
+      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/Wal-1.webp" alt="Slide 13"></div>
+      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/Wal-2.webp" alt="Slide 14"></div>
+      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/Wal-3.webp" alt="Slide 15"></div>
+      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/Wal-4.webp" alt="Slide 16"></div>
+    </div>
+
+    <!-- Monitor bezel overlay -->
+    <div class="ppt-monitor" id="pptMonitor">
+      <div class="ppt-monitor-top">
+        <div class="ppt-monitor-cam"></div>
       </div>
-      <div class="ppt-thumb-strip">
-        <img loading="lazy" src="Powerpoints/ppt-summit2.webp" alt="slide 2">
-        <img loading="lazy" src="Powerpoints/ppt-summit3.webp" alt="slide 3">
-        <img loading="lazy" src="Powerpoints/ppt-summit4.webp" alt="slide 4">
+      <div class="ppt-monitor-btm">
+        <div class="ppt-monitor-brand">Display</div>
       </div>
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Women to Women — CS Summit Updates &amp; Linkages</div>
-      <div class="portfolio-desc-agency">IOM × UKAID · Stakeholder Presentation</div>
-      <div class="portfolio-desc-body">Stakeholder presentation summarising W2W programme linkages and updates — delivered at the Civil Society Summit for donors and implementing partners.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">PowerPoint</span>
-        <span class="portfolio-tag">W2W</span>
-        <span class="portfolio-tag">Stakeholder</span>
-        <span class="portfolio-tag">CS Summit</span>
-      </div>
+
+    <!-- Stand (below monitor) -->
+    <div class="ppt-stand">
+      <div class="ppt-stand-neck"></div>
+      <div class="ppt-stand-base"></div>
     </div>
+
   </div>
 
-  <div class="section-spread-divider"></div>
-
-  <!-- Empower One -->
-  <div class="portfolio-spread reveal">
-    <div>
-      <div class="ppt-main-frame">
-        <img loading="lazy" src="Powerpoints/ppt-dec1.webp" alt="Empower One slide 1">
-        <div class="ppt-slide-badge">4 Slides</div>
-      </div>
-      <div class="ppt-thumb-strip">
-        <img loading="lazy" src="Powerpoints/ppt-dec2.webp" alt="slide 2">
-        <img loading="lazy" src="Powerpoints/ppt-dec3.webp" alt="slide 3">
-        <img loading="lazy" src="Powerpoints/ppt-dec4.webp" alt="slide 4">
-      </div>
+  <div class="ppt-meta">
+    <div class="ppt-info-panels">
+    <div class="ppt-info-panel active" data-camp="0">
+      <div class="ppt-info-title">Women to Women — CS Summit Updates &amp; Linkages</div>
+      <div class="ppt-info-agency">IOM × UKAID · Stakeholder Presentation</div>
+      <div class="ppt-info-body">Stakeholder presentation summarising W2W programme linkages and updates — delivered at the Civil Society Summit for donors and implementing partners.</div>
+      <div class="ppt-info-tags"><span class="ppt-info-tag">PowerPoint</span><span class="ppt-info-tag">W2W</span><span class="ppt-info-tag">Stakeholder</span><span class="ppt-info-tag">CS Summit</span></div>
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Women to Women — Empower One, Empower All</div>
-      <div class="portfolio-desc-agency">Baidoa &amp; Dhusamareb · December 2025</div>
-      <div class="portfolio-desc-body">December 2025 programme brief covering W2W activities, outcomes, and field impact across Baidoa and Dhusamareb — presented to programme leads.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">PowerPoint</span>
-        <span class="portfolio-tag">W2W</span>
-        <span class="portfolio-tag">Dec 2025</span>
-        <span class="portfolio-tag">Programme Brief</span>
-      </div>
+    <div class="ppt-info-panel" data-camp="1">
+      <div class="ppt-info-title">Women to Women — Empower One, Empower All</div>
+      <div class="ppt-info-agency">Baidoa &amp; Dhusamareb · December 2025</div>
+      <div class="ppt-info-body">December 2025 programme brief covering W2W activities, outcomes, and field impact across Baidoa and Dhusamareb — presented to programme leads.</div>
+      <div class="ppt-info-tags"><span class="ppt-info-tag">PowerPoint</span><span class="ppt-info-tag">W2W</span><span class="ppt-info-tag">Dec 2025</span><span class="ppt-info-tag">Programme Brief</span></div>
     </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- Political & Security Updates -->
-  <div class="portfolio-spread reveal">
-    <div>
-      <div class="ppt-main-frame">
-        <img loading="lazy" src="Powerpoints/PPT-Update.webp" alt="Political updates slide 1">
-        <div class="ppt-slide-badge">4 Slides</div>
-      </div>
-      <div class="ppt-thumb-strip">
-        <img loading="lazy" src="Powerpoints/PPT-Update-2.webp" alt="slide 2">
-        <img loading="lazy" src="Powerpoints/PPT-Update-3.webp" alt="slide 3">
-        <img loading="lazy" src="Powerpoints/PPT-Update-4.webp" alt="slide 4">
-      </div>
+    <div class="ppt-info-panel" data-camp="2">
+      <div class="ppt-info-title">Political &amp; Security Updates — Baidoa &amp; Dhusamareb</div>
+      <div class="ppt-info-agency">IOM UN Migration · Programme Brief</div>
+      <div class="ppt-info-body">Monthly political and security update brief synthesising field intelligence and situational analysis from Baidoa and Dhusamareb for programme management.</div>
+      <div class="ppt-info-tags"><span class="ppt-info-tag">PowerPoint</span><span class="ppt-info-tag">Security Brief</span><span class="ppt-info-tag">Field Intelligence</span><span class="ppt-info-tag">Monthly</span></div>
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Political &amp; Security Updates — Baidoa &amp; Dhusamareb</div>
-      <div class="portfolio-desc-agency">IOM UN Migration · Programme Brief</div>
-      <div class="portfolio-desc-body">Monthly political and security update brief synthesising field intelligence and situational analysis from Baidoa and Dhusamareb for programme management.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">PowerPoint</span>
-        <span class="portfolio-tag">Security Brief</span>
-        <span class="portfolio-tag">Field Intelligence</span>
-        <span class="portfolio-tag">Monthly</span>
-      </div>
+    <div class="ppt-info-panel" data-camp="3">
+      <div class="ppt-info-title">WaL-MCAP — Presentation</div>
+      <div class="ppt-info-agency">IOM UN Migration · Programme Deck</div>
+      <div class="ppt-info-body">Presentation deck for the Women and Leadership — Management of Conflict Action Plan programme, covering objectives, activities, and outcomes.</div>
+      <div class="ppt-info-tags"><span class="ppt-info-tag">PowerPoint</span><span class="ppt-info-tag">WaL-MCAP</span><span class="ppt-info-tag">Women &amp; Leadership</span><span class="ppt-info-tag">Programme</span></div>
     </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- WaL-MCAP -->
-  <div class="portfolio-spread reveal">
-    <div>
-      <div class="ppt-main-frame">
-        <img loading="lazy" src="Powerpoints/Wal-1.webp" alt="WaL slide 1">
-        <div class="ppt-slide-badge">4 Slides</div>
-      </div>
-      <div class="ppt-thumb-strip">
-        <img loading="lazy" src="Powerpoints/Wal-2.webp" alt="slide 2">
-        <img loading="lazy" src="Powerpoints/Wal-3.webp" alt="slide 3">
-        <img loading="lazy" src="Powerpoints/Wal-4.webp" alt="slide 4">
-      </div>
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">WaL-MCAP — Presentation</div>
-      <div class="portfolio-desc-agency">IOM UN Migration · Programme Deck</div>
-      <div class="portfolio-desc-body">Presentation deck for the Women and Leadership — Management of Conflict Action Plan programme, covering objectives, activities, and outcomes for internal and partner audiences.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">PowerPoint</span>
-        <span class="portfolio-tag">WaL-MCAP</span>
-        <span class="portfolio-tag">Women &amp; Leadership</span>
-        <span class="portfolio-tag">Programme</span>
-      </div>
+    <div class="ppt-camp-nav">
+    <button class="ppt-camp-dot active" data-camp="0" aria-label="PPT set 1"></button>
+    <button class="ppt-camp-dot" data-camp="1" aria-label="PPT set 2"></button>
+    <button class="ppt-camp-dot" data-camp="2" aria-label="PPT set 3"></button>
+    <button class="ppt-camp-dot" data-camp="3" aria-label="PPT set 4"></button>
     </div>
+    <div class="ppt-river-hint">slides flow automatically · drag to explore</div>
   </div>
 
 </section>
@@ -2831,41 +3563,33 @@
     <div class="section-line"></div>
   </div>
 
-  <!-- Pages 74-75 -->
-  <div class="portfolio-spread reveal">
-    <div class="brand-pdf-frame">
-      <iframe src="Brand-Guideline/Jagnoor-Hunjan-Portfolio_74-75.pdf" title="Brand Guidelines 74-75"></iframe>
+  <div class="brand-shots reveal">
+    <div class="brand-shot">
+      <img
+        loading="lazy"
+        src="Brand-Guideline/Screenshot 2026-06-19 122648.png"
+        alt="Brand Guidelines — Logo Grid &amp; Clear Space"
+      >
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Brand Guidelines — Pages 74–75</div>
-      <div class="portfolio-desc-agency">Brand Identity · Visual System</div>
-      <div class="portfolio-desc-body">Core brand guidelines covering typography hierarchy, colour palette, and logo usage — establishing the visual language for consistent communication across all channels.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Typography</span>
-        <span class="portfolio-tag">Colour Palette</span>
-        <span class="portfolio-tag">Logo Usage</span>
-        <span class="portfolio-tag">Brand Identity</span>
-      </div>
+    <div class="brand-shot">
+      <img
+        loading="lazy"
+        src="Brand-Guideline/Screenshot 2026-06-19 122619.png"
+        alt="Brand Guidelines — Typography"
+      >
     </div>
   </div>
 
-  <div class="section-spread-divider"></div>
-
-  <!-- Pages 76-77 -->
-  <div class="portfolio-spread reveal">
-    <div class="brand-pdf-frame">
-      <iframe src="Brand-Guideline/Jagnoor-Hunjan-Portfolio_76-77.pdf" title="Brand Guidelines 76-77"></iframe>
-    </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Brand Guidelines — Pages 76–77</div>
-      <div class="portfolio-desc-agency">Brand Identity · Visual System</div>
-      <div class="portfolio-desc-body">Layout principles, iconography standards, and photography direction — ensuring every asset feels considered and cohesive regardless of who produces it.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Layout Rules</span>
-        <span class="portfolio-tag">Iconography</span>
-        <span class="portfolio-tag">Photography</span>
-        <span class="portfolio-tag">Brand System</span>
-      </div>
+  <div class="brand-desc reveal">
+    <div class="portfolio-desc-title">UN-Habitat Urban Lab — Brand Guidelines</div>
+    <div class="portfolio-desc-agency">UN-Habitat · Planning Finance &amp; Economy Section · 2024</div>
+    <div class="portfolio-desc-body" style="max-width:640px;line-height:1.65;color:rgba(255,255,255,0.6);font-size:0.9rem;">Complete brand identity system covering logo usage, clear space rules, typography hierarchy, and colour palette — designed to ensure consistent visual communication across all Urban Lab platforms and publications.</div>
+    <div class="portfolio-tag-row" style="justify-content:center">
+      <span class="portfolio-tag">Brand Identity</span>
+      <span class="portfolio-tag">Typography</span>
+      <span class="portfolio-tag">Logo System</span>
+      <span class="portfolio-tag">UN-Habitat</span>
+      <span class="portfolio-tag">Visual Guidelines</span>
     </div>
   </div>
 
@@ -2908,170 +3632,149 @@
     <div class="section-line"></div>
   </div>
 
-  <!-- AnyVan -->
-  <div class="portfolio-spread reveal">
-    <div class="browser-frame">
-      <div class="browser-bar">
-        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
-        <span class="browser-url">anyvan.com</span>
+  <div class="web-river reveal" id="webRiver">
+    <div class="web-strip" id="webStrip">
+    <div class="web-card" data-idx="0">
+      <div class="web-card-bar">
+        <div class="web-card-dots">
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+        </div>
+        <div class="web-card-url">anyvan.com</div>
       </div>
-      <div class="site-screen">
-        <video class="hover-video" muted loop playsinline poster="Website-Design/Any-van-1.png">
+      <div class="web-card-screen">
+        <video muted loop playsinline poster="Website-Design/Any-van-1.webp" data-real="1">
           <source src="Website-Design/Any-van-1.mp4" type="video/mp4">
         </video>
       </div>
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">AnyVan — Website Redesign</div>
-      <div class="portfolio-desc-agency">UI/UX · Web · Brand</div>
-      <div class="portfolio-desc-body">Full UX audit and visual redesign of AnyVan's web platform — improving the booking flow, tightening the visual hierarchy, and aligning the interface with a refreshed brand identity.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">UI/UX</span>
-        <span class="portfolio-tag">Redesign</span>
-        <span class="portfolio-tag">Web</span>
-        <span class="portfolio-tag">Brand</span>
+    <div class="web-card" data-idx="1">
+      <div class="web-card-bar">
+        <div class="web-card-dots">
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+        </div>
+        <div class="web-card-url">savetheelephants.org</div>
       </div>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- Save the Elephants -->
-  <div class="portfolio-spread reveal">
-    <div class="browser-frame">
-      <div class="browser-bar">
-        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
-        <span class="browser-url">savetheelephants.org</span>
-      </div>
-      <div class="site-screen">
-        <video class="hover-video" muted loop playsinline>
+      <div class="web-card-screen">
+        <video muted loop playsinline data-real="1">
           <source src="Website-Design/Save-the-elephants.mp4" type="video/mp4">
         </video>
       </div>
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Save the Elephants — Conservation Website</div>
-      <div class="portfolio-desc-agency">Web · UI Design · Non-Profit</div>
-      <div class="portfolio-desc-body">Conservation website balancing scientific rigour with emotive, campaign-driven design — built to engage both researchers and the general public around elephant conservation.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Non-Profit</span>
-        <span class="portfolio-tag">UI Design</span>
-        <span class="portfolio-tag">Conservation</span>
-        <span class="portfolio-tag">Web</span>
+    <div class="web-card" data-idx="2">
+      <div class="web-card-bar">
+        <div class="web-card-dots">
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+        </div>
+        <div class="web-card-url">notes-app.dev</div>
       </div>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- Notes App -->
-  <div class="portfolio-spread reveal">
-    <div class="browser-frame">
-      <div class="browser-bar">
-        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
-        <span class="browser-url">notes-app.dev</span>
-      </div>
-      <div class="site-screen">
-        <video class="hover-video" muted loop playsinline>
+      <div class="web-card-screen">
+        <video muted loop playsinline data-real="1">
           <source src="Website-Design/Notes-App.mp4" type="video/mp4">
         </video>
       </div>
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Notes App</div>
-      <div class="portfolio-desc-agency">Web App · UI/UX · Full-Stack</div>
-      <div class="portfolio-desc-body">A clean, full-stack notes application with real-time sync and a minimal, distraction-free UI — built for speed and simplicity.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Full-Stack</span>
-        <span class="portfolio-tag">Real-Time</span>
-        <span class="portfolio-tag">UI/UX</span>
-        <span class="portfolio-tag">Web App</span>
+    <div class="web-card" data-idx="3">
+      <div class="web-card-bar">
+        <div class="web-card-dots">
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+        </div>
+        <div class="web-card-url">apple.com/siri — concept</div>
       </div>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- Siri -->
-  <div class="portfolio-spread reveal">
-    <div class="browser-frame">
-      <div class="browser-bar">
-        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
-        <span class="browser-url">apple.com/siri — concept</span>
-      </div>
-      <div class="site-screen">
-        <video class="hover-video" muted loop playsinline>
+      <div class="web-card-screen">
+        <video muted loop playsinline data-real="1">
           <source src="Website-Design/Siri-1.mp4" type="video/mp4">
         </video>
       </div>
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Siri — Concept Design</div>
-      <div class="portfolio-desc-agency">UI/UX · Motion · Concept</div>
-      <div class="portfolio-desc-body">Conceptual redesign of Apple's Siri interface — exploring a more ambient, gesture-first visual language that feels native to a post-screen-tap generation.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Concept</span>
-        <span class="portfolio-tag">Motion</span>
-        <span class="portfolio-tag">UI/UX</span>
-        <span class="portfolio-tag">Apple</span>
+    <div class="web-card" data-idx="4">
+      <div class="web-card-bar">
+        <div class="web-card-dots">
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+        </div>
+        <div class="web-card-url">studyai.app</div>
       </div>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- StudyAI -->
-  <div class="portfolio-spread reveal">
-    <div class="browser-frame">
-      <div class="browser-bar">
-        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
-        <span class="browser-url">studyai.app</span>
-      </div>
-      <div class="site-screen">
-        <video class="hover-video" muted loop playsinline>
+      <div class="web-card-screen">
+        <video muted loop playsinline data-real="1">
           <source src="Website-Design/Study-ai.mp4" type="video/mp4">
         </video>
       </div>
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">StudyAI — AI-Powered Study Platform</div>
-      <div class="portfolio-desc-agency">GPT-4o · Real-time DB · Full-Stack</div>
-      <div class="portfolio-desc-body">AI-powered study platform using GPT-4o to generate summaries, flashcards, and quizzes from uploaded content — built with a real-time database for live collaboration.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">GPT-4o</span>
-        <span class="portfolio-tag">AI</span>
-        <span class="portfolio-tag">Full-Stack</span>
-        <span class="portfolio-tag">EdTech</span>
+    <div class="web-card" data-idx="5">
+      <div class="web-card-bar">
+        <div class="web-card-dots">
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+          <div class="web-card-dot"></div>
+        </div>
+        <div class="web-card-url">mario-platformer.js</div>
       </div>
-    </div>
-  </div>
-
-  <div class="section-spread-divider"></div>
-
-  <!-- Mario -->
-  <div class="portfolio-spread reveal">
-    <div class="browser-frame">
-      <div class="browser-bar">
-        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
-        <span class="browser-url">mario-platformer.js</span>
-      </div>
-      <div class="site-screen">
-        <video class="hover-video" muted loop playsinline>
+      <div class="web-card-screen">
+        <video muted loop playsinline data-real="1">
           <source src="Website-Design/Mario-game.mp4" type="video/mp4">
         </video>
       </div>
     </div>
-    <div class="portfolio-desc">
-      <div class="portfolio-desc-title">Interactive 2D Mario-Inspired Platformer</div>
-      <div class="portfolio-desc-agency">Game Dev · HTML/CSS/JS · Multiple Levels</div>
-      <div class="portfolio-desc-body">Browser-based 2D platformer inspired by Mario — built entirely with vanilla HTML, CSS, and JavaScript across multiple levels with collision detection and physics.</div>
-      <div class="portfolio-tag-row">
-        <span class="portfolio-tag">Game Dev</span>
-        <span class="portfolio-tag">Vanilla JS</span>
-        <span class="portfolio-tag">Canvas</span>
-        <span class="portfolio-tag">Multi-Level</span>
-      </div>
     </div>
+  </div>
+
+  <div class="web-meta">
+    <div class="web-info-panels">
+    <div class="web-info-panel active" data-idx="0">
+      <div class="web-info-title">AnyVan — Website Redesign</div>
+      <div class="web-info-agency">UI/UX · Web · Brand</div>
+      <div class="web-info-body">Full UX audit and visual redesign of AnyVan’s web platform — improving the booking flow, tightening the visual hierarchy, and aligning the interface with a refreshed brand identity.</div>
+      <div class="web-info-tags"><span class="web-info-tag">UI/UX</span><span class="web-info-tag">Redesign</span><span class="web-info-tag">Web</span><span class="web-info-tag">Brand</span></div>
+    </div>
+    <div class="web-info-panel" data-idx="1">
+      <div class="web-info-title">Save the Elephants — Conservation Website</div>
+      <div class="web-info-agency">Web · UI Design · Non-Profit</div>
+      <div class="web-info-body">Conservation website balancing scientific rigour with emotive, campaign-driven design — built to engage both researchers and the general public around elephant conservation.</div>
+      <div class="web-info-tags"><span class="web-info-tag">Non-Profit</span><span class="web-info-tag">UI Design</span><span class="web-info-tag">Conservation</span><span class="web-info-tag">Web</span></div>
+    </div>
+    <div class="web-info-panel" data-idx="2">
+      <div class="web-info-title">Notes App</div>
+      <div class="web-info-agency">Web App · UI/UX · Full-Stack</div>
+      <div class="web-info-body">A clean, full-stack notes application with real-time sync and a minimal, distraction-free UI — built for speed and simplicity.</div>
+      <div class="web-info-tags"><span class="web-info-tag">Full-Stack</span><span class="web-info-tag">Real-Time</span><span class="web-info-tag">UI/UX</span><span class="web-info-tag">Web App</span></div>
+    </div>
+    <div class="web-info-panel" data-idx="3">
+      <div class="web-info-title">Siri — Concept Design</div>
+      <div class="web-info-agency">UI/UX · Motion · Concept</div>
+      <div class="web-info-body">Conceptual redesign of Apple's Siri interface — exploring a more ambient, gesture-first visual language that feels native to a post-screen-tap generation.</div>
+      <div class="web-info-tags"><span class="web-info-tag">Concept</span><span class="web-info-tag">Motion</span><span class="web-info-tag">UI/UX</span><span class="web-info-tag">Apple</span></div>
+    </div>
+    <div class="web-info-panel" data-idx="4">
+      <div class="web-info-title">StudyAI — AI-Powered Study Platform</div>
+      <div class="web-info-agency">GPT-4o · Real-time DB · Full-Stack</div>
+      <div class="web-info-body">AI-powered study platform using GPT-4o to generate summaries, flashcards, and quizzes from uploaded content — built with a real-time database for live collaboration.</div>
+      <div class="web-info-tags"><span class="web-info-tag">GPT-4o</span><span class="web-info-tag">AI</span><span class="web-info-tag">Full-Stack</span><span class="web-info-tag">EdTech</span></div>
+    </div>
+    <div class="web-info-panel" data-idx="5">
+      <div class="web-info-title">Interactive 2D Mario-Inspired Platformer</div>
+      <div class="web-info-agency">Game Dev · HTML/CSS/JS · Multiple Levels</div>
+      <div class="web-info-body">Browser-based 2D platformer built entirely with vanilla HTML, CSS, and JavaScript — multiple levels with collision detection, physics, and enemies.</div>
+      <div class="web-info-tags"><span class="web-info-tag">Game Dev</span><span class="web-info-tag">Vanilla JS</span><span class="web-info-tag">Canvas</span><span class="web-info-tag">Multi-Level</span></div>
+    </div>
+    </div>
+    <div class="web-camp-nav">
+    <button class="web-camp-dot active" data-idx="0" aria-label="Site 1"></button>
+    <button class="web-camp-dot" data-idx="1" aria-label="Site 2"></button>
+    <button class="web-camp-dot" data-idx="2" aria-label="Site 3"></button>
+    <button class="web-camp-dot" data-idx="3" aria-label="Site 4"></button>
+    <button class="web-camp-dot" data-idx="4" aria-label="Site 5"></button>
+    <button class="web-camp-dot" data-idx="5" aria-label="Site 6"></button>
+    </div>
+    <div class="web-river-hint">sites flow automatically · drag to explore</div>
   </div>
 
 </section>
@@ -3106,79 +3809,100 @@
   </div>
 
   <section class="content-section" id="app-content">
-    <div class="section-header reveal">
-      <span class="section-num">07</span>
-      <span class="section-title-text cyan">App Design</span>
-      <div class="section-line"></div>
-    </div>
 
-    <!-- ── APP 1: MAZINGIRA ── -->
-    <div class="app-block reveal">
-      <div class="app-screens-strip">
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot1.jpeg" alt="Mazingira app screen 1"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot2.jpeg" alt="Mazingira app screen 2"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot3.jpeg" alt="Mazingira app screen 3"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot4.jpeg" alt="Mazingira app screen 4"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot5.jpeg" alt="Mazingira app screen 5"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot6.jpeg" alt="Mazingira app screen 6"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot7.jpeg" alt="Mazingira app screen 7"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Mazingira-App/Mazingira-Screenshot8.jpeg" alt="Mazingira app screen 8"></div>
-      </div>
-      <div class="app-info">
-        <div>
-          <div class="app-status live">● Live</div>
-          <div class="app-name">Mazingira</div>
-          <div class="app-agency">Environmental Justice</div>
-          <div class="app-tags-row">
-            <span class="app-tag">Offline-First</span>
-            <span class="app-tag">GPS Reporting</span>
-            <span class="app-tag">Photo Upload</span>
-            <span class="app-tag">Maps</span>
-            <span class="app-tag">English · Swahili</span>
-            <span class="app-tag">Sync on Connect</span>
-            <span class="app-tag">Community-Driven</span>
+  <div class="section-header reveal">
+    <span class="section-num">07</span>
+    <span class="section-title-text cyan">App Design</span>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- Two phones floating side by side -->
+  <div class="app-stage reveal">
+    <div class="app-unit">
+      <div class="app-phone" id="appPhonemaz" data-n="8">
+        <div class="app-ph-top">
+          <div class="app-ph-island"></div>
+          <div class="app-ph-status"><span>9:41</span><span>▲▲ ◼◼◼</span></div>
+        </div>
+        <div class="app-ph-screen">
+          <div class="app-ph-strip" id="appStripmaz">
+          <img loading="lazy" src="App-Design/Mazingira-App/Mazingira-Screenshot1.jpeg" alt="Mazingira screen 1">
+          <img loading="lazy" src="App-Design/Mazingira-App/Mazingira-Screenshot2.jpeg" alt="Mazingira screen 2">
+          <img loading="lazy" src="App-Design/Mazingira-App/Mazingira-Screenshot3.jpeg" alt="Mazingira screen 3">
+          <img loading="lazy" src="App-Design/Mazingira-App/Mazingira-Screenshot4.jpeg" alt="Mazingira screen 4">
+          <img loading="lazy" src="App-Design/Mazingira-App/Mazingira-Screenshot5.jpeg" alt="Mazingira screen 5">
+          <img loading="lazy" src="App-Design/Mazingira-App/Mazingira-Screenshot6.jpeg" alt="Mazingira screen 6">
+          <img loading="lazy" src="App-Design/Mazingira-App/Mazingira-Screenshot7.jpeg" alt="Mazingira screen 7">
+          <img loading="lazy" src="App-Design/Mazingira-App/Mazingira-Screenshot8.jpeg" alt="Mazingira screen 8">
           </div>
         </div>
-        <div class="app-desc">
-          A community-driven <strong>Environmental Justice Tracker</strong> that puts pollution reporting in the hands of the people most affected by it. Residents in informal settlements, areas near schools, and industrial zones can document <strong>air pollution, illegal dumping, factory emissions, water contamination, and noise pollution</strong> — with photos and precise GPS coordinates — directly from their phones.<br><br>
-          The app works <strong>fully offline</strong>, queuing reports locally and syncing to the backend the moment connectivity returns — so a weak signal never stops a report from being filed. An integrated map layer makes environmental disparities visible across vulnerable communities, turning lived experience into documented evidence. Available in both <strong>English and Swahili</strong>.
+        <div class="app-dot-row" id="appDotsmaz">
+        <div class="app-dot active"></div>
+        <div class="app-dot"></div>
+        <div class="app-dot"></div>
+        <div class="app-dot"></div>
+        <div class="app-dot"></div>
+        <div class="app-dot"></div>
+        <div class="app-dot"></div>
+        <div class="app-dot"></div>
         </div>
+        <div class="app-ph-bottom"><div class="app-ph-home"></div></div>
+      </div>
+      <div class="app-unit-label">
+        <div class="app-status-live">● Live</div>
+        <div class="app-unit-name">Mazingira</div>
+        <div class="app-unit-sub">Environmental Justice Tracker</div>
       </div>
     </div>
-
-    <div class="app-divider-line"></div>
-
-    <!-- ── APP 2: FIELD MONITOR ── -->
-    <div class="app-block reveal">
-      <div class="app-screens-strip">
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Field-Monitor-App/Monitor-App-Landing-Page1.JPEG" alt="Field Monitor — Landing Page"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Field-Monitor-App/Monitor-App-Submit-Report-Page2.JPEG" alt="Field Monitor — Submit Report"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Field-Monitor-App/Monitor-App-Data-View-Page3.JPEG" alt="Field Monitor — Data View"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Field-Monitor-App/Monitor-App-Map-View-Page4.JPEG" alt="Field Monitor — Map View"></div>
-        <div class="app-screen-frame"><img loading="lazy" src="App-design/Field-Monitor-App/Monitor-App-View-Page5.JPEG" alt="Field Monitor — View Page"></div>
-      </div>
-      <div class="app-info">
-        <div>
-          <div class="app-status proposal">◎ Proposal</div>
-          <div class="app-name">Field Monitor</div>
-          <div class="app-agency">M&amp;E Field Tool</div>
-          <div class="app-tags-row">
-            <span class="app-tag">Field Reporting</span>
-            <span class="app-tag">Real-Time Sync</span>
-            <span class="app-tag">Encrypted DB</span>
-            <span class="app-tag">Smartphone-First</span>
-            <span class="app-tag">M&amp;E Tools</span>
-            <span class="app-tag">Instant Updates</span>
+    <div class="app-unit">
+      <div class="app-phone" id="appPhonefm" data-n="5">
+        <div class="app-ph-top">
+          <div class="app-ph-island"></div>
+          <div class="app-ph-status"><span>9:41</span><span>▲▲ ◼◼◼</span></div>
+        </div>
+        <div class="app-ph-screen">
+          <div class="app-ph-strip" id="appStripfm">
+          <img loading="lazy" src="App-Design/Field-Monitor-App/Monitor-App-Landing-Page1.JPEG" alt="Field Monitor screen 1">
+          <img loading="lazy" src="App-Design/Field-Monitor-App/Monitor-App-Submit-Report-Page2.JPEG" alt="Field Monitor screen 2">
+          <img loading="lazy" src="App-Design/Field-Monitor-App/Monitor-App-Data-View-Page3.JPEG" alt="Field Monitor screen 3">
+          <img loading="lazy" src="App-Design/Field-Monitor-App/Monitor-App-Map-View-Page4.JPEG" alt="Field Monitor screen 4">
+          <img loading="lazy" src="App-Design/Field-Monitor-App/Monitor-App-View-Page5.JPEG" alt="Field Monitor screen 5">
           </div>
         </div>
-        <div class="app-desc">
-          A proposed <strong>field monitoring app</strong> designed for the M&amp;E team — built around how field officers actually work. Instead of paper forms or slow desktop dashboards, staff log tasks, activities, and progress <strong>directly from their smartphones</strong> in real time.<br><br>
-          Reports update <strong>instantly</strong> across the team, giving programme managers live visibility without chasing emails. Data is stored in a <strong>secure, encrypted database</strong>, keeping sensitive field information protected. Designed to be fast, intuitive, and friction-free — because in the field, every minute counts.
+        <div class="app-dot-row" id="appDotsfm">
+        <div class="app-dot active"></div>
+        <div class="app-dot"></div>
+        <div class="app-dot"></div>
+        <div class="app-dot"></div>
+        <div class="app-dot"></div>
         </div>
+        <div class="app-ph-bottom"><div class="app-ph-home"></div></div>
+      </div>
+      <div class="app-unit-label">
+        <div class="app-status-proposal">◎ Proposal</div>
+        <div class="app-unit-name">Field Monitor</div>
+        <div class="app-unit-sub">M&amp;E Field Tool</div>
       </div>
     </div>
+  </div>
 
-  </section>
+  <!-- Descriptions -->
+  <div class="app-desc-grid reveal">
+      <div class="app-desc-col">
+        <div class="app-unit-name">Mazingira</div>
+        <div class="app-desc-agency">Community-Driven · Offline-First · GPS</div>
+        <div class="app-desc-body">A community-driven environmental justice app that lets residents in informal settlements document air pollution, illegal dumping, water contamination, and factory emissions — with photos and GPS coordinates — directly from their phones. Works fully offline, syncing the moment connectivity returns. Available in English and Swahili.</div>
+        <div class="app-desc-tags"><span class="app-desc-tag cyan">Offline-First</span><span class="app-desc-tag cyan">GPS Reporting</span><span class="app-desc-tag cyan">Photo Upload</span><span class="app-desc-tag cyan">Maps</span><span class="app-desc-tag cyan">Swahili</span><span class="app-desc-tag cyan">Sync on Connect</span></div>
+      </div>
+      <div class="app-desc-col">
+        <div class="app-unit-name">Field Monitor</div>
+        <div class="app-desc-agency">Real-Time Sync · Encrypted · Smartphone-First</div>
+        <div class="app-desc-body">A proposed field monitoring app built around how field officers actually work. Staff log tasks, activities, and progress directly from their smartphones in real time. Reports update instantly across the team, giving programme managers live visibility without chasing emails. Data is stored in a secure encrypted database.</div>
+        <div class="app-desc-tags"><span class="app-desc-tag blue">Field Reporting</span><span class="app-desc-tag blue">Real-Time Sync</span><span class="app-desc-tag blue">Encrypted DB</span><span class="app-desc-tag blue">Smartphone-First</span><span class="app-desc-tag blue">M&E Tools</span></div>
+      </div>
+  </div>
+
+</section>
 
 
   <!-- ══ PDF MODAL ══ -->
@@ -3617,108 +4341,541 @@
   });
 
   
-  // ─── SOCIAL MEDIA: infinite loop post carousel + campaign sync ───
+  
+  // ─── SOCIAL MEDIA: flowing river carousel ───
   (function () {
-    const carousel   = document.getElementById('phCarousel');
-    if (!carousel) return;
+    const river  = document.getElementById('socRiver');
+    const strip  = document.getElementById('socStrip');
+    if (!river || !strip) return;
 
-    const realSlides = [...carousel.querySelectorAll('.ph-slide[data-real]')];
-    const n          = realSlides.length;
-    if (!n) return;
+    const POST_W = 320;   // must match CSS .soc-post width
+    const POST_H = 400;   // must match CSS .soc-post height
+    const GAP    = 20;    // must match CSS .soc-strip gap
+    const STEP   = POST_W + GAP; // px per post slot
 
-    // ── 1. Clone all slides: prepend n clones, append n clones ──
-    // Append (end clones)
-    realSlides.forEach(s => {
-      const c = s.cloneNode(true);
+    // Clone all real posts and append (makes the loop seamless)
+    const realPosts = [...strip.querySelectorAll('.soc-post[data-real]')];
+    const N = realPosts.length; // 21
+    realPosts.forEach(p => {
+      const c = p.cloneNode(true);
       c.removeAttribute('data-real');
-      carousel.appendChild(c);
-    });
-    // Prepend (start clones)
-    const allBeforeClone = [...carousel.querySelectorAll('.ph-slide[data-real]')];
-    allBeforeClone.slice().reverse().forEach(s => {
-      const c = s.cloneNode(true);
-      c.removeAttribute('data-real');
-      carousel.insertBefore(c, carousel.firstChild);
+      strip.appendChild(c);
     });
 
-    // ── 2. Start at first real slide (offset by n clone widths) ──
-    const slideW = () => carousel.clientWidth;
-    function startPos() { return n * slideW(); }
-    carousel.scrollLeft = startPos();
+    // Info panels and dots
+    const panels = [...document.querySelectorAll('.soc-info-panel-new')];
+    const dots   = [...document.querySelectorAll('.soc-camp-dot-new')];
 
-    // ── 3. Progress bar + campaign description sync ──
-    const progressBar  = document.getElementById('phProgress');
-    const infoPanels   = document.querySelectorAll('.soc-info-panel');
-    const campDots     = document.querySelectorAll('.soc-camp-dot');
+    // scrollX: how many px we've scrolled from the start (first real post centered)
+    let scrollX = 0;
+    const totalW = N * STEP; // after this many px, the loop resets
 
-    function getRealIdx() {
-      // current index within the real slides (0 to n-1)
-      const w = slideW();
-      if (!w) return 0;
-      const raw = Math.round(carousel.scrollLeft / w);
-      return ((raw - n) % n + n) % n;
+    // Position the strip so scrollX=0 centers the first post in the phone
+    function getStartLeft() {
+      return river.offsetWidth / 2 - POST_W / 2;
     }
 
-    function getCampaign(realIdx) {
-      const slide = realSlides[realIdx];
-      return slide ? parseInt(slide.dataset.campaign, 10) : 0;
+    function applyPosition() {
+      const x = scrollX % totalW;
+      strip.style.left = (getStartLeft() - x) + 'px';
     }
 
-    function update() {
-      const idx  = getRealIdx();
-      const camp = getCampaign(idx);
-
-      // Progress bar
-      if (progressBar) {
-        progressBar.style.width = ((idx / (n - 1)) * 100).toFixed(1) + '%';
-      }
-
-      // Info panel crossfade
-      infoPanels.forEach((p, i) => p.classList.toggle('active', i === camp));
-
-      // Campaign dots
-      campDots.forEach((d, i) => d.classList.toggle('on', i === camp));
+    // Which campaign is currently centered in the phone?
+    let lastCamp = -1;
+    function updateInfo() {
+      const idx  = Math.round((scrollX % totalW) / STEP) % N;
+      const camp = realPosts[idx].dataset.camp | 0;
+      if (camp === lastCamp) return;
+      lastCamp = camp;
+      panels.forEach((p, i) => p.classList.toggle('active', i === camp));
+      dots.forEach((d, i)   => d.classList.toggle('active', i === camp));
     }
 
-    // ── 4. Infinite loop: jump when entering clone territory ──
-    let jumping = false;
-    carousel.addEventListener('scroll', () => {
-      if (jumping) return;
-      const w   = slideW();
-      const pos = carousel.scrollLeft;
+    // ── Auto-scroll ──────────────────────────────────────────────────────────
+    const SPEED = 0.55; // px/frame  (~33px/s at 60fps)
+    let   paused      = false;
+    let   pauseUntil  = 0;
+    let   isDragging  = false;
+    let   dragStartX  = 0;
+    let   dragOriginX = 0;
 
-      // Entered prepended clones (before the real slides)
-      if (pos < n * w - w * 0.1) {
-        jumping = true;
-        carousel.scrollLeft = pos + n * w;
-        requestAnimationFrame(() => { jumping = false; });
+    function tick() {
+      if (!isDragging && Date.now() > pauseUntil) {
+        scrollX += SPEED;
+        if (scrollX >= totalW) scrollX -= totalW;
+        applyPosition();
+        updateInfo();
       }
-      // Entered appended clones (after the real slides)
-      else if (pos > 2 * n * w - w * 0.9) {
-        jumping = true;
-        carousel.scrollLeft = pos - n * w;
-        requestAnimationFrame(() => { jumping = false; });
-      }
+      requestAnimationFrame(tick);
+    }
 
-      update();
-    }, { passive: true });
+    // ── Pointer / touch drag ─────────────────────────────────────────────────
+    river.addEventListener('pointerdown', e => {
+      isDragging   = true;
+      dragStartX   = e.clientX;
+      dragOriginX  = scrollX;
+      river.setPointerCapture(e.pointerId);
+      river.classList.add('dragging');
+    });
 
-    // ── 5. Campaign dots → jump to first post of that campaign ──
-    campDots.forEach(dot => {
+    river.addEventListener('pointermove', e => {
+      if (!isDragging) return;
+      const delta = e.clientX - dragStartX;
+      scrollX = ((dragOriginX - delta) % totalW + totalW) % totalW;
+      applyPosition();
+      updateInfo();
+    });
+
+    river.addEventListener('pointerup', () => {
+      isDragging  = false;
+      pauseUntil  = Date.now() + 2200; // resume auto after 2.2s
+      river.classList.remove('dragging');
+    });
+
+    river.addEventListener('pointercancel', () => {
+      isDragging = false;
+      river.classList.remove('dragging');
+    });
+
+    // Campaign dot clicks: jump to that campaign's first post
+    dots.forEach((dot, i) => {
       dot.addEventListener('click', () => {
-        const targetCamp = parseInt(dot.dataset.camp, 10);
-        // Find first real slide of that campaign
-        const targetSlideIdx = realSlides.findIndex(s => parseInt(s.dataset.campaign, 10) === targetCamp);
-        if (targetSlideIdx < 0) return;
-        const w = slideW();
-        carousel.scrollTo({ left: (n + targetSlideIdx) * w, behavior: 'smooth' });
+        const firstIdx = realPosts.findIndex(p => (p.dataset.camp | 0) === i);
+        if (firstIdx === -1) return;
+        scrollX    = firstIdx * STEP;
+        pauseUntil = Date.now() + 3000;
+        applyPosition();
+        updateInfo();
       });
     });
 
-    update();
+    // Start
+    applyPosition();
+    updateInfo();
+    requestAnimationFrame(tick);
   })();
 
-</script>
+  
+
+  // ─── PPT: monitor river carousel ───
+  (function () {
+    const river = document.getElementById('pptRiver');
+    const strip = document.getElementById('pptStrip');
+    if (!river || !strip) return;
+
+    const SLIDE_W = 500;
+    const GAP     = 22;
+    const STEP    = SLIDE_W + GAP;
+
+    // Clone real slides for infinite loop
+    const realSlides = [...strip.querySelectorAll('.ppt-slide[data-real]')];
+    const N = realSlides.length;
+    realSlides.forEach(s => {
+      const c = s.cloneNode(true);
+      c.removeAttribute('data-real');
+      strip.appendChild(c);
+    });
+
+    const panels = [...document.querySelectorAll('.ppt-info-panel')];
+    const dots   = [...document.querySelectorAll('.ppt-camp-dot')];
+    const totalW = N * STEP;
+
+    let scrollX    = 0;
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragOriginX= 0;
+    let pauseUntil = 0;
+    let lastCamp   = -1;
+
+    function getStartLeft() {
+      return river.offsetWidth / 2 - SLIDE_W / 2;
+    }
+
+    function applyPosition() {
+      const x = ((scrollX % totalW) + totalW) % totalW;
+      strip.style.left = (getStartLeft() - x) + 'px';
+    }
+
+    function updateInfo() {
+      const x   = ((scrollX % totalW) + totalW) % totalW;
+      const idx  = Math.round(x / STEP) % N;
+      const camp = realSlides[idx].dataset.camp | 0;
+      if (camp === lastCamp) return;
+      lastCamp = camp;
+      panels.forEach((p, i) => p.classList.toggle('active', i === camp));
+      dots.forEach((d, i)   => d.classList.toggle('active', i === camp));
+    }
+
+    const SPEED = 0.5;
+
+    function tick() {
+      if (!isDragging && Date.now() > pauseUntil) {
+        scrollX += SPEED;
+        applyPosition();
+        updateInfo();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    river.addEventListener('pointerdown', e => {
+      isDragging  = true;
+      dragStartX  = e.clientX;
+      dragOriginX = scrollX;
+      river.setPointerCapture(e.pointerId);
+      river.classList.add('dragging');
+    });
+
+    river.addEventListener('pointermove', e => {
+      if (!isDragging) return;
+      scrollX = dragOriginX - (e.clientX - dragStartX);
+      applyPosition();
+      updateInfo();
+    });
+
+    river.addEventListener('pointerup', () => {
+      isDragging  = false;
+      pauseUntil  = Date.now() + 2200;
+      river.classList.remove('dragging');
+    });
+
+    river.addEventListener('pointercancel', () => {
+      isDragging = false;
+      river.classList.remove('dragging');
+    });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        const firstIdx = realSlides.findIndex(s => (s.dataset.camp | 0) === i);
+        if (firstIdx === -1) return;
+        scrollX    = firstIdx * STEP;
+        pauseUntil = Date.now() + 3000;
+        applyPosition();
+        updateInfo();
+      });
+    });
+
+    applyPosition();
+    updateInfo();
+    requestAnimationFrame(tick);
+  })();
+
+  
+
+  // ─── WEBSITES: browser card river ───
+  (function () {
+    const river = document.getElementById('webRiver');
+    const strip = document.getElementById('webStrip');
+    if (!river || !strip) return;
+
+    const CARD_W = 540;
+    const GAP    = 24;
+    const STEP   = CARD_W + GAP;
+
+    // Grab real cards and clone for infinite loop
+    const realCards = [...strip.querySelectorAll('.web-card')];
+    const N = realCards.length;
+    realCards.forEach(c => {
+      const clone = c.cloneNode(true);
+      strip.appendChild(clone);
+    });
+
+    const allCards = [...strip.querySelectorAll('.web-card')];
+    const panels   = [...document.querySelectorAll('.web-info-panel')];
+    const dots     = [...document.querySelectorAll('.web-camp-dot')];
+    const totalW   = N * STEP;
+
+    let scrollX    = 0;
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragOriginX= 0;
+    let pauseUntil = 0;
+    let lastIdx    = -1;
+
+    function getStartLeft() { return river.offsetWidth / 2 - CARD_W / 2; }
+
+    function applyPosition() {
+      const x = ((scrollX % totalW) + totalW) % totalW;
+      strip.style.left = (getStartLeft() - x) + 'px';
+    }
+
+    // Play video in centred card, pause all others
+    function updateActive() {
+      const x   = ((scrollX % totalW) + totalW) % totalW;
+      const idx  = Math.round(x / STEP) % N;
+      if (idx === lastIdx) return;
+      lastIdx = idx;
+
+      // Update description + dots
+      panels.forEach((p, i) => p.classList.toggle('active', i === idx));
+      dots.forEach((d, i)   => d.classList.toggle('active', i === idx));
+
+      // Play centred video, pause others (across both real + clone sets)
+      allCards.forEach((card, ci) => {
+        const video = card.querySelector('video');
+        if (!video) return;
+        if (ci % N === idx) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    }
+
+    const SPEED = 0.45;
+
+    function tick() {
+      if (!isDragging && Date.now() > pauseUntil) {
+        scrollX += SPEED;
+        applyPosition();
+        updateActive();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    river.addEventListener('pointerdown', e => {
+      isDragging  = true;
+      dragStartX  = e.clientX;
+      dragOriginX = scrollX;
+      river.setPointerCapture(e.pointerId);
+      river.classList.add('dragging');
+    });
+
+    river.addEventListener('pointermove', e => {
+      if (!isDragging) return;
+      scrollX = dragOriginX - (e.clientX - dragStartX);
+      applyPosition();
+      updateActive();
+    });
+
+    river.addEventListener('pointerup', () => {
+      isDragging = false;
+      pauseUntil = Date.now() + 2200;
+      river.classList.remove('dragging');
+    });
+
+    river.addEventListener('pointercancel', () => {
+      isDragging = false;
+      river.classList.remove('dragging');
+    });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        scrollX    = i * STEP;
+        pauseUntil = Date.now() + 3000;
+        applyPosition();
+        updateActive();
+      });
+    });
+
+    applyPosition();
+    updateActive();
+    requestAnimationFrame(tick);
+  })();
+
+  
+
+  // ─── APP DESIGN: dual phone carousel ───
+  (function () {
+    function initPhone(phoneId, stripId, dotsId) {
+      const phone = document.getElementById(phoneId);
+      const strip = document.getElementById(stripId);
+      const dotsEl= document.getElementById(dotsId);
+      if (!phone || !strip) return;
+
+      const imgs = [...strip.querySelectorAll('img')];
+      const dots = dotsEl ? [...dotsEl.querySelectorAll('.app-dot')] : [];
+      const N    = imgs.length;
+      const SCREEN_W = 200; // must match CSS .app-ph-strip img width
+      let current = 0;
+      let busy    = false;
+      let autoTimer;
+
+      function showRipple() {
+        const screen = phone.querySelector('.app-ph-screen');
+        if (!screen) return;
+        const r = document.createElement('div');
+        r.className = 'app-tap-ripple';
+        r.style.left = (20 + Math.random() * 60) + '%';
+        r.style.top  = (25 + Math.random() * 45) + '%';
+        screen.appendChild(r);
+        setTimeout(() => r.remove(), 700);
+      }
+
+      function goTo(idx) {
+        if (busy) return;
+        busy    = true;
+        current = ((idx % N) + N) % N;
+        strip.style.transform = 'translateX(-' + (current * SCREEN_W) + 'px)';
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+        showRipple();
+        setTimeout(() => { busy = false; }, 600);
+      }
+
+      function scheduleNext() {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(() => {
+          goTo(current + 1);
+          scheduleNext();
+        }, 2800 + Math.random() * 600);
+      }
+
+      // Tap/click: advance one screen, reset timer
+      phone.addEventListener('click', () => {
+        goTo(current + 1);
+        scheduleNext();
+      });
+
+      // Touch swipe
+      let touchStartX = 0;
+      phone.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+      phone.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 30) {
+          goTo(dx < 0 ? current + 1 : current - 1);
+          scheduleNext();
+        }
+      }, { passive: true });
+
+      scheduleNext();
+    }
+
+    initPhone('appPhonemaz', 'appStripmaz', 'appDotsmaz');
+    initPhone('appPhonefm',  'appStripfm',  'appDotsfm');
+  })();
+
+  
+
+  // ─── REPORT COVERS: auto-crossfade ───
+  (function () {
+    const wrap  = document.getElementById('rcoverWrap');
+    if (!wrap) return;
+    const imgs  = [...wrap.querySelectorAll('.rcover-img')];
+    const dots  = [...document.querySelectorAll('.rcover-dot')];
+    const N     = imgs.length;
+    let current = 0;
+    let timer;
+
+    function goTo(idx) {
+      imgs[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = ((idx % N) + N) % N;
+      imgs[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    function schedule() {
+      clearInterval(timer);
+      timer = setInterval(() => goTo(current + 1), 4000);
+    }
+
+    // Click / tap to advance
+    wrap.addEventListener('click', () => { goTo(current + 1); schedule(); });
+
+    // Touch swipe
+    let tx = 0;
+    wrap.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+    wrap.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 30) { goTo(dx < 0 ? current + 1 : current - 1); schedule(); }
+    }, { passive: true });
+
+    // Dot clicks
+    dots.forEach((d, i) => d.addEventListener('click', e => {
+      e.stopPropagation(); goTo(i); schedule();
+    }));
+
+    schedule();
+  })();
+
+  
+
+  // ─── SECTION MODAL SYSTEM ───
+  (function () {
+    var SECTIONS = {
+      reports: ['#reports-divider', '#reports-strip', '#reports-content'],
+      social:  ['#social-divider',  '#social-strip',  '#social-content'],
+      info:    ['#info-divider',    '#info-strip',    '#info-content'],
+      ppt:     ['#ppt-divider',     '#ppt-strip',     '#ppt-content'],
+      brand:   ['#brand-divider',   '#brand-strip',   '#brand-content'],
+      web:     ['#web-divider',     '#web-strip',     '#web-content'],
+      app:     ['#app-divider',     '#app-strip',     '#app-content'],
+    };
+
+    // Defer until full DOM (modal+store are injected after the script tag)
+    document.addEventListener('DOMContentLoaded', function () {
+      var store     = document.getElementById('section-store');
+      var modal     = document.getElementById('section-modal');
+      var modalBody = document.getElementById('modal-body');
+      var closeBtn  = document.getElementById('modal-close');
+
+      if (!store || !modal) return;
+
+      // Move all portfolio section elements to hidden store
+      Object.keys(SECTIONS).forEach(function (key) {
+        SECTIONS[key].forEach(function (sel) {
+          var el = document.querySelector(sel);
+          if (el) store.appendChild(el);
+        });
+      });
+
+      function openSection(key) {
+        var sels = SECTIONS[key];
+        if (!sels) return;
+
+        // Return any open section to store first
+        while (modalBody.firstChild) store.appendChild(modalBody.firstChild);
+
+        // Move this section into modal
+        sels.forEach(function (sel) {
+          var el = document.querySelector(sel);
+          if (el) modalBody.appendChild(el);
+        });
+
+        modal.classList.add('open');
+        document.body.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+        modal.scrollTop = 0;
+
+        // Trigger reveal animations inside modal
+        setTimeout(function () {
+          modalBody.querySelectorAll('.reveal').forEach(function (el) {
+            el.classList.add('visible');
+          });
+        }, 80);
+      }
+
+      function closeModal() {
+        while (modalBody.firstChild) store.appendChild(modalBody.firstChild);
+        modal.classList.remove('open');
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+      }
+
+      // Launcher buttons
+      document.querySelectorAll('.launcher-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () { openSection(btn.dataset.section); });
+      });
+
+      // Close triggers
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    });
+  })();
+
+  </script>
+
+  <!-- SECTION MODAL -->
+  <div id="section-modal" role="dialog" aria-modal="true" aria-label="Portfolio section">
+    <button id="modal-close" aria-label="Close">&#10005;</button>
+    <div id="modal-body"></div>
+  </div>
+
+  <!-- SECTION STORE — hidden warehouse for all portfolio sections -->
+  <div id="section-store"></div>
+
 </body>
 </html>
 
