@@ -1440,6 +1440,305 @@
       .app-screen-frame { width: 150px; border-radius: 16px; }
     }
 
+
+    /* ════════════════════════════════════════
+       UNIFIED PORTFOLIO SPREAD LAYOUT
+    ════════════════════════════════════════ */
+    .portfolio-spread {
+      display: grid;
+      grid-template-columns: 55% 1fr;
+      gap: 3rem;
+      margin-bottom: 5rem;
+      align-items: start;
+    }
+    .portfolio-spread:last-child { margin-bottom: 0; }
+
+    .portfolio-desc {
+      display: grid;
+      gap: 1rem;
+      align-content: start;
+      padding-top: 0.5rem;
+    }
+    .portfolio-desc-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: white;
+      line-height: 1.2;
+    }
+    .portfolio-desc-agency {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: -0.3rem;
+    }
+    .portfolio-desc-body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.78;
+      color: rgba(255,255,255,0.62);
+    }
+    .portfolio-tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
+    .portfolio-tag {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      padding: 0.25rem 0.7rem;
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 3px;
+    }
+    .section-spread-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 4rem 0;
+    }
+
+    /* ── Social: post grid ── */
+    .social-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+    .social-grid-item { overflow: hidden; position: relative; aspect-ratio: 1; }
+    .social-grid-item.wide { grid-column: span 2; aspect-ratio: 2 / 1; }
+    .social-grid-item.portrait { aspect-ratio: 3 / 4; }
+    .social-grid-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.5s cubic-bezier(.22,1,.36,1);
+    }
+    .social-grid-item:hover img { transform: scale(1.05); }
+
+    /* ── PPT: 16:9 + thumbnail strip ── */
+    .ppt-main-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .ppt-main-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ppt-slide-badge {
+      position: absolute; bottom: 0.8rem; right: 0.8rem;
+      font-family: 'Bebas Neue', cursive; font-size: 0.72rem;
+      letter-spacing: 0.12em; color: white;
+      background: rgba(0,0,0,0.55); padding: 0.2rem 0.55rem;
+      border-radius: 3px; backdrop-filter: blur(4px);
+    }
+    .ppt-thumb-strip {
+      display: flex; gap: 0.5rem; margin-top: 0.65rem;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .ppt-thumb-strip::-webkit-scrollbar { display: none; }
+    .ppt-thumb-strip img {
+      flex: 0 0 auto; height: 50px; width: auto;
+      border-radius: 4px; opacity: 0.4;
+      transition: opacity 0.2s; cursor: pointer; display: block;
+    }
+    .ppt-thumb-strip img:hover { opacity: 1; }
+
+    /* ── Infosheets: document iframe ── */
+    .infosheet-doc-frame {
+      width: 100%; aspect-ratio: 210 / 297;
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+    .infosheet-doc-frame iframe { width: 100%; height: 100%; border: none; display: block; }
+    .infosheet-dl-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'Bebas Neue', cursive; font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      padding: 0.5rem 1.2rem;
+      background: rgba(216,236,200,0.12); color: #D8ECC8;
+      border: 1px solid rgba(216,236,200,0.3); border-radius: 3px;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .infosheet-dl-btn:hover { background: rgba(216,236,200,0.22); }
+
+    /* ── Brand: full-height PDF frame ── */
+    .brand-pdf-frame {
+      width: 100%; min-height: 480px; aspect-ratio: 1.41;
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .brand-pdf-frame iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* ── Websites: browser chrome ── */
+    .browser-frame {
+      width: 100%; border-radius: 10px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .browser-bar {
+      padding: 0.55rem 1rem;
+      background: #1e1e2e;
+      display: flex; align-items: center; gap: 0.45rem;
+    }
+    .browser-dot { width: 9px; height: 9px; border-radius: 50%; }
+    .browser-dot:nth-child(1) { background: #ff5f57; }
+    .browser-dot:nth-child(2) { background: #febc2e; }
+    .browser-dot:nth-child(3) { background: #28c840; }
+    .browser-url {
+      margin-left: 0.4rem;
+      font-family: 'DM Sans', sans-serif; font-size: 0.67rem;
+      color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.06);
+      padding: 0.18rem 0.65rem; border-radius: 20px;
+      flex: 1; max-width: 200px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    /* Suppress old .site-screen chrome when inside new .browser-frame */
+    .browser-frame .site-screen { border-radius: 0; box-shadow: none; }
+    .browser-frame .site-screen::before { display: none; }
+
+    @media (max-width: 900px) {
+      .portfolio-spread { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+
+    /* ═══════════════════════════════════════════════════
+       SECTION ANIMATION ENHANCEMENTS
+    ═══════════════════════════════════════════════════ */
+
+    /* Split entrance: left panel slides from left, right panel from right */
+    .portfolio-spread.visible > div:first-child {
+      animation: splitLeft 0.7s cubic-bezier(.22,1,.36,1) both;
+    }
+    .portfolio-spread.visible > .portfolio-desc {
+      animation: splitRight 0.7s 0.1s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes splitLeft  { from { transform: translateX(-22px); } to { transform: translateX(0); } }
+    @keyframes splitRight { from { transform: translateX(22px);  } to { transform: translateX(0); } }
+
+    /* Social grid cells: scale-pop with stagger */
+    .portfolio-spread.visible .social-grid-item:nth-child(1) { animation: cellIn 0.5s 0.1s  cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .social-grid-item:nth-child(2) { animation: cellIn 0.5s 0.19s cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .social-grid-item:nth-child(3) { animation: cellIn 0.5s 0.28s cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .social-grid-item:nth-child(4) { animation: cellIn 0.5s 0.37s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes cellIn {
+      from { opacity: 0; transform: scale(0.87); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* PPT thumbnails: slide in from left staggered */
+    .portfolio-spread.visible .ppt-thumb-strip img:nth-child(1) { animation: thumbSlide 0.45s 0.5s  cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .ppt-thumb-strip img:nth-child(2) { animation: thumbSlide 0.45s 0.59s cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .ppt-thumb-strip img:nth-child(3) { animation: thumbSlide 0.45s 0.68s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes thumbSlide {
+      from { opacity: 0; transform: translateX(-14px); }
+      to   { opacity: 0.4; transform: translateX(0); }
+    }
+
+    /* Desc block: children stagger up on reveal */
+    .portfolio-spread.visible .portfolio-desc-title  { animation: slideUp 0.5s 0.22s cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .portfolio-desc-agency { animation: slideUp 0.5s 0.31s cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .portfolio-desc-body   { animation: slideUp 0.5s 0.4s  cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .portfolio-tag-row     { animation: slideUp 0.5s 0.49s cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .infosheet-dl-btn      { animation: slideUp 0.5s 0.58s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(13px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tag pills: cascade pop */
+    .portfolio-spread.visible .portfolio-tag:nth-child(1) { animation: tagPop 0.3s 0.52s cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .portfolio-tag:nth-child(2) { animation: tagPop 0.3s 0.59s cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .portfolio-tag:nth-child(3) { animation: tagPop 0.3s 0.66s cubic-bezier(.22,1,.36,1) both; }
+    .portfolio-spread.visible .portfolio-tag:nth-child(4) { animation: tagPop 0.3s 0.73s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes tagPop {
+      from { opacity: 0; transform: translateY(6px) scale(0.88); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Section title line: expand from left on scroll into view */
+    .section-header.visible .section-line {
+      animation: lineExpand 0.9s 0.35s cubic-bezier(.22,1,.36,1) both;
+      transform-origin: left;
+    }
+    @keyframes lineExpand {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    /* Section number: gentle infinite float */
+    .section-num {
+      display: inline-block;
+      animation: numFloat 5s ease-in-out infinite;
+    }
+    @keyframes numFloat {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-7px); }
+    }
+
+    /* PPT slide badge: breathing pulse */
+    .ppt-slide-badge {
+      animation: badgePulse 3s 1.5s ease-in-out infinite;
+    }
+    @keyframes badgePulse {
+      0%, 100% { opacity: 0.7; }
+      50%       { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.35); }
+    }
+
+    /* Title: thin accent underline appears on reveal */
+    .portfolio-desc-title {
+      border-bottom: 1px solid rgba(255,255,255,0);
+      padding-bottom: 0.4rem;
+      transition: border-color 0.5s 0.7s ease;
+    }
+    .portfolio-spread.visible .portfolio-desc-title {
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    /* Hover: preview frame lift + shadow deepen */
+    .ppt-main-frame      { transition: transform 0.4s cubic-bezier(.22,1,.36,1), box-shadow 0.4s ease; }
+    .infosheet-doc-frame { transition: transform 0.4s cubic-bezier(.22,1,.36,1), box-shadow 0.4s ease; }
+    .brand-pdf-frame     { transition: transform 0.4s cubic-bezier(.22,1,.36,1), box-shadow 0.4s ease; }
+    .browser-frame       { transition: transform 0.4s cubic-bezier(.22,1,.36,1), box-shadow 0.4s ease; }
+    .ppt-main-frame:hover,
+    .infosheet-doc-frame:hover,
+    .brand-pdf-frame:hover,
+    .browser-frame:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.65);
+    }
+
+    /* Hover: social grid item — subtle flash overlay */
+    .social-grid-item::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0);
+      transition: background 0.35s ease;
+      pointer-events: none; z-index: 1;
+    }
+    .social-grid-item:hover::after { background: rgba(255,255,255,0.06); }
+
+    /* Hover: download button shimmer sweep */
+    .infosheet-dl-btn { position: relative; overflow: hidden; }
+    .infosheet-dl-btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 20%, rgba(255,255,255,0.2) 50%, transparent 80%);
+      transform: translateX(-130%);
+      transition: transform 0s;
+    }
+    .infosheet-dl-btn:hover::after {
+      transform: translateX(130%);
+      transition: transform 0.55s ease;
+    }
+
+    /* Hover: portfolio tag highlight */
+    .portfolio-tag { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+    .portfolio-tag:hover {
+      background: rgba(255,255,255,0.16);
+      color: rgba(255,255,255,0.9);
+      border-color: rgba(255,255,255,0.3);
+    }
+
   </style>
 </head>
 <body>
@@ -1823,145 +2122,166 @@
   </div>
 
   <section class="content-section" id="social-content">
-    <div class="section-header reveal">
-      <span class="section-num">02</span>
-      <span class="section-title-text pink">Social Media</span>
-      <div class="section-line"></div>
-    </div>
 
-    <!-- Building Peace -->
-    <div class="social-campaign reveal">
-      <div class="social-campaign-slides">
-        <div class="social-slide featured">
-          <img loading="lazy" src="Social-Design/Building-peace1.webp" alt="Building Peace One Family at a Time — slide 1" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/Building-peace-2.webp" alt="Building Peace — slide 2" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/Building-peace-3.webp" alt="Building Peace — slide 3" />
-        </div>
-      </div>
-      <div class="social-campaign-info">
-        <span class="social-campaign-name">Building Peace One Family at a Time</span>
-        <span class="social-campaign-meta">IOM × UKAID · #WomentoWomen</span>
-      </div>
-    </div>
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <span class="section-title-text pink">Social Media</span>
+    <div class="section-line"></div>
+  </div>
 
-    <!-- Guardians of Their Own Safety -->
-    <div class="social-campaign reveal">
-      <div class="social-campaign-slides">
-        <div class="social-slide featured">
-          <img loading="lazy" src="Social-Design/Guardians-of-their-own-safety.webp" alt="Guardians of Their Own Safety — slide 1" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-2.webp" alt="Guardians — slide 2" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-3.webp" alt="Guardians — slide 3" />
-        </div>
-      </div>
-      <div class="social-campaign-info">
-        <span class="social-campaign-name">Guardians of Their Own Safety</span>
-        <span class="social-campaign-meta">IOM Somalia · Baidoa Series</span>
+  <!-- Building Peace -->
+  <div class="portfolio-spread reveal">
+    <div class="social-grid">
+      <div class="social-grid-item wide"><img loading="lazy" src="Social-Design/Building-peace1.webp" alt="Building Peace slide 1"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/Building-peace-2.webp" alt="Building Peace slide 2"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/Building-peace-3.webp" alt="Building Peace slide 3"></div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Building Peace One Family at a Time</div>
+      <div class="portfolio-desc-agency">IOM × UKAID · #WomentoWomen</div>
+      <div class="portfolio-desc-body">A three-part visual series exploring how lasting peace starts at home — produced for digital platforms as part of the #WomentoWomen campaign across Somalia.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Carousel</span>
+        <span class="portfolio-tag">#WomentoWomen</span>
+        <span class="portfolio-tag">Instagram</span>
+        <span class="portfolio-tag">Peacebuilding</span>
       </div>
     </div>
+  </div>
 
-    <!-- Men and Boys -->
-    <div class="social-campaign reveal">
-      <div class="social-campaign-slides">
-        <div class="social-slide featured">
-          <img loading="lazy" src="Social-Design/Men-and-Boys-Carasol.webp" alt="Men and Boys as Allies — slide 1" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/Men-and-Boys-Carasol2.webp" alt="Men and Boys — slide 2" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/Men-and-Boys-Carasol3.webp" alt="Men and Boys — slide 3" />
-        </div>
-      </div>
-      <div class="social-campaign-info">
-        <span class="social-campaign-name">Men &amp; Boys as Allies</span>
-        <span class="social-campaign-meta">IOM Somalia · #WomentoWomen</span>
-      </div>
-    </div>
+  <div class="section-spread-divider"></div>
 
-    <!-- Women's Day (4 slides) -->
-    <div class="social-campaign reveal">
-      <div class="social-campaign-slides">
-        <div class="social-slide featured">
-          <img loading="lazy" src="Social-Design/Womens-day-1.jpeg" alt="Women's Day — slide 1" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/womens-day-2.jpeg" alt="Women's Day — slide 2" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/womens-day-3.jpeg" alt="Women's Day — slide 3" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/womens-day-5.jpeg" alt="Women's Day — slide 4" />
-        </div>
-      </div>
-      <div class="social-campaign-info">
-        <span class="social-campaign-name">International Women's Day Campaign</span>
-        <span class="social-campaign-meta">IOM Somalia</span>
+  <!-- Guardians -->
+  <div class="portfolio-spread reveal">
+    <div class="social-grid">
+      <div class="social-grid-item wide"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety.webp" alt="Guardians slide 1"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-2.webp" alt="Guardians slide 2"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-3.webp" alt="Guardians slide 3"></div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Guardians of Their Own Safety</div>
+      <div class="portfolio-desc-agency">IOM Somalia · Baidoa Series</div>
+      <div class="portfolio-desc-body">Baidoa community safety series — spotlighting women as active agents in building secure environments for themselves and their families.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Carousel</span>
+        <span class="portfolio-tag">Community Safety</span>
+        <span class="portfolio-tag">Baidoa</span>
+        <span class="portfolio-tag">Instagram</span>
       </div>
     </div>
+  </div>
 
-    <!-- 16 Days of Activism -->
-    <div class="social-campaign reveal">
-      <div class="social-campaign-slides">
-        <div class="social-slide featured">
-          <img loading="lazy" src="Social-Design/16DAYS-Activism-Posts.webp" alt="16 Days of Activism — slide 1" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/16DAYS-Activism-Posts3.webp" alt="16 Days of Activism — slide 2" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/16DAYS-Activism-Posts4.webp" alt="16 Days of Activism — slide 3" />
-        </div>
-      </div>
-      <div class="social-campaign-info">
-        <span class="social-campaign-name">16 Days of Activism</span>
-        <span class="social-campaign-meta">IOM Somalia · End GBV</span>
-      </div>
-    </div>
+  <div class="section-spread-divider"></div>
 
-    <!-- WUF12 Dialogue Flyers -->
-    <div class="social-campaign reveal">
-      <div class="social-campaign-slides">
-        <div class="social-slide featured">
-          <img loading="lazy" src="Social-Design/Dialogue-4-WUF12-Flyer.webp" alt="WUF12 Dialogue 4 Flyer" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/Dialogue-4-Green-Flyer.webp" alt="WUF12 Dialogue 4 Green Flyer" />
-        </div>
-      </div>
-      <div class="social-campaign-info">
-        <span class="social-campaign-name">World Urban Forum 12 — Dialogue 4 Flyers</span>
-        <span class="social-campaign-meta">UN-Habitat · WUF12</span>
+  <!-- Men & Boys -->
+  <div class="portfolio-spread reveal">
+    <div class="social-grid">
+      <div class="social-grid-item wide"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol.webp" alt="Men and Boys slide 1"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol2.webp" alt="Men and Boys slide 2"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol3.webp" alt="Men and Boys slide 3"></div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Men &amp; Boys as Allies</div>
+      <div class="portfolio-desc-agency">IOM Somalia · #WomentoWomen</div>
+      <div class="portfolio-desc-body">Campaign positioning men and boys as essential partners in ending gender-based violence — part of the wider #WomentoWomen programme messaging.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Carousel</span>
+        <span class="portfolio-tag">GBV Prevention</span>
+        <span class="portfolio-tag">#WomentoWomen</span>
+        <span class="portfolio-tag">Campaign</span>
       </div>
     </div>
+  </div>
 
-    <!-- W2W Carousel -->
-    <div class="social-campaign reveal">
-      <div class="social-campaign-slides">
-        <div class="social-slide featured">
-          <img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%201.webp" alt="W2W Carousel — slide 1" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%202.webp" alt="W2W Carousel — slide 2" />
-        </div>
-        <div class="social-slide">
-          <img loading="lazy" src="Social-Design/W2W-Carasoul%20%20-%20Page%203.webp" alt="W2W Carousel — slide 3" />
-        </div>
-      </div>
-      <div class="social-campaign-info">
-        <span class="social-campaign-name">Women to Women Carousel</span>
-        <span class="social-campaign-meta">IOM × UKID · #WomentoWomen</span>
+  <div class="section-spread-divider"></div>
+
+  <!-- Women's Day -->
+  <div class="portfolio-spread reveal">
+    <div class="social-grid">
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/Womens-day-1.jpeg" alt="Women's Day slide 1"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/womens-day-2.jpeg" alt="Women's Day slide 2"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/womens-day-3.jpeg" alt="Women's Day slide 3"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/womens-day-5.jpeg" alt="Women's Day slide 4"></div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">International Women's Day Campaign</div>
+      <div class="portfolio-desc-agency">IOM Somalia</div>
+      <div class="portfolio-desc-body">Four-slide IWD campaign celebrating women's leadership in peace and security programming — designed for bold impact across social platforms on 8 March.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">#IWD</span>
+        <span class="portfolio-tag">4-Slide Series</span>
+        <span class="portfolio-tag">Campaign</span>
+        <span class="portfolio-tag">Instagram</span>
       </div>
     </div>
-  </section>
+  </div>
+
+  <div class="section-spread-divider"></div>
+
+  <!-- 16 Days -->
+  <div class="portfolio-spread reveal">
+    <div class="social-grid">
+      <div class="social-grid-item wide"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts.webp" alt="16 Days slide 1"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts3.webp" alt="16 Days slide 2"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts4.webp" alt="16 Days slide 3"></div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">16 Days of Activism</div>
+      <div class="portfolio-desc-agency">IOM Somalia · End GBV</div>
+      <div class="portfolio-desc-body">End GBV campaign for the 16 Days of Activism — raising awareness through bold visual storytelling across IOM Somalia's digital platforms.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">16 Days</span>
+        <span class="portfolio-tag">End GBV</span>
+        <span class="portfolio-tag">Activism</span>
+        <span class="portfolio-tag">Campaign</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-spread-divider"></div>
+
+  <!-- WUF12 -->
+  <div class="portfolio-spread reveal">
+    <div class="social-grid">
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/Dialogue-4-WUF12-Flyer.webp" alt="WUF12 Flyer 1"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/Dialogue-4-Green-Flyer.webp" alt="WUF12 Flyer 2"></div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">World Urban Forum 12 — Dialogue 4 Flyers</div>
+      <div class="portfolio-desc-agency">UN-Habitat · WUF12</div>
+      <div class="portfolio-desc-body">Event flyers designed for Dialogue 4 at the World Urban Forum 12 in Cairo — clean, conference-ready layouts in two colourways.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Flyer Design</span>
+        <span class="portfolio-tag">WUF12</span>
+        <span class="portfolio-tag">UN-Habitat</span>
+        <span class="portfolio-tag">Event</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-spread-divider"></div>
+
+  <!-- W2W Carousel -->
+  <div class="portfolio-spread reveal">
+    <div class="social-grid">
+      <div class="social-grid-item wide"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%201.webp" alt="W2W Carousel slide 1"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%202.webp" alt="W2W Carousel slide 2"></div>
+      <div class="social-grid-item"><img loading="lazy" src="Social-Design/W2W-Carasoul%20%20-%20Page%203.webp" alt="W2W Carousel slide 3"></div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Women to Women — Carousel</div>
+      <div class="portfolio-desc-agency">IOM × UKID · #WomentoWomen</div>
+      <div class="portfolio-desc-body">Multi-slide Instagram carousel introducing the Women to Women programme — designed to be swiped through as a narrative, building awareness slide by slide.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Instagram Carousel</span>
+        <span class="portfolio-tag">#WomentoWomen</span>
+        <span class="portfolio-tag">Programme</span>
+        <span class="portfolio-tag">UKID</span>
+      </div>
+    </div>
+  </div>
+
+</section>
 
 
   <!-- ══════════════════════════════════════ -->
@@ -1993,68 +2313,95 @@
   </div>
 
   <section class="content-section" id="info-content">
-    <div class="section-header reveal">
-      <span class="section-num">03</span>
-      <span class="section-title-text mint">InfoSheets</span>
-      <div class="section-line"></div>
-    </div>
 
-    <!-- December 2025 Infosheet — PDF embed -->
-    <div class="infosheet-showcase reveal">
-      <div class="infosheet-display">
-        <iframe src="Infosheet-Design/December%202025%20-%20Infosheet.pdf" title="December 2025 Infosheet"></iframe>
-      </div>
-      <div class="infosheet-info">
-        <div>
-          <div class="infosheet-name">Women to Women — December 2025 Infosheet</div>
-          <div class="infosheet-meta">IOM Somalia · December 2025</div>
-        </div>
-        <a class="infosheet-dl" href="Infosheet-Design/December%202025%20-%20Infosheet.pdf" download>↓ Download PDF</a>
-      </div>
-    </div>
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <span class="section-title-text mint">InfoSheets</span>
+    <div class="section-line"></div>
+  </div>
 
-    <!-- Co-Funding System Infosheet — PDF embed -->
-    <div class="infosheet-showcase reveal">
-      <div class="infosheet-display">
-        <iframe src="Infosheet-Design/Co-Funding%20System%20Infosheet%20IOM%20Somalia%20-%20JH.pdf" title="Co-Funding System Infosheet"></iframe>
-      </div>
-      <div class="infosheet-info">
-        <div>
-          <div class="infosheet-name">Co-Funding System — IOM Somalia</div>
-          <div class="infosheet-meta">IOM UN Migration · CFS Programme</div>
-        </div>
-        <a class="infosheet-dl" href="Infosheet-Design/Co-Funding%20System%20Infosheet%20IOM%20Somalia%20-%20JH.pdf" download>↓ Download PDF</a>
-      </div>
+  <!-- W2W December 2025 -->
+  <div class="portfolio-spread reveal">
+    <div class="infosheet-doc-frame">
+      <iframe src="Infosheet-Design/December%202025%20-%20Infosheet.pdf" title="December 2025 Infosheet"></iframe>
     </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Women to Women — December 2025 Infosheet</div>
+      <div class="portfolio-desc-agency">IOM Somalia · December 2025</div>
+      <div class="portfolio-desc-body">Monthly programme infosheet tracking Women to Women activities and outcomes — designed for donor visibility and stakeholder reporting.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Infosheet</span>
+        <span class="portfolio-tag">W2W</span>
+        <span class="portfolio-tag">Donor Reporting</span>
+        <span class="portfolio-tag">Dec 2025</span>
+      </div>
+      <a class="infosheet-dl-btn" href="Infosheet-Design/December%202025%20-%20Infosheet.pdf" download>↓ Download PDF</a>
+    </div>
+  </div>
 
-    <!-- ED Infosheet — PDF embed -->
-    <div class="infosheet-showcase reveal">
-      <div class="infosheet-display">
-        <iframe src="Infosheet-Design/Infosheet%20-%20ED.pdf" title="ED Infosheet"></iframe>
-      </div>
-      <div class="infosheet-info">
-        <div>
-          <div class="infosheet-name">Infosheet — ED</div>
-          <div class="infosheet-meta">IOM Somalia</div>
-        </div>
-        <a class="infosheet-dl" href="Infosheet-Design/Infosheet%20-%20ED.pdf" download>↓ Download PDF</a>
-      </div>
-    </div>
+  <div class="section-spread-divider"></div>
 
-    <!-- 2-Pager PDF -->
-    <div class="infosheet-showcase reveal">
-      <div class="infosheet-display">
-        <iframe src="Infosheet-Design/241003_2PAGER.pdf" title="2-Pager Infosheet"></iframe>
-      </div>
-      <div class="infosheet-info">
-        <div>
-          <div class="infosheet-name">2-Pager Brief</div>
-          <div class="infosheet-meta">IOM Somalia · October 2024</div>
-        </div>
-        <a class="infosheet-dl" href="Infosheet-Design/241003_2PAGER.pdf" download>↓ Download PDF</a>
-      </div>
+  <!-- Co-Funding -->
+  <div class="portfolio-spread reveal">
+    <div class="infosheet-doc-frame">
+      <iframe src="Infosheet-Design/Co-Funding%20System%20Infosheet%20IOM%20Somalia%20-%20JH.pdf" title="Co-Funding System Infosheet"></iframe>
     </div>
-  </section>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Co-Funding System — IOM Somalia</div>
+      <div class="portfolio-desc-agency">IOM UN Migration · CFS Programme</div>
+      <div class="portfolio-desc-body">One-page visual explainer of IOM Somalia's Co-Funding System — designed to make a complex mechanism immediately understandable for communities and partners.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Infosheet</span>
+        <span class="portfolio-tag">Co-Funding</span>
+        <span class="portfolio-tag">Community</span>
+        <span class="portfolio-tag">CFS</span>
+      </div>
+      <a class="infosheet-dl-btn" href="Infosheet-Design/Co-Funding%20System%20Infosheet%20IOM%20Somalia%20-%20JH.pdf" download>↓ Download PDF</a>
+    </div>
+  </div>
+
+  <div class="section-spread-divider"></div>
+
+  <!-- ED Infosheet -->
+  <div class="portfolio-spread reveal">
+    <div class="infosheet-doc-frame">
+      <iframe src="Infosheet-Design/Infosheet%20-%20ED.pdf" title="ED Infosheet"></iframe>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Infosheet — ED</div>
+      <div class="portfolio-desc-agency">IOM Somalia</div>
+      <div class="portfolio-desc-body">Executive Director infosheet — a concise programme brief distilling key data and outcomes for senior leadership and high-level stakeholder meetings.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Infosheet</span>
+        <span class="portfolio-tag">Executive Brief</span>
+        <span class="portfolio-tag">Leadership</span>
+      </div>
+      <a class="infosheet-dl-btn" href="Infosheet-Design/Infosheet%20-%20ED.pdf" download>↓ Download PDF</a>
+    </div>
+  </div>
+
+  <div class="section-spread-divider"></div>
+
+  <!-- 2-Pager -->
+  <div class="portfolio-spread reveal">
+    <div class="infosheet-doc-frame">
+      <iframe src="Infosheet-Design/241003_2PAGER.pdf" title="2-Pager Infosheet"></iframe>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">2-Pager Brief</div>
+      <div class="portfolio-desc-agency">IOM Somalia · October 2024</div>
+      <div class="portfolio-desc-body">Two-page programme brief summarising key outcomes and data points — designed for external reporting and partner engagement in October 2024.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">2-Pager</span>
+        <span class="portfolio-tag">Programme Brief</span>
+        <span class="portfolio-tag">Oct 2024</span>
+        <span class="portfolio-tag">Partner Reporting</span>
+      </div>
+      <a class="infosheet-dl-btn" href="Infosheet-Design/241003_2PAGER.pdf" download>↓ Download PDF</a>
+    </div>
+  </div>
+
+</section>
 
 
   <!-- ══════════════════════════════════════ -->
@@ -2086,106 +2433,124 @@
   </div>
 
   <section class="content-section" id="ppt-content">
-    <div class="section-header reveal">
-      <span class="section-num">04</span>
-      <span class="section-title-text lavender">Powerpoints</span>
-      <div class="section-line"></div>
-    </div>
 
-    <!-- ── DECK 1: CS Summit Updates ── -->
-    <div class="ppt-deck reveal">
-      <div class="ppt-deck-slides">
-        <div class="ppt-slide featured">
-          <img loading="lazy" src="Powerpoints/ppt-summit1.webp" alt="CS Summit Updates — slide 1" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/ppt-summit2.webp" alt="CS Summit Updates — slide 2" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/ppt-summit3.webp" alt="CS Summit Updates — slide 3" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/ppt-summit4.webp" alt="CS Summit Updates — slide 4" />
-        </div>
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <span class="section-title-text lavender">Powerpoints</span>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- CS Summit -->
+  <div class="portfolio-spread reveal">
+    <div>
+      <div class="ppt-main-frame">
+        <img loading="lazy" src="Powerpoints/ppt-summit1.webp" alt="CS Summit slide 1">
+        <div class="ppt-slide-badge">4 Slides</div>
       </div>
-      <div class="ppt-deck-info">
-        <div class="ppt-deck-name">Women to Women — CS Summit Updates & Linkages</div>
-        <div class="ppt-deck-meta">IOM × UKID · Stakeholder Presentation</div>
+      <div class="ppt-thumb-strip">
+        <img loading="lazy" src="Powerpoints/ppt-summit2.webp" alt="slide 2">
+        <img loading="lazy" src="Powerpoints/ppt-summit3.webp" alt="slide 3">
+        <img loading="lazy" src="Powerpoints/ppt-summit4.webp" alt="slide 4">
       </div>
     </div>
-
-    <div class="report-divider-line"></div>
-
-    <!-- ── DECK 2: Empower One, Empower All ── -->
-    <div class="ppt-deck reveal">
-      <div class="ppt-deck-slides">
-        <div class="ppt-slide featured">
-          <img loading="lazy" src="Powerpoints/ppt-dec1.webp" alt="Empower One Empower All — slide 1" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/ppt-dec2.webp" alt="Empower One Empower All — slide 2" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/ppt-dec3.webp" alt="Empower One Empower All — slide 3" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/ppt-dec4.webp" alt="Empower One Empower All — slide 4" />
-        </div>
-      </div>
-      <div class="ppt-deck-info">
-        <div class="ppt-deck-name">Women to Women — Empower One, Empower All</div>
-        <div class="ppt-deck-meta">Baidoa & Dhusamareb · December 2025</div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Women to Women — CS Summit Updates &amp; Linkages</div>
+      <div class="portfolio-desc-agency">IOM × UKAID · Stakeholder Presentation</div>
+      <div class="portfolio-desc-body">Stakeholder presentation summarising W2W programme linkages and updates — delivered at the Civil Society Summit for donors and implementing partners.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">PowerPoint</span>
+        <span class="portfolio-tag">W2W</span>
+        <span class="portfolio-tag">Stakeholder</span>
+        <span class="portfolio-tag">CS Summit</span>
       </div>
     </div>
+  </div>
 
-    <div class="report-divider-line"></div>
+  <div class="section-spread-divider"></div>
 
-    <!-- ── DECK 3: PPT Updates ── -->
-    <div class="ppt-deck reveal">
-      <div class="ppt-deck-slides">
-        <div class="ppt-slide featured">
-          <img loading="lazy" src="Powerpoints/PPT-Update.webp" alt="Programme Updates — slide 1" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/PPT-Update-2.webp" alt="Programme Updates — slide 2" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/PPT-Update-3.webp" alt="Programme Updates — slide 3" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/PPT-Update-4.webp" alt="Programme Updates — slide 4" />
-        </div>
+  <!-- Empower One -->
+  <div class="portfolio-spread reveal">
+    <div>
+      <div class="ppt-main-frame">
+        <img loading="lazy" src="Powerpoints/ppt-dec1.webp" alt="Empower One slide 1">
+        <div class="ppt-slide-badge">4 Slides</div>
       </div>
-      <div class="ppt-deck-info">
-        <div class="ppt-deck-name">Political & Security Updates — Baidoa & Dhusamareb</div>
-        <div class="ppt-deck-meta">IOM UN Migration · Programme Brief</div>
+      <div class="ppt-thumb-strip">
+        <img loading="lazy" src="Powerpoints/ppt-dec2.webp" alt="slide 2">
+        <img loading="lazy" src="Powerpoints/ppt-dec3.webp" alt="slide 3">
+        <img loading="lazy" src="Powerpoints/ppt-dec4.webp" alt="slide 4">
       </div>
     </div>
-
-    <div class="report-divider-line"></div>
-
-    <!-- ── DECK 4: WaL ── -->
-    <div class="ppt-deck reveal">
-      <div class="ppt-deck-slides">
-        <div class="ppt-slide featured">
-          <img loading="lazy" src="Powerpoints/Wal-1.webp" alt="WaL — slide 1" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/Wal-2.webp" alt="WaL — slide 2" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/Wal-3.webp" alt="WaL — slide 3" />
-        </div>
-        <div class="ppt-slide">
-          <img loading="lazy" src="Powerpoints/Wal-4.webp" alt="WaL — slide 4" />
-        </div>
-      </div>
-      <div class="ppt-deck-info">
-        <div class="ppt-deck-name">WaL-MCAP — Presentation</div>
-        <div class="ppt-deck-meta">IOM UN Migration · Programme Deck</div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Women to Women — Empower One, Empower All</div>
+      <div class="portfolio-desc-agency">Baidoa &amp; Dhusamareb · December 2025</div>
+      <div class="portfolio-desc-body">December 2025 programme brief covering W2W activities, outcomes, and field impact across Baidoa and Dhusamareb — presented to programme leads.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">PowerPoint</span>
+        <span class="portfolio-tag">W2W</span>
+        <span class="portfolio-tag">Dec 2025</span>
+        <span class="portfolio-tag">Programme Brief</span>
       </div>
     </div>
-  </section>
+  </div>
+
+  <div class="section-spread-divider"></div>
+
+  <!-- Political & Security Updates -->
+  <div class="portfolio-spread reveal">
+    <div>
+      <div class="ppt-main-frame">
+        <img loading="lazy" src="Powerpoints/PPT-Update.webp" alt="Political updates slide 1">
+        <div class="ppt-slide-badge">4 Slides</div>
+      </div>
+      <div class="ppt-thumb-strip">
+        <img loading="lazy" src="Powerpoints/PPT-Update-2.webp" alt="slide 2">
+        <img loading="lazy" src="Powerpoints/PPT-Update-3.webp" alt="slide 3">
+        <img loading="lazy" src="Powerpoints/PPT-Update-4.webp" alt="slide 4">
+      </div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Political &amp; Security Updates — Baidoa &amp; Dhusamareb</div>
+      <div class="portfolio-desc-agency">IOM UN Migration · Programme Brief</div>
+      <div class="portfolio-desc-body">Monthly political and security update brief synthesising field intelligence and situational analysis from Baidoa and Dhusamareb for programme management.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">PowerPoint</span>
+        <span class="portfolio-tag">Security Brief</span>
+        <span class="portfolio-tag">Field Intelligence</span>
+        <span class="portfolio-tag">Monthly</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-spread-divider"></div>
+
+  <!-- WaL-MCAP -->
+  <div class="portfolio-spread reveal">
+    <div>
+      <div class="ppt-main-frame">
+        <img loading="lazy" src="Powerpoints/Wal-1.webp" alt="WaL slide 1">
+        <div class="ppt-slide-badge">4 Slides</div>
+      </div>
+      <div class="ppt-thumb-strip">
+        <img loading="lazy" src="Powerpoints/Wal-2.webp" alt="slide 2">
+        <img loading="lazy" src="Powerpoints/Wal-3.webp" alt="slide 3">
+        <img loading="lazy" src="Powerpoints/Wal-4.webp" alt="slide 4">
+      </div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">WaL-MCAP — Presentation</div>
+      <div class="portfolio-desc-agency">IOM UN Migration · Programme Deck</div>
+      <div class="portfolio-desc-body">Presentation deck for the Women and Leadership — Management of Conflict Action Plan programme, covering objectives, activities, and outcomes for internal and partner audiences.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">PowerPoint</span>
+        <span class="portfolio-tag">WaL-MCAP</span>
+        <span class="portfolio-tag">Women &amp; Leadership</span>
+        <span class="portfolio-tag">Programme</span>
+      </div>
+    </div>
+  </div>
+
+</section>
 
 
   <!-- ══════════════════════════════════════ -->
@@ -2217,38 +2582,52 @@
   </div>
 
   <section class="content-section" id="brand-content">
-    <div class="section-header reveal">
-      <span class="section-num">05</span>
-      <span class="section-title-text teal">Brand Guidelines</span>
-      <div class="section-line"></div>
+
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <span class="section-title-text teal">Brand Guidelines</span>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- Pages 74-75 -->
+  <div class="portfolio-spread reveal">
+    <div class="brand-pdf-frame">
+      <iframe src="Brand-Guideline/Jagnoor-Hunjan-Portfolio_74-75.pdf" title="Brand Guidelines 74-75"></iframe>
     </div>
-
-    <div class="cards-grid">
-
-      <div class="card card-brand card-wide reveal" style="padding:0;overflow:hidden;">
-        <iframe src="Brand-Guideline/Jagnoor-Hunjan-Portfolio_74-75.pdf"
-          style="width:100%;height:100%;min-height:520px;border:none;display:block;"
-          title="Brand Guidelines 74-75"></iframe>
-        <div class="card-overlay">
-          <div class="card-name">Brand Guidelines — Pages 74–75</div>
-          <div class="card-meta">Brand Identity · Visual System</div>
-        </div>
-        <div class="card-accent-bar"></div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Brand Guidelines — Pages 74–75</div>
+      <div class="portfolio-desc-agency">Brand Identity · Visual System</div>
+      <div class="portfolio-desc-body">Core brand guidelines covering typography hierarchy, colour palette, and logo usage — establishing the visual language for consistent communication across all channels.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Typography</span>
+        <span class="portfolio-tag">Colour Palette</span>
+        <span class="portfolio-tag">Logo Usage</span>
+        <span class="portfolio-tag">Brand Identity</span>
       </div>
-
-      <div class="card card-brand card-wide reveal reveal-delay-1" style="padding:0;overflow:hidden;">
-        <iframe src="Brand-Guideline/Jagnoor-Hunjan-Portfolio_76-77.pdf"
-          style="width:100%;height:100%;min-height:520px;border:none;display:block;"
-          title="Brand Guidelines 76-77"></iframe>
-        <div class="card-overlay">
-          <div class="card-name">Brand Guidelines — Pages 76–77</div>
-          <div class="card-meta">Brand Identity · Visual System</div>
-        </div>
-        <div class="card-accent-bar"></div>
-      </div>
-
     </div>
-  </section>
+  </div>
+
+  <div class="section-spread-divider"></div>
+
+  <!-- Pages 76-77 -->
+  <div class="portfolio-spread reveal">
+    <div class="brand-pdf-frame">
+      <iframe src="Brand-Guideline/Jagnoor-Hunjan-Portfolio_76-77.pdf" title="Brand Guidelines 76-77"></iframe>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Brand Guidelines — Pages 76–77</div>
+      <div class="portfolio-desc-agency">Brand Identity · Visual System</div>
+      <div class="portfolio-desc-body">Layout principles, iconography standards, and photography direction — ensuring every asset feels considered and cohesive regardless of who produces it.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Layout Rules</span>
+        <span class="portfolio-tag">Iconography</span>
+        <span class="portfolio-tag">Photography</span>
+        <span class="portfolio-tag">Brand System</span>
+      </div>
+    </div>
+  </div>
+
+</section>
 
 
   <!-- ══════════════════════════════════════ -->
@@ -2280,100 +2659,180 @@
   </div>
 
   <section class="content-section" id="web-content">
-    <div class="section-header reveal">
-      <span class="section-num">06</span>
-      <span class="section-title-text lime">Websites</span>
-      <div class="section-line"></div>
-    </div>
 
-    <!-- AnyVan -->
-    <div class="site-showcase reveal">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <span class="section-title-text lime">Websites</span>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- AnyVan -->
+  <div class="portfolio-spread reveal">
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
+        <span class="browser-url">anyvan.com</span>
+      </div>
       <div class="site-screen">
         <video class="hover-video" muted loop playsinline poster="Website-Design/Any-van-1.png">
           <source src="Website-Design/Any-van-1.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="site-info">
-        <div>
-          <div class="site-name">AnyVan — Website Redesign</div>
-          <div class="site-meta">UI/UX · Web · Brand</div>
-        </div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">AnyVan — Website Redesign</div>
+      <div class="portfolio-desc-agency">UI/UX · Web · Brand</div>
+      <div class="portfolio-desc-body">Full UX audit and visual redesign of AnyVan's web platform — improving the booking flow, tightening the visual hierarchy, and aligning the interface with a refreshed brand identity.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">UI/UX</span>
+        <span class="portfolio-tag">Redesign</span>
+        <span class="portfolio-tag">Web</span>
+        <span class="portfolio-tag">Brand</span>
       </div>
     </div>
+  </div>
 
-    <!-- Save the Elephants -->
-    <div class="site-showcase reveal">
+  <div class="section-spread-divider"></div>
+
+  <!-- Save the Elephants -->
+  <div class="portfolio-spread reveal">
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
+        <span class="browser-url">savetheelephants.org</span>
+      </div>
       <div class="site-screen">
         <video class="hover-video" muted loop playsinline>
           <source src="Website-Design/Save-the-elephants.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="site-info">
-        <div>
-          <div class="site-name">Save the Elephants — Conservation Website</div>
-          <div class="site-meta">Web · UI Design · Non-Profit</div>
-        </div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Save the Elephants — Conservation Website</div>
+      <div class="portfolio-desc-agency">Web · UI Design · Non-Profit</div>
+      <div class="portfolio-desc-body">Conservation website balancing scientific rigour with emotive, campaign-driven design — built to engage both researchers and the general public around elephant conservation.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Non-Profit</span>
+        <span class="portfolio-tag">UI Design</span>
+        <span class="portfolio-tag">Conservation</span>
+        <span class="portfolio-tag">Web</span>
       </div>
     </div>
+  </div>
 
-    <!-- Notes App -->
-    <div class="site-showcase reveal">
+  <div class="section-spread-divider"></div>
+
+  <!-- Notes App -->
+  <div class="portfolio-spread reveal">
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
+        <span class="browser-url">notes-app.dev</span>
+      </div>
       <div class="site-screen">
         <video class="hover-video" muted loop playsinline>
           <source src="Website-Design/Notes-App.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="site-info">
-        <div>
-          <div class="site-name">Notes App</div>
-          <div class="site-meta">Web App · UI/UX · Full-Stack</div>
-        </div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Notes App</div>
+      <div class="portfolio-desc-agency">Web App · UI/UX · Full-Stack</div>
+      <div class="portfolio-desc-body">A clean, full-stack notes application with real-time sync and a minimal, distraction-free UI — built for speed and simplicity.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Full-Stack</span>
+        <span class="portfolio-tag">Real-Time</span>
+        <span class="portfolio-tag">UI/UX</span>
+        <span class="portfolio-tag">Web App</span>
       </div>
     </div>
+  </div>
 
-    <!-- Siri -->
-    <div class="site-showcase reveal">
+  <div class="section-spread-divider"></div>
+
+  <!-- Siri -->
+  <div class="portfolio-spread reveal">
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
+        <span class="browser-url">apple.com/siri — concept</span>
+      </div>
       <div class="site-screen">
         <video class="hover-video" muted loop playsinline>
           <source src="Website-Design/Siri-1.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="site-info">
-        <div>
-          <div class="site-name">Siri — Concept Design</div>
-          <div class="site-meta">UI/UX · Motion · Concept</div>
-        </div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Siri — Concept Design</div>
+      <div class="portfolio-desc-agency">UI/UX · Motion · Concept</div>
+      <div class="portfolio-desc-body">Conceptual redesign of Apple's Siri interface — exploring a more ambient, gesture-first visual language that feels native to a post-screen-tap generation.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Concept</span>
+        <span class="portfolio-tag">Motion</span>
+        <span class="portfolio-tag">UI/UX</span>
+        <span class="portfolio-tag">Apple</span>
       </div>
     </div>
+  </div>
 
-    <div class="site-showcase reveal">
+  <div class="section-spread-divider"></div>
+
+  <!-- StudyAI -->
+  <div class="portfolio-spread reveal">
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
+        <span class="browser-url">studyai.app</span>
+      </div>
       <div class="site-screen">
         <video class="hover-video" muted loop playsinline>
           <source src="Website-Design/Study-ai.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="site-info">
-        <div>
-          <div class="site-name">StudyAI — AI-Powered Study Platform</div>
-          <div class="site-meta">GPT-4o · Real-time DB · Full-Stack</div>
-        </div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">StudyAI — AI-Powered Study Platform</div>
+      <div class="portfolio-desc-agency">GPT-4o · Real-time DB · Full-Stack</div>
+      <div class="portfolio-desc-body">AI-powered study platform using GPT-4o to generate summaries, flashcards, and quizzes from uploaded content — built with a real-time database for live collaboration.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">GPT-4o</span>
+        <span class="portfolio-tag">AI</span>
+        <span class="portfolio-tag">Full-Stack</span>
+        <span class="portfolio-tag">EdTech</span>
       </div>
     </div>
+  </div>
 
-    <div class="site-showcase reveal">
+  <div class="section-spread-divider"></div>
+
+  <!-- Mario -->
+  <div class="portfolio-spread reveal">
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div>
+        <span class="browser-url">mario-platformer.js</span>
+      </div>
       <div class="site-screen">
         <video class="hover-video" muted loop playsinline>
           <source src="Website-Design/Mario-game.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="site-info">
-        <div>
-          <div class="site-name">Interactive 2D Mario-Inspired Platformer</div>
-          <div class="site-meta">Game Dev · HTML/CSS/JS · Multiple Levels</div>
-        </div>
+    </div>
+    <div class="portfolio-desc">
+      <div class="portfolio-desc-title">Interactive 2D Mario-Inspired Platformer</div>
+      <div class="portfolio-desc-agency">Game Dev · HTML/CSS/JS · Multiple Levels</div>
+      <div class="portfolio-desc-body">Browser-based 2D platformer inspired by Mario — built entirely with vanilla HTML, CSS, and JavaScript across multiple levels with collision detection and physics.</div>
+      <div class="portfolio-tag-row">
+        <span class="portfolio-tag">Game Dev</span>
+        <span class="portfolio-tag">Vanilla JS</span>
+        <span class="portfolio-tag">Canvas</span>
+        <span class="portfolio-tag">Multi-Level</span>
       </div>
     </div>
-  </section>
+  </div>
+
+</section>
 
 
   <!-- ══════════════════════════════════════ -->
