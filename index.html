@@ -3850,14 +3850,14 @@
         </div>
         <div class="app-ph-screen">
           <div class="app-ph-strip" id="appStripmaz">
-          <img loading="eager" src="App-Design/Mazingira-App/Mazingira-Screenshot1.jpeg" alt="Mazingira screen 1">
-          <img loading="eager" src="App-Design/Mazingira-App/Mazingira-Screenshot2.jpeg" alt="Mazingira screen 2">
-          <img loading="eager" src="App-Design/Mazingira-App/Mazingira-Screenshot3.jpeg" alt="Mazingira screen 3">
-          <img loading="eager" src="App-Design/Mazingira-App/Mazingira-Screenshot4.jpeg" alt="Mazingira screen 4">
-          <img loading="eager" src="App-Design/Mazingira-App/Mazingira-Screenshot5.jpeg" alt="Mazingira screen 5">
-          <img loading="eager" src="App-Design/Mazingira-App/Mazingira-Screenshot6.jpeg" alt="Mazingira screen 6">
-          <img loading="eager" src="App-Design/Mazingira-App/Mazingira-Screenshot7.jpeg" alt="Mazingira screen 7">
-          <img loading="eager" src="App-Design/Mazingira-App/Mazingira-Screenshot8.jpeg" alt="Mazingira screen 8">
+          <img loading="eager" src="App-design/Mazingira-App/Mazingira-Screenshot1.jpeg" alt="Mazingira screen 1">
+          <img loading="eager" src="App-design/Mazingira-App/Mazingira-Screenshot2.jpeg" alt="Mazingira screen 2">
+          <img loading="eager" src="App-design/Mazingira-App/Mazingira-Screenshot3.jpeg" alt="Mazingira screen 3">
+          <img loading="eager" src="App-design/Mazingira-App/Mazingira-Screenshot4.jpeg" alt="Mazingira screen 4">
+          <img loading="eager" src="App-design/Mazingira-App/Mazingira-Screenshot5.jpeg" alt="Mazingira screen 5">
+          <img loading="eager" src="App-design/Mazingira-App/Mazingira-Screenshot6.jpeg" alt="Mazingira screen 6">
+          <img loading="eager" src="App-design/Mazingira-App/Mazingira-Screenshot7.jpeg" alt="Mazingira screen 7">
+          <img loading="eager" src="App-design/Mazingira-App/Mazingira-Screenshot8.jpeg" alt="Mazingira screen 8">
           </div>
         </div>
         <div class="app-dot-row" id="appDotsmaz">
@@ -3886,11 +3886,11 @@
         </div>
         <div class="app-ph-screen">
           <div class="app-ph-strip" id="appStripfm">
-          <img loading="eager" src="App-Design/Field-Monitor-App/Monitor-App-Landing-Page1.JPEG" alt="Field Monitor screen 1">
-          <img loading="eager" src="App-Design/Field-Monitor-App/Monitor-App-Submit-Report-Page2.JPEG" alt="Field Monitor screen 2">
-          <img loading="eager" src="App-Design/Field-Monitor-App/Monitor-App-Data-View-Page3.JPEG" alt="Field Monitor screen 3">
-          <img loading="eager" src="App-Design/Field-Monitor-App/Monitor-App-Map-View-Page4.JPEG" alt="Field Monitor screen 4">
-          <img loading="eager" src="App-Design/Field-Monitor-App/Monitor-App-View-Page5.JPEG" alt="Field Monitor screen 5">
+          <img loading="eager" src="App-design/Field-Monitor-App/Monitor-App-Landing-Page1.JPEG" alt="Field Monitor screen 1">
+          <img loading="eager" src="App-design/Field-Monitor-App/Monitor-App-Submit-Report-Page2.JPEG" alt="Field Monitor screen 2">
+          <img loading="eager" src="App-design/Field-Monitor-App/Monitor-App-Data-View-Page3.JPEG" alt="Field Monitor screen 3">
+          <img loading="eager" src="App-design/Field-Monitor-App/Monitor-App-Map-View-Page4.JPEG" alt="Field Monitor screen 4">
+          <img loading="eager" src="App-design/Field-Monitor-App/Monitor-App-View-Page5.JPEG" alt="Field Monitor screen 5">
           </div>
         </div>
         <div class="app-dot-row" id="appDotsfm">
@@ -4869,6 +4869,12 @@
         setTimeout(function () {
           modalBody.querySelectorAll('.reveal').forEach(function (el) {
             el.classList.add('visible');
+          });
+          // Force-load images that did not load while hidden
+          modalBody.querySelectorAll('img').forEach(function (img) {
+            if (!img.complete || img.naturalWidth === 0) {
+              var s = img.getAttribute('src'); img.src = ''; img.src = s;
+            }
           });
         }, 80);
       }
