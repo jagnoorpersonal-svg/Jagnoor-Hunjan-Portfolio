@@ -2802,19 +2802,24 @@
 
 
     /* ════════════════════════════════════════
-       TAGLINE & TOOLS (horizontal scroll era)
+       SECTION LAUNCHERS — page 2 tagline
     ════════════════════════════════════════ */
 
-    /* Two-column: tagline text left, tools right */
+    /* Two-column layout: left = tagline text + buttons, right = tools */
     #tagline {
       display: grid;
       grid-template-columns: 1fr 210px;
-      grid-template-areas: "text tools";
+      grid-template-areas:
+        "text  tools"
+        "launch tools";
       column-gap: 4rem;
-      align-items: center;
+      align-items: start;
     }
-    .tagline-inner { grid-area: text; }
 
+    .tagline-inner    { grid-area: text; }
+    .section-launchers { grid-area: launch; margin-top: 2rem; }
+
+    /* Restore tools-corner to right column, right-aligned */
     .tools-corner {
       grid-area: tools !important;
       position: static !important;
@@ -2826,321 +2831,162 @@
       gap: 1.4rem;
       align-items: flex-end;
       align-self: start;
-      padding-top: 2rem;
+      padding-top: 1rem;
     }
-    .tools-group { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end; }
-    .tools-badge { align-self: flex-end; }
-    .tools-badge.green { background: var(--cyan); color: var(--dark); }
-    .tool-item.pm { border-color: rgba(10,10,28,0.25); color: #0a0a1c; }
+    .tools-group  { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end; }
+    .tools-badge  { align-self: flex-end; }
 
-    /* Scroll hint under tagline text */
-    .tagline-scroll-hint {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 2.8rem;
+    /* ─── Launcher grid ─── */
+    .launcher-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+    }
+
+    .launcher-btn {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto auto;
+      column-gap: 0.65rem;
+      align-items: start;
+      padding: 0.6rem 0.8rem;
+      background: #ffffff;
+      border: 1.5px solid rgba(255,255,255,0.9);
+      border-radius: 10px;
+      cursor: pointer;
+      transition:
+        transform 0.28s cubic-bezier(.22,1,.36,1),
+        box-shadow 0.28s ease;
+      text-align: left;
+    }
+
+    .launcher-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(10,10,28,0.2);
+    }
+    .launcher-btn:active { transform: translateY(-1px); }
+
+    .launcher-num {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: rgba(10,10,28,0.13);
+      align-self: center;
+      transition: color 0.25s;
+      letter-spacing: 0.02em;
+    }
+    .launcher-btn:hover .launcher-num { color: rgba(10,10,28,0.35); }
+
+    .launcher-title {
+      grid-column: 2;
+      grid-row: 1;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #0a0a1c;
+      line-height: 1.15;
+    }
+
+    .launcher-desc {
+      grid-column: 2;
+      grid-row: 2;
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(10,10,28,0.38);
+      font-size: 0.6rem;
+      color: rgba(10,10,28,0.44);
+      line-height: 1.35;
+      padding-top: 0.12rem;
     }
-    .tagline-scroll-hint .tsh-arrow {
-      display: inline-block;
-      animation: tshBounce 1.6s ease-in-out infinite;
+
+    .launcher-arrow {
+      grid-column: 3;
+      grid-row: 1 / 3;
+      font-size: 0.82rem;
+      color: rgba(10,10,28,0.2);
+      align-self: center;
+      transition: transform 0.25s cubic-bezier(.22,1,.36,1), color 0.25s;
     }
-    @keyframes tshBounce {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(4px); }
+    .launcher-btn:hover .launcher-arrow {
+      transform: translateX(4px);
+      color: #0a0a1c;
     }
 
     /* ════════════════════════════════════════
-       HORIZONTAL SCROLL MACHINERY
+       SECTION MODAL
     ════════════════════════════════════════ */
 
-    /* Height set by JS: panels × 100vh */
-    .h-section { position: relative; }
-
-    /* Sticks to top of viewport while parent scrolls */
-    .h-track {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    /* Horizontal strip driven by JS translateX */
-    .h-strip {
-      position: absolute;
+    #section-modal {
+      position: fixed;
       inset: 0;
-      display: flex;
-      will-change: transform;
+      z-index: 9999;
+      background: #0a0a1c;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.38s ease;
+    }
+    #section-modal.open {
+      opacity: 1;
+      pointer-events: all;
     }
 
-    /* Each panel = one full viewport */
-    .h-panel {
-      width: 100vw;
-      height: 100vh;
-      flex-shrink: 0;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Divider fills its panel */
-    .h-panel > section.section-divider {
-      height: 100% !important;
-      min-height: unset !important;
-    }
-
-    /* Content sections fill their panel */
-    .h-panel > .content-section,
-    .h-panel > .reports-section {
-      height: 100% !important;
-      min-height: unset !important;
-      overflow: hidden;
-    }
-
-    /* Quote strip inside title panel */
-    .h-panel > .quote-strip {
-      position: absolute;
-      bottom: 4rem;
-      left: 0;
-      width: 100%;
-    }
-
-    /* Scroll hint overlay in title panel */
-    .h-panel-hint {
-      position: absolute;
-      bottom: 1.6rem;
-      left: 50%;
-      transform: translateX(-50%);
+    #modal-close {
+      position: fixed;
+      top: 1.4rem;
+      right: 1.6rem;
+      z-index: 10001;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.85);
+      font-size: 1.1rem;
+      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.45rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.38);
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-      white-space: nowrap;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s, transform 0.25s;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-    .h-panel-hint .hph-arrow {
-      display: inline-block;
-      animation: hphBounce 1.5s ease-in-out infinite;
-      font-size: 1rem;
-    }
-    @keyframes hphBounce {
-      0%,100% { transform: translateX(0); }
-      50%      { transform: translateX(4px); }
+    #modal-close:hover {
+      background: rgba(255,255,255,0.16);
+      border-color: rgba(255,255,255,0.55);
+      transform: rotate(90deg);
     }
 
-    /* Progress dots bottom-right of track */
-    .h-progress {
-      position: absolute;
-      bottom: 1.4rem;
-      right: 1.8rem;
-      display: flex;
-      gap: 0.42rem;
-      z-index: 20;
-      pointer-events: none;
-    }
-    .h-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.25);
-      transition: background 0.3s, transform 0.3s;
-    }
-    .h-dot.active {
-      background: rgba(255,255,255,0.88);
-      transform: scale(1.55);
-    }
+    #modal-body { min-height: 100vh; }
+    #section-store { display: none; }
 
-    /* Section label on right edge of track */
-    .h-section-num {
-      position: absolute;
-      right: 1.8rem;
-      top: 50%;
-      transform: translateY(-50%) rotate(90deg);
-      transform-origin: center;
-      font-family: 'Bebas Neue', cursive;
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      color: rgba(255,255,255,0.12);
-      pointer-events: none;
-      z-index: 20;
-      white-space: nowrap;
+    .modal-open .back-to-top { opacity: 0 !important; pointer-events: none !important; }
+
+    .tools-badge.green { background: var(--cyan); color: var(--dark); }
+    .tool-item.pm {
+      border-color: rgba(10,10,28,0.25);
+      color: #0a0a1c;
     }
 
     @media (max-width: 900px) {
       #tagline {
         grid-template-columns: 1fr;
-        grid-template-areas: "text" "tools";
+        grid-template-areas: "text" "launch" "tools";
       }
       .tools-corner {
         text-align: left;
         align-items: flex-start;
-        padding-top: 1.5rem;
+        padding-top: 2rem;
       }
-      .tools-group { align-items: flex-start; }
-      .tools-badge { align-self: flex-start; }
+      .tools-group  { align-items: flex-start; }
+      .tools-badge  { align-self: flex-start; }
+      .launcher-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 560px) {
-      .h-panel > .content-section,
-      .h-panel > .reports-section { padding: 2rem 1.4rem; }
+      .launcher-grid { grid-template-columns: 1fr; }
+      #modal-close { top: 1rem; right: 1rem; width: 40px; height: 40px; font-size: 1rem; }
     }
 
-  
-    /* ════════════════════════════════════════
-       FLOATING NAV PILL
-    ════════════════════════════════════════ */
-
-    #nav-pill {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 8888;
-      font-family: 'DM Sans', sans-serif;
-    }
-
-    #nav-pill-toggle {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 0.58rem 1.15rem;
-      background: rgba(10,10,28,0.82);
-      border: 1px solid rgba(255,255,255,0.13);
-      border-radius: 999px;
-      color: rgba(255,255,255,0.78);
-      font-size: 0.78rem;
-      font-family: 'DM Sans', sans-serif;
-      letter-spacing: 0.06em;
-      cursor: pointer;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      transition: background 0.22s, border-color 0.22s, color 0.22s;
-      white-space: nowrap;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
-    }
-    #nav-pill-toggle:hover {
-      background: rgba(10,10,28,0.96);
-      border-color: rgba(255,255,255,0.3);
-      color: #fff;
-    }
-
-    #nav-pill-chevron {
-      opacity: 0.45;
-      transition: transform 0.22s, opacity 0.22s;
-    }
-    #nav-pill.open #nav-pill-chevron {
-      transform: rotate(180deg);
-      opacity: 0.8;
-    }
-
-    #nav-pill-menu {
-      position: absolute;
-      bottom: calc(100% + 0.65rem);
-      left: 50%;
-      transform: translateX(-50%) translateY(8px);
-      background: rgba(10,10,28,0.94);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 18px;
-      padding: 0.45rem;
-      display: flex;
-      flex-direction: column;
-      min-width: 190px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.22s ease, transform 0.22s ease;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    }
-    #nav-pill.open #nav-pill-menu {
-      opacity: 1;
-      pointer-events: all;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    .nav-pill-item {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      padding: 0.52rem 0.9rem;
-      border-radius: 12px;
-      color: rgba(255,255,255,0.58);
-      font-size: 0.8rem;
-      font-family: 'DM Sans', sans-serif;
-      letter-spacing: 0.04em;
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s;
-    }
-    .nav-pill-item:hover {
-      background: rgba(255,255,255,0.09);
-      color: rgba(255,255,255,0.95);
-    }
-    .nav-pill-item.active {
-      color: #fff;
-      background: rgba(255,255,255,0.07);
-    }
-    .nav-pill-item.active .npi-dot {
-      background: #fff;
-      transform: scale(1.3);
-    }
-
-    .npi-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.22);
-      flex-shrink: 0;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    @media (max-width: 480px) {
-      #nav-pill { bottom: 1.2rem; }
-      #nav-pill-toggle { font-size: 0.72rem; padding: 0.5rem 1rem; }
-      #nav-pill-menu { min-width: 170px; }
-    }
-
-    /* ════════════════════════════════════════
-       REPORTS PANEL: full cover image visible
-    ════════════════════════════════════════ */
-
-    /* Remove the bleed trick inside the h-panel — fit portrait covers fully */
-    .h-panel > .reports-section .rcover-wrap {
-      width: 100%;
-      margin-left: 0;
-      height: calc(100vh - 14rem);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    /* All cover images fill the wrap, maintain aspect ratio */
-    .h-panel > .reports-section .rcover-img,
-    .h-panel > .reports-section .rcover-img.active {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center top;
-    }
-    /* Hover lift on wrap instead of individual image */
-    .h-panel > .reports-section .rcover-wrap:hover .rcover-img.active {
-      transform: none;
-    }
-
-    @media (max-width: 900px) {
-      .h-panel > .reports-section .rcover-wrap {
-        height: calc(100vh - 11rem);
-      }
-    }
   </style>
 </head>
 <body>
@@ -3201,9 +3047,62 @@
       <span class="tagline-line reveal reveal-delay-2">every project</span>
       <span class="tagline-line accent reveal reveal-delay-3">stronger than</span>
       <span class="tagline-line accent reveal reveal-delay-4">the one before.</span>
-      <p class="tagline-scroll-hint">scroll to explore <span class="tsh-arrow">&#8595;</span></p>
     </div>
 
+    <div class="section-launchers reveal">
+      <div class="launcher-grid">
+
+        <button class="launcher-btn" data-section="reports">
+          <span class="launcher-num">01</span>
+          <span class="launcher-title">Reports</span>
+          <span class="launcher-desc">Donor reports, programme briefs &amp; policy publications</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="social">
+          <span class="launcher-num">02</span>
+          <span class="launcher-title">Social Media</span>
+          <span class="launcher-desc">Strategic content across platforms for UN agencies</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="info">
+          <span class="launcher-num">03</span>
+          <span class="launcher-title">Infosheets</span>
+          <span class="launcher-desc">Visual fact sheets, briefing packs &amp; one-pagers</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="ppt">
+          <span class="launcher-num">04</span>
+          <span class="launcher-title">Powerpoints</span>
+          <span class="launcher-desc">Campaign decks, donor pitches &amp; training materials</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="brand">
+          <span class="launcher-num">05</span>
+          <span class="launcher-title">Brand Guidelines</span>
+          <span class="launcher-desc">Identity systems, typography &amp; logo usage rules</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="web">
+          <span class="launcher-num">06</span>
+          <span class="launcher-title">Websites</span>
+          <span class="launcher-desc">UI/UX design, full-stack builds &amp; digital platforms</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="app">
+          <span class="launcher-num">07</span>
+          <span class="launcher-title">App Design</span>
+          <span class="launcher-desc">Mobile-first interface design for field &amp; conservation tools</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+      </div>
+    </div>
 
     <div class="tools-corner reveal">
 
@@ -4919,240 +4818,96 @@
 
   
 
-  // ─── HORIZONTAL SCROLL SECTIONS ───
+  // ─── SECTION MODAL SYSTEM ───
   (function () {
-    var GROUPS = [
-      { key: 'reports', n: '01', divider: '#reports-divider', strip: '#reports-strip', content: '#reports-content' },
-      { key: 'social',  n: '02', divider: '#social-divider',  strip: '#social-strip',  content: '#social-content'  },
-      { key: 'info',    n: '03', divider: '#info-divider',    strip: '#info-strip',    content: '#info-content'    },
-      { key: 'ppt',     n: '04', divider: '#ppt-divider',     strip: '#ppt-strip',     content: '#ppt-content'     },
-      { key: 'brand',   n: '05', divider: '#brand-divider',   strip: '#brand-strip',   content: '#brand-content'   },
-      { key: 'web',     n: '06', divider: '#web-divider',     strip: '#web-strip',     content: '#web-content'     },
-      { key: 'app',     n: '07', divider: '#app-divider',     strip: '#app-strip',     content: '#app-content'     },
-    ];
+    var SECTIONS = {
+      reports: ['#reports-divider', '#reports-strip', '#reports-content'],
+      social:  ['#social-divider',  '#social-strip',  '#social-content'],
+      info:    ['#info-divider',    '#info-strip',    '#info-content'],
+      ppt:     ['#ppt-divider',     '#ppt-strip',     '#ppt-content'],
+      brand:   ['#brand-divider',   '#brand-strip',   '#brand-content'],
+      web:     ['#web-divider',     '#web-strip',     '#web-content'],
+      app:     ['#app-divider',     '#app-strip',     '#app-content'],
+    };
 
+    // Defer until full DOM (modal+store are injected after the script tag)
     document.addEventListener('DOMContentLoaded', function () {
-      var hSections = [];
+      var store     = document.getElementById('section-store');
+      var modal     = document.getElementById('section-modal');
+      var modalBody = document.getElementById('modal-body');
+      var closeBtn  = document.getElementById('modal-close');
 
-      GROUPS.forEach(function (g) {
-        var dividerEl = document.querySelector(g.divider);
-        var stripEl   = g.strip ? document.querySelector(g.strip) : null;
-        var contentEl = document.querySelector(g.content);
-        if (!dividerEl || !contentEl) return;
+      if (!store || !modal) return;
 
-        var parent  = dividerEl.parentNode;
-
-        // ── Build wrapper ──
-        var wrapper = document.createElement('div');
-        wrapper.className = 'h-section';
-        wrapper.id = g.key + '-section';
-
-        var track = document.createElement('div');
-        track.className = 'h-track';
-
-        var hstrip = document.createElement('div');
-        hstrip.className = 'h-strip';
-
-        // Panel 1: title divider + quote strip
-        var p1 = document.createElement('div');
-        p1.className = 'h-panel';
-
-        // Panel 2: main content
-        var p2 = document.createElement('div');
-        p2.className = 'h-panel';
-
-        // Scroll hint in title panel
-        var hint = document.createElement('div');
-        hint.className = 'h-panel-hint';
-        hint.innerHTML = '<span>scroll</span><span class="hph-arrow">&#8594;</span>';
-
-        // Section label
-        var label = document.createElement('div');
-        label.className = 'h-section-num';
-        label.textContent = g.n + ' ' + g.key.toUpperCase();
-
-        // Progress dots
-        var prog = document.createElement('div');
-        prog.className = 'h-progress';
-        prog.innerHTML = '<div class="h-dot active"></div><div class="h-dot"></div>';
-
-        // Insert wrapper at current divider position, then move elements into it
-        parent.insertBefore(wrapper, dividerEl);
-        p1.appendChild(dividerEl);
-        if (stripEl) p1.appendChild(stripEl);
-        p1.appendChild(hint);
-        p2.appendChild(contentEl);
-
-        hstrip.appendChild(p1);
-        hstrip.appendChild(p2);
-        track.appendChild(hstrip);
-        track.appendChild(prog);
-        track.appendChild(label);
-        wrapper.appendChild(track);
-
-        hSections.push({ wrapper: wrapper, hstrip: hstrip, prog: prog, hint: hint, panels: 2 });
+      // Move all portfolio section elements to hidden store
+      Object.keys(SECTIONS).forEach(function (key) {
+        SECTIONS[key].forEach(function (sel) {
+          var el = document.querySelector(sel);
+          if (el) store.appendChild(el);
+        });
       });
 
-      // ── Set section heights ──
-      function setHeights() {
-        hSections.forEach(function (s) {
-          s.wrapper.style.height = (s.panels * 100) + 'vh';
+      function openSection(key) {
+        var sels = SECTIONS[key];
+        if (!sels) return;
+
+        // Return any open section to store first
+        while (modalBody.firstChild) store.appendChild(modalBody.firstChild);
+
+        // Move this section into modal
+        sels.forEach(function (sel) {
+          var el = document.querySelector(sel);
+          if (el) modalBody.appendChild(el);
         });
-      }
-      setHeights();
-      window.addEventListener('resize', setHeights);
 
-      // ── Scroll driver ──
-      function onScroll() {
-        var wh = window.innerHeight;
-        var ww = window.innerWidth;
-        hSections.forEach(function (s) {
-          var rect       = s.wrapper.getBoundingClientRect();
-          var totalRange = s.wrapper.offsetHeight - wh;
-          var scrolled   = Math.max(0, Math.min(totalRange, -rect.top));
-          var progress   = totalRange > 0 ? scrolled / totalRange : 0;
-          var tx         = progress * ww * (s.panels - 1);
+        modal.classList.add('open');
+        document.body.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+        modal.scrollTop = 0;
 
-          s.hstrip.style.transform = 'translateX(-' + tx + 'px)';
-
-          // Progress dots
-          var activePanel = Math.round(progress * (s.panels - 1));
-          s.prog.querySelectorAll('.h-dot').forEach(function (d, i) {
-            d.classList.toggle('active', i === activePanel);
+        // Trigger reveal animations inside modal
+        setTimeout(function () {
+          modalBody.querySelectorAll('.reveal').forEach(function (el) {
+            el.classList.add('visible');
           });
-
-          // Fade hint after first nudge
-          s.hint.style.opacity = progress > 0.05 ? '0' : '1';
-
-    
-        });
+          // Force-load images that did not load while hidden
+          modalBody.querySelectorAll('img').forEach(function (img) {
+            if (!img.complete || img.naturalWidth === 0) {
+              var s = img.getAttribute('src'); img.src = ''; img.src = s;
+            }
+          });
+        }, 80);
       }
 
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll);
-      onScroll();
+      function closeModal() {
+        while (modalBody.firstChild) store.appendChild(modalBody.firstChild);
+        modal.classList.remove('open');
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+      }
+
+      // Launcher buttons
+      document.querySelectorAll('.launcher-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () { openSection(btn.dataset.section); });
+      });
+
+      // Close triggers
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
     });
-
-      // ── Floating nav pill ──
-      (function () {
-        var pill       = document.getElementById('nav-pill');
-        var pillLabel  = document.getElementById('nav-pill-label');
-        var pillToggle = document.getElementById('nav-pill-toggle');
-        var pillMenu   = document.getElementById('nav-pill-menu');
-        if (!pill || !pillToggle) return;
-
-        var NAMES = {
-          reports: 'Reports', social: 'Social Media', info: 'Infosheets',
-          ppt: 'Powerpoints', brand: 'Brand', web: 'Websites', app: 'App Design',
-        };
-
-        // Toggle menu open/close
-        pillToggle.addEventListener('click', function (e) {
-          e.stopPropagation();
-          pill.classList.toggle('open');
-        });
-        document.addEventListener('click', function () {
-          pill.classList.remove('open');
-        });
-
-        // Smooth scroll on link click (sections created dynamically by h-scroll JS)
-        pillMenu.addEventListener('click', function (e) {
-          var link = e.target.closest('.nav-pill-item');
-          if (!link) return;
-          var href = link.getAttribute('href');
-          if (href && href.startsWith('#')) {
-            var target = document.querySelector(href);
-            if (target) {
-              e.preventDefault();
-              target.scrollIntoView({ behavior: 'smooth' });
-            }
-          }
-          pill.classList.remove('open');
-        });
-
-        // Update active label on scroll
-        function updatePill() {
-          var wh     = window.innerHeight;
-          var mid    = wh / 2;
-          var active = 'home';
-          var label  = 'Home';
-
-          var contact = document.getElementById('contact');
-          if (contact && contact.getBoundingClientRect().top <= mid) {
-            active = 'contact'; label = 'Contact';
-          }
-
-          // Check h-sections (built by h-scroll JS — they may not exist yet at first call)
-          var hSecs = document.querySelectorAll('.h-section');
-          hSecs.forEach(function (s) {
-            var rect = s.getBoundingClientRect();
-            if (rect.top <= mid && rect.bottom > mid) {
-              var key = s.id.replace('-section', '');
-              active = key;
-              label  = NAMES[key] || label;
-            }
-          });
-
-          if (pillLabel) pillLabel.textContent = label;
-
-          pillMenu.querySelectorAll('.nav-pill-item').forEach(function (item) {
-            var sec = item.getAttribute('data-section') || item.getAttribute('href').replace('#','').replace('-section','');
-            item.classList.toggle('active', sec === active || item.getAttribute('href') === '#' + active);
-          });
-        }
-
-        window.addEventListener('scroll', updatePill, { passive: true });
-        updatePill();
-      })();
   })();
 
   </script>
 
-
-  <!-- FLOATING NAV PILL -->
-  <div id="nav-pill">
-    <button id="nav-pill-toggle" aria-label="Navigation menu">
-      <svg id="nav-pill-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-        <rect x="0" y="0" width="5.5" height="5.5" rx="1.2" fill="currentColor" opacity="0.7"/>
-        <rect x="8.5" y="0" width="5.5" height="5.5" rx="1.2" fill="currentColor" opacity="0.7"/>
-        <rect x="0" y="8.5" width="5.5" height="5.5" rx="1.2" fill="currentColor" opacity="0.7"/>
-        <rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.2" fill="currentColor" opacity="0.7"/>
-      </svg>
-      <span id="nav-pill-label">Portfolio</span>
-      <svg id="nav-pill-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <div id="nav-pill-menu" role="menu">
-      <a class="nav-pill-item" href="#hero" role="menuitem">
-        <span class="npi-dot"></span>Home
-      </a>
-      <a class="nav-pill-item" href="#reports-section" data-section="reports" role="menuitem">
-        <span class="npi-dot"></span>Reports
-      </a>
-      <a class="nav-pill-item" href="#social-section" data-section="social" role="menuitem">
-        <span class="npi-dot"></span>Social Media
-      </a>
-      <a class="nav-pill-item" href="#info-section" data-section="info" role="menuitem">
-        <span class="npi-dot"></span>Infosheets
-      </a>
-      <a class="nav-pill-item" href="#ppt-section" data-section="ppt" role="menuitem">
-        <span class="npi-dot"></span>Powerpoints
-      </a>
-      <a class="nav-pill-item" href="#brand-section" data-section="brand" role="menuitem">
-        <span class="npi-dot"></span>Brand Guidelines
-      </a>
-      <a class="nav-pill-item" href="#web-section" data-section="web" role="menuitem">
-        <span class="npi-dot"></span>Websites
-      </a>
-      <a class="nav-pill-item" href="#app-section" data-section="app" role="menuitem">
-        <span class="npi-dot"></span>App Design
-      </a>
-      <a class="nav-pill-item" href="#contact" role="menuitem">
-        <span class="npi-dot"></span>Contact
-      </a>
-    </div>
+  <!-- SECTION MODAL -->
+  <div id="section-modal" role="dialog" aria-modal="true" aria-label="Portfolio section">
+    <button id="modal-close" aria-label="Close">&#10005;</button>
+    <div id="modal-body"></div>
   </div>
+
+  <!-- SECTION STORE — hidden warehouse for all portfolio sections -->
+  <div id="section-store"></div>
 
 </body>
 </html>
