@@ -2802,24 +2802,19 @@
 
 
     /* ════════════════════════════════════════
-       SECTION LAUNCHERS — page 2 tagline
+       TAGLINE & TOOLS (horizontal scroll era)
     ════════════════════════════════════════ */
 
-    /* Two-column layout: left = tagline text + buttons, right = tools */
+    /* Two-column: tagline text left, tools right */
     #tagline {
       display: grid;
       grid-template-columns: 1fr 210px;
-      grid-template-areas:
-        "text  tools"
-        "launch tools";
+      grid-template-areas: "text tools";
       column-gap: 4rem;
-      align-items: start;
+      align-items: center;
     }
+    .tagline-inner { grid-area: text; }
 
-    .tagline-inner    { grid-area: text; }
-    .section-launchers { grid-area: launch; margin-top: 2rem; }
-
-    /* Restore tools-corner to right column, right-aligned */
     .tools-corner {
       grid-area: tools !important;
       position: static !important;
@@ -2831,160 +2826,172 @@
       gap: 1.4rem;
       align-items: flex-end;
       align-self: start;
-      padding-top: 1rem;
+      padding-top: 2rem;
     }
-    .tools-group  { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end; }
-    .tools-badge  { align-self: flex-end; }
+    .tools-group { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end; }
+    .tools-badge { align-self: flex-end; }
+    .tools-badge.green { background: var(--cyan); color: var(--dark); }
+    .tool-item.pm { border-color: rgba(10,10,28,0.25); color: #0a0a1c; }
 
-    /* ─── Launcher grid ─── */
-    .launcher-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.55rem;
-    }
-
-    .launcher-btn {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      grid-template-rows: auto auto;
-      column-gap: 0.65rem;
-      align-items: start;
-      padding: 0.6rem 0.8rem;
-      background: #ffffff;
-      border: 1.5px solid rgba(255,255,255,0.9);
-      border-radius: 10px;
-      cursor: pointer;
-      transition:
-        transform 0.28s cubic-bezier(.22,1,.36,1),
-        box-shadow 0.28s ease;
-      text-align: left;
-    }
-
-    .launcher-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 22px rgba(10,10,28,0.2);
-    }
-    .launcher-btn:active { transform: translateY(-1px); }
-
-    .launcher-num {
-      grid-column: 1;
-      grid-row: 1 / 3;
-      font-family: 'Bebas Neue', cursive;
-      font-size: 1.5rem;
-      line-height: 1;
-      color: rgba(10,10,28,0.13);
-      align-self: center;
-      transition: color 0.25s;
-      letter-spacing: 0.02em;
-    }
-    .launcher-btn:hover .launcher-num { color: rgba(10,10,28,0.35); }
-
-    .launcher-title {
-      grid-column: 2;
-      grid-row: 1;
-      font-family: 'Syne', sans-serif;
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: #0a0a1c;
-      line-height: 1.15;
-    }
-
-    .launcher-desc {
-      grid-column: 2;
-      grid-row: 2;
+    /* Scroll hint under tagline text */
+    .tagline-scroll-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2.8rem;
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.6rem;
-      color: rgba(10,10,28,0.44);
-      line-height: 1.35;
-      padding-top: 0.12rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(10,10,28,0.38);
     }
-
-    .launcher-arrow {
-      grid-column: 3;
-      grid-row: 1 / 3;
-      font-size: 0.82rem;
-      color: rgba(10,10,28,0.2);
-      align-self: center;
-      transition: transform 0.25s cubic-bezier(.22,1,.36,1), color 0.25s;
+    .tagline-scroll-hint .tsh-arrow {
+      display: inline-block;
+      animation: tshBounce 1.6s ease-in-out infinite;
     }
-    .launcher-btn:hover .launcher-arrow {
-      transform: translateX(4px);
-      color: #0a0a1c;
+    @keyframes tshBounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(4px); }
     }
 
     /* ════════════════════════════════════════
-       SECTION MODAL
+       HORIZONTAL SCROLL MACHINERY
     ════════════════════════════════════════ */
 
-    #section-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: #0a0a1c;
-      overflow-y: auto;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.38s ease;
-    }
-    #section-modal.open {
-      opacity: 1;
-      pointer-events: all;
+    /* Height set by JS: panels × 100vh */
+    .h-section { position: relative; }
+
+    /* Sticks to top of viewport while parent scrolls */
+    .h-track {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    #modal-close {
-      position: fixed;
-      top: 1.4rem;
-      right: 1.6rem;
-      z-index: 10001;
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(255,255,255,0.22);
-      background: rgba(255,255,255,0.07);
-      color: rgba(255,255,255,0.85);
-      font-size: 1.1rem;
-      cursor: pointer;
+    /* Horizontal strip driven by JS translateX */
+    .h-strip {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      will-change: transform;
+    }
+
+    /* Each panel = one full viewport */
+    .h-panel {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Divider fills its panel */
+    .h-panel > section.section-divider {
+      height: 100% !important;
+      min-height: unset !important;
+    }
+
+    /* Content sections fill their panel */
+    .h-panel > .content-section,
+    .h-panel > .reports-section {
+      height: 100% !important;
+      min-height: unset !important;
+      overflow-y: auto;
+    }
+
+    /* Quote strip inside title panel */
+    .h-panel > .quote-strip {
+      position: absolute;
+      bottom: 4rem;
+      left: 0;
+      width: 100%;
+    }
+
+    /* Scroll hint overlay in title panel */
+    .h-panel-hint {
+      position: absolute;
+      bottom: 1.6rem;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       align-items: center;
-      justify-content: center;
-      transition: background 0.2s, border-color 0.2s, transform 0.25s;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      gap: 0.45rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      white-space: nowrap;
     }
-    #modal-close:hover {
-      background: rgba(255,255,255,0.16);
-      border-color: rgba(255,255,255,0.55);
-      transform: rotate(90deg);
+    .h-panel-hint .hph-arrow {
+      display: inline-block;
+      animation: hphBounce 1.5s ease-in-out infinite;
+      font-size: 1rem;
+    }
+    @keyframes hphBounce {
+      0%,100% { transform: translateX(0); }
+      50%      { transform: translateX(4px); }
     }
 
-    #modal-body { min-height: 100vh; }
-    #section-store { display: none; }
+    /* Progress dots bottom-right of track */
+    .h-progress {
+      position: absolute;
+      bottom: 1.4rem;
+      right: 1.8rem;
+      display: flex;
+      gap: 0.42rem;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .h-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .h-dot.active {
+      background: rgba(255,255,255,0.88);
+      transform: scale(1.55);
+    }
 
-    .modal-open .back-to-top { opacity: 0 !important; pointer-events: none !important; }
-
-    .tools-badge.green { background: var(--cyan); color: var(--dark); }
-    .tool-item.pm {
-      border-color: rgba(10,10,28,0.25);
-      color: #0a0a1c;
+    /* Section label on right edge of track */
+    .h-section-num {
+      position: absolute;
+      right: 1.8rem;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      transform-origin: center;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.12);
+      pointer-events: none;
+      z-index: 20;
+      white-space: nowrap;
     }
 
     @media (max-width: 900px) {
       #tagline {
         grid-template-columns: 1fr;
-        grid-template-areas: "text" "launch" "tools";
+        grid-template-areas: "text" "tools";
       }
       .tools-corner {
         text-align: left;
         align-items: flex-start;
-        padding-top: 2rem;
+        padding-top: 1.5rem;
       }
-      .tools-group  { align-items: flex-start; }
-      .tools-badge  { align-self: flex-start; }
-      .launcher-grid { grid-template-columns: repeat(2, 1fr); }
+      .tools-group { align-items: flex-start; }
+      .tools-badge { align-self: flex-start; }
     }
     @media (max-width: 560px) {
-      .launcher-grid { grid-template-columns: 1fr; }
-      #modal-close { top: 1rem; right: 1rem; width: 40px; height: 40px; font-size: 1rem; }
+      .h-panel > .content-section,
+      .h-panel > .reports-section { padding: 2rem 1.4rem; }
     }
 
   </style>
@@ -3047,62 +3054,9 @@
       <span class="tagline-line reveal reveal-delay-2">every project</span>
       <span class="tagline-line accent reveal reveal-delay-3">stronger than</span>
       <span class="tagline-line accent reveal reveal-delay-4">the one before.</span>
+      <p class="tagline-scroll-hint">scroll to explore <span class="tsh-arrow">&#8595;</span></p>
     </div>
 
-    <div class="section-launchers reveal">
-      <div class="launcher-grid">
-
-        <button class="launcher-btn" data-section="reports">
-          <span class="launcher-num">01</span>
-          <span class="launcher-title">Reports</span>
-          <span class="launcher-desc">Donor reports, programme briefs &amp; policy publications</span>
-          <span class="launcher-arrow">&#8594;</span>
-        </button>
-
-        <button class="launcher-btn" data-section="social">
-          <span class="launcher-num">02</span>
-          <span class="launcher-title">Social Media</span>
-          <span class="launcher-desc">Strategic content across platforms for UN agencies</span>
-          <span class="launcher-arrow">&#8594;</span>
-        </button>
-
-        <button class="launcher-btn" data-section="info">
-          <span class="launcher-num">03</span>
-          <span class="launcher-title">Infosheets</span>
-          <span class="launcher-desc">Visual fact sheets, briefing packs &amp; one-pagers</span>
-          <span class="launcher-arrow">&#8594;</span>
-        </button>
-
-        <button class="launcher-btn" data-section="ppt">
-          <span class="launcher-num">04</span>
-          <span class="launcher-title">Powerpoints</span>
-          <span class="launcher-desc">Campaign decks, donor pitches &amp; training materials</span>
-          <span class="launcher-arrow">&#8594;</span>
-        </button>
-
-        <button class="launcher-btn" data-section="brand">
-          <span class="launcher-num">05</span>
-          <span class="launcher-title">Brand Guidelines</span>
-          <span class="launcher-desc">Identity systems, typography &amp; logo usage rules</span>
-          <span class="launcher-arrow">&#8594;</span>
-        </button>
-
-        <button class="launcher-btn" data-section="web">
-          <span class="launcher-num">06</span>
-          <span class="launcher-title">Websites</span>
-          <span class="launcher-desc">UI/UX design, full-stack builds &amp; digital platforms</span>
-          <span class="launcher-arrow">&#8594;</span>
-        </button>
-
-        <button class="launcher-btn" data-section="app">
-          <span class="launcher-num">07</span>
-          <span class="launcher-title">App Design</span>
-          <span class="launcher-desc">Mobile-first interface design for field &amp; conservation tools</span>
-          <span class="launcher-arrow">&#8594;</span>
-        </button>
-
-      </div>
-    </div>
 
     <div class="tools-corner reveal">
 
@@ -4818,96 +4772,122 @@
 
   
 
-  // ─── SECTION MODAL SYSTEM ───
+  // ─── HORIZONTAL SCROLL SECTIONS ───
   (function () {
-    var SECTIONS = {
-      reports: ['#reports-divider', '#reports-strip', '#reports-content'],
-      social:  ['#social-divider',  '#social-strip',  '#social-content'],
-      info:    ['#info-divider',    '#info-strip',    '#info-content'],
-      ppt:     ['#ppt-divider',     '#ppt-strip',     '#ppt-content'],
-      brand:   ['#brand-divider',   '#brand-strip',   '#brand-content'],
-      web:     ['#web-divider',     '#web-strip',     '#web-content'],
-      app:     ['#app-divider',     '#app-strip',     '#app-content'],
-    };
+    var GROUPS = [
+      { key: 'reports', n: '01', divider: '#reports-divider', strip: '#reports-strip', content: '#reports-content' },
+      { key: 'social',  n: '02', divider: '#social-divider',  strip: '#social-strip',  content: '#social-content'  },
+      { key: 'info',    n: '03', divider: '#info-divider',    strip: '#info-strip',    content: '#info-content'    },
+      { key: 'ppt',     n: '04', divider: '#ppt-divider',     strip: '#ppt-strip',     content: '#ppt-content'     },
+      { key: 'brand',   n: '05', divider: '#brand-divider',   strip: '#brand-strip',   content: '#brand-content'   },
+      { key: 'web',     n: '06', divider: '#web-divider',     strip: '#web-strip',     content: '#web-content'     },
+      { key: 'app',     n: '07', divider: '#app-divider',     strip: '#app-strip',     content: '#app-content'     },
+    ];
 
-    // Defer until full DOM (modal+store are injected after the script tag)
     document.addEventListener('DOMContentLoaded', function () {
-      var store     = document.getElementById('section-store');
-      var modal     = document.getElementById('section-modal');
-      var modalBody = document.getElementById('modal-body');
-      var closeBtn  = document.getElementById('modal-close');
+      var hSections = [];
 
-      if (!store || !modal) return;
+      GROUPS.forEach(function (g) {
+        var dividerEl = document.querySelector(g.divider);
+        var stripEl   = g.strip ? document.querySelector(g.strip) : null;
+        var contentEl = document.querySelector(g.content);
+        if (!dividerEl || !contentEl) return;
 
-      // Move all portfolio section elements to hidden store
-      Object.keys(SECTIONS).forEach(function (key) {
-        SECTIONS[key].forEach(function (sel) {
-          var el = document.querySelector(sel);
-          if (el) store.appendChild(el);
-        });
+        var parent  = dividerEl.parentNode;
+
+        // ── Build wrapper ──
+        var wrapper = document.createElement('div');
+        wrapper.className = 'h-section';
+        wrapper.id = g.key + '-section';
+
+        var track = document.createElement('div');
+        track.className = 'h-track';
+
+        var hstrip = document.createElement('div');
+        hstrip.className = 'h-strip';
+
+        // Panel 1: title divider + quote strip
+        var p1 = document.createElement('div');
+        p1.className = 'h-panel';
+
+        // Panel 2: main content
+        var p2 = document.createElement('div');
+        p2.className = 'h-panel';
+
+        // Scroll hint in title panel
+        var hint = document.createElement('div');
+        hint.className = 'h-panel-hint';
+        hint.innerHTML = '<span>scroll</span><span class="hph-arrow">&#8594;</span>';
+
+        // Section label
+        var label = document.createElement('div');
+        label.className = 'h-section-num';
+        label.textContent = g.n + ' ' + g.key.toUpperCase();
+
+        // Progress dots
+        var prog = document.createElement('div');
+        prog.className = 'h-progress';
+        prog.innerHTML = '<div class="h-dot active"></div><div class="h-dot"></div>';
+
+        // Insert wrapper at current divider position, then move elements into it
+        parent.insertBefore(wrapper, dividerEl);
+        p1.appendChild(dividerEl);
+        if (stripEl) p1.appendChild(stripEl);
+        p1.appendChild(hint);
+        p2.appendChild(contentEl);
+
+        hstrip.appendChild(p1);
+        hstrip.appendChild(p2);
+        track.appendChild(hstrip);
+        track.appendChild(prog);
+        track.appendChild(label);
+        wrapper.appendChild(track);
+
+        hSections.push({ wrapper: wrapper, hstrip: hstrip, prog: prog, hint: hint, panels: 2 });
       });
 
-      function openSection(key) {
-        var sels = SECTIONS[key];
-        if (!sels) return;
-
-        // Return any open section to store first
-        while (modalBody.firstChild) store.appendChild(modalBody.firstChild);
-
-        // Move this section into modal
-        sels.forEach(function (sel) {
-          var el = document.querySelector(sel);
-          if (el) modalBody.appendChild(el);
+      // ── Set section heights ──
+      function setHeights() {
+        hSections.forEach(function (s) {
+          s.wrapper.style.height = (s.panels * 100) + 'vh';
         });
+      }
+      setHeights();
+      window.addEventListener('resize', setHeights);
 
-        modal.classList.add('open');
-        document.body.classList.add('modal-open');
-        document.body.style.overflow = 'hidden';
-        modal.scrollTop = 0;
+      // ── Scroll driver ──
+      function onScroll() {
+        var wh = window.innerHeight;
+        var ww = window.innerWidth;
+        hSections.forEach(function (s) {
+          var rect       = s.wrapper.getBoundingClientRect();
+          var totalRange = s.wrapper.offsetHeight - wh;
+          var scrolled   = Math.max(0, Math.min(totalRange, -rect.top));
+          var progress   = totalRange > 0 ? scrolled / totalRange : 0;
+          var tx         = progress * ww * (s.panels - 1);
 
-        // Trigger reveal animations inside modal
-        setTimeout(function () {
-          modalBody.querySelectorAll('.reveal').forEach(function (el) {
-            el.classList.add('visible');
+          s.hstrip.style.transform = 'translateX(-' + tx + 'px)';
+
+          // Progress dots
+          var activePanel = Math.round(progress * (s.panels - 1));
+          s.prog.querySelectorAll('.h-dot').forEach(function (d, i) {
+            d.classList.toggle('active', i === activePanel);
           });
-          // Force-load images that did not load while hidden
-          modalBody.querySelectorAll('img').forEach(function (img) {
-            if (!img.complete || img.naturalWidth === 0) {
-              var s = img.getAttribute('src'); img.src = ''; img.src = s;
-            }
-          });
-        }, 80);
+
+          // Fade hint after first nudge
+          s.hint.style.opacity = progress > 0.05 ? '0' : '1';
+
+    
+        });
       }
 
-      function closeModal() {
-        while (modalBody.firstChild) store.appendChild(modalBody.firstChild);
-        modal.classList.remove('open');
-        document.body.classList.remove('modal-open');
-        document.body.style.overflow = '';
-      }
-
-      // Launcher buttons
-      document.querySelectorAll('.launcher-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () { openSection(btn.dataset.section); });
-      });
-
-      // Close triggers
-      if (closeBtn) closeBtn.addEventListener('click', closeModal);
-      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      onScroll();
     });
   })();
 
   </script>
-
-  <!-- SECTION MODAL -->
-  <div id="section-modal" role="dialog" aria-modal="true" aria-label="Portfolio section">
-    <button id="modal-close" aria-label="Close">&#10005;</button>
-    <div id="modal-body"></div>
-  </div>
-
-  <!-- SECTION STORE — hidden warehouse for all portfolio sections -->
-  <div id="section-store"></div>
 
 </body>
 </html>
