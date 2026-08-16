@@ -3039,6 +3039,58 @@
       .soc-post  { width: 240px; height: 305px; }
       .soc-strip { gap: 16px; }
     }
+  
+    /* ════════════════════════════════════════
+       SOCIAL GRID — 3×2, no scroll
+    ════════════════════════════════════════ */
+    #social-content {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 3.5rem 3.5rem 2.5rem;
+      box-sizing: border-box;
+    }
+
+    .soc-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 1rem;
+      min-height: 0;
+    }
+
+    .soc-grid-item {
+      overflow: hidden;
+      border-radius: 14px;
+      min-height: 0;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+      transition: transform 0.32s cubic-bezier(.22,1,.36,1),
+                  box-shadow 0.32s ease;
+      cursor: pointer;
+    }
+    .soc-grid-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.7);
+      z-index: 2;
+      position: relative;
+    }
+    .soc-grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      #social-content { padding: 2.5rem 2rem 2rem; }
+      .soc-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); gap: 0.75rem; }
+    }
+    @media (max-width: 560px) {
+      #social-content { padding: 2rem 1.2rem 1.5rem; }
+      .soc-grid { gap: 0.55rem; }
+    }
   </style>
 </head>
 <body>
@@ -3324,111 +3376,31 @@
   </div>
 
   <section class="content-section" id="social-content">
-
   <div class="section-header reveal">
     <span class="section-num">02</span>
     <span class="section-title-text pink">Social Media</span>
     <div class="section-line"></div>
   </div>
 
-  <!-- Posts flow as a continuous strip behind the phone bezel -->
-  <div class="soc-river reveal" id="socRiver">
-
-    <!-- Post strip: real posts + clones for infinite loop (clones added by JS) -->
-    <div class="soc-strip" id="socStrip">
-          <div class="soc-post" data-camp="0" data-real="1"><img loading="eager" src="Social-Design/Social-Media-Post-1.png"  alt="Social media post 1"></div>
-          <div class="soc-post" data-camp="0" data-real="1"><img loading="eager" src="Social-Design/Social-Media-Post-12.png" alt="Social media post 12"></div>
-          <div class="soc-post" data-camp="0" data-real="1"><img loading="eager" src="Social-Design/Social-Media-Post-13.png" alt="Social media post 13"></div>
-          <div class="soc-post" data-camp="0" data-real="1"><img loading="eager" src="Social-Design/Social-Media-Post-14.png" alt="Social media post 14"></div>
-          <div class="soc-post" data-camp="0" data-real="1"><img loading="eager" src="Social-Design/Social-Media-Post-15.png" alt="Social media post 15"></div>
-          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Building-peace1.webp" alt="Post 1"></div>
-          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-2.webp" alt="Post 2"></div>
-          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-3.webp" alt="Post 3"></div>
-          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety.webp" alt="Post 4"></div>
-          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-2.webp" alt="Post 5"></div>
-          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-3.webp" alt="Post 6"></div>
-          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol.webp" alt="Post 7"></div>
-          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol2.webp" alt="Post 8"></div>
-          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol3.webp" alt="Post 9"></div>
-          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/Womens-day-1.jpeg" alt="Post 10"></div>
-          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/womens-day-2.jpeg" alt="Post 11"></div>
-          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/womens-day-3.jpeg" alt="Post 12"></div>
-          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/womens-day-5.jpeg" alt="Post 13"></div>
-          <div class="soc-post" data-camp="5" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts.webp" alt="Post 14"></div>
-          <div class="soc-post" data-camp="5" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts3.webp" alt="Post 15"></div>
-          <div class="soc-post" data-camp="5" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts4.webp" alt="Post 16"></div>
-          <div class="soc-post" data-camp="6" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-WUF12-Flyer.webp" alt="Post 17"></div>
-          <div class="soc-post" data-camp="6" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-Green-Flyer.webp" alt="Post 18"></div>
-          <div class="soc-post" data-camp="7" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%201.webp" alt="Post 19"></div>
-          <div class="soc-post" data-camp="7" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%202.webp" alt="Post 20"></div>
-          <div class="soc-post" data-camp="7" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20%20-%20Page%203.webp" alt="Post 21"></div>
+  <div class="soc-grid">
+    <div class="soc-grid-item reveal">
+      <img loading="eager" src="Social-Design/Social-Media-Post-1.png" alt="Social Media Campaign">
     </div>
-
-  </div>
-
-  <!-- Description + campaign nav below the river -->
-  <div class="soc-meta">
-    <div class="soc-info-panels">
-      <div class="soc-info-panel-new active" data-camp="0">
-        <div class="soc-info-panel-title">Social Media Campaign</div>
-        <div class="soc-info-panel-agency">IOM Somalia</div>
-        <div class="soc-info-panel-body">A series of impactful social media graphics designed for digital platforms — bold visuals built to stop the scroll and drive awareness across key programme areas.</div>
-        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Social Media</span><span class="soc-info-panel-tag">Campaign</span><span class="soc-info-panel-tag">Instagram</span><span class="soc-info-panel-tag">IOM Somalia</span></div>
-      </div>
-      <div class="soc-info-panel-new" data-camp="1">
-        <div class="soc-info-panel-title">Building Peace One Family at a Time</div>
-        <div class="soc-info-panel-agency">IOM × UKAID · #WomentoWomen</div>
-        <div class="soc-info-panel-body">A three-part visual series exploring how lasting peace starts at home — produced for digital platforms as part of the #WomentoWomen campaign across Somalia.</div>
-        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Carousel</span><span class="soc-info-panel-tag">#WomentoWomen</span><span class="soc-info-panel-tag">Instagram</span><span class="soc-info-panel-tag">Peacebuilding</span></div>
-      </div>
-      <div class="soc-info-panel-new" data-camp="2">
-        <div class="soc-info-panel-title">Guardians of Their Own Safety</div>
-        <div class="soc-info-panel-agency">IOM Somalia · Baidoa Series</div>
-        <div class="soc-info-panel-body">Baidoa community safety series — spotlighting women as active agents in building secure environments for themselves and their families.</div>
-        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Carousel</span><span class="soc-info-panel-tag">Community Safety</span><span class="soc-info-panel-tag">Baidoa</span><span class="soc-info-panel-tag">Instagram</span></div>
-      </div>
-      <div class="soc-info-panel-new" data-camp="3">
-        <div class="soc-info-panel-title">Men &amp; Boys as Allies</div>
-        <div class="soc-info-panel-agency">IOM Somalia · #WomentoWomen</div>
-        <div class="soc-info-panel-body">Campaign positioning men and boys as essential partners in ending gender-based violence — part of the wider #WomentoWomen programme messaging.</div>
-        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Carousel</span><span class="soc-info-panel-tag">GBV Prevention</span><span class="soc-info-panel-tag">#WomentoWomen</span><span class="soc-info-panel-tag">Campaign</span></div>
-      </div>
-      <div class="soc-info-panel-new" data-camp="4">
-        <div class="soc-info-panel-title">International Women's Day Campaign</div>
-        <div class="soc-info-panel-agency">IOM Somalia</div>
-        <div class="soc-info-panel-body">Four-slide IWD campaign celebrating women's leadership in peace and security — designed for bold impact across social platforms on 8 March.</div>
-        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">#IWD</span><span class="soc-info-panel-tag">4-Slide Series</span><span class="soc-info-panel-tag">Campaign</span><span class="soc-info-panel-tag">Instagram</span></div>
-      </div>
-      <div class="soc-info-panel-new" data-camp="5">
-        <div class="soc-info-panel-title">16 Days of Activism</div>
-        <div class="soc-info-panel-agency">IOM Somalia · End GBV</div>
-        <div class="soc-info-panel-body">End GBV campaign for the 16 Days of Activism — raising awareness through bold visual storytelling across digital platforms.</div>
-        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">16 Days</span><span class="soc-info-panel-tag">End GBV</span><span class="soc-info-panel-tag">Activism</span><span class="soc-info-panel-tag">Campaign</span></div>
-      </div>
-      <div class="soc-info-panel-new" data-camp="6">
-        <div class="soc-info-panel-title">World Urban Forum 12 — Dialogue 4</div>
-        <div class="soc-info-panel-agency">UN-Habitat · WUF12</div>
-        <div class="soc-info-panel-body">Event flyers for Dialogue 4 at the World Urban Forum 12 in Cairo — clean, conference-ready layouts in two colourways.</div>
-        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Flyer Design</span><span class="soc-info-panel-tag">WUF12</span><span class="soc-info-panel-tag">UN-Habitat</span><span class="soc-info-panel-tag">Event</span></div>
-      </div>
-      <div class="soc-info-panel-new" data-camp="7">
-        <div class="soc-info-panel-title">Women to Women — Carousel</div>
-        <div class="soc-info-panel-agency">IOM × UKID · #WomentoWomen</div>
-        <div class="soc-info-panel-body">Multi-slide Instagram carousel introducing the Women to Women programme — designed to be swiped through as a narrative, building awareness slide by slide.</div>
-        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Instagram Carousel</span><span class="soc-info-panel-tag">#WomentoWomen</span><span class="soc-info-panel-tag">Programme</span><span class="soc-info-panel-tag">UKID</span></div>
-      </div>
+    <div class="soc-grid-item reveal">
+      <img loading="eager" src="Social-Design/EU-Social-Media-Post.png" alt="EU Social Media Post">
     </div>
-    <div class="soc-camp-nav">
-      <button class="soc-camp-dot-new active" data-camp="0" aria-label="Campaign 1"></button>
-      <button class="soc-camp-dot-new" data-camp="1" aria-label="Campaign 1"></button>
-      <button class="soc-camp-dot-new" data-camp="2" aria-label="Campaign 2"></button>
-      <button class="soc-camp-dot-new" data-camp="3" aria-label="Campaign 3"></button>
-      <button class="soc-camp-dot-new" data-camp="4" aria-label="Campaign 4"></button>
-      <button class="soc-camp-dot-new" data-camp="5" aria-label="Campaign 5"></button>
-      <button class="soc-camp-dot-new" data-camp="6" aria-label="Campaign 6"></button>
-      <button class="soc-camp-dot-new" data-camp="7" aria-label="Campaign 7"></button>
+    <div class="soc-grid-item reveal">
+      <img loading="eager" src="Social-Design/Building-peace1.png" alt="Building Peace One Family at a Time">
     </div>
-    <div class="soc-river-hint">posts flow automatically · drag to explore</div>
+    <div class="soc-grid-item reveal">
+      <img loading="eager" src="Social-Design/Guardians-of-their-own-safety.png" alt="Guardians of Their Own Safety">
+    </div>
+    <div class="soc-grid-item reveal">
+      <img loading="eager" src="Social-Design/Men-and-Boys-Carasol.png" alt="Men & Boys as Allies">
+    </div>
+    <div class="soc-grid-item reveal">
+      <img loading="eager" src="Social-Design/W2W-Carasoul - Page 1.png" alt="Women to Women">
+    </div>
   </div>
 
 </section>
