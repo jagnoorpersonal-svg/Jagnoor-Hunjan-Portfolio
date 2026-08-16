@@ -2987,6 +2987,58 @@
       #modal-close { top: 1rem; right: 1rem; width: 40px; height: 40px; font-size: 1rem; }
     }
 
+  
+    /* ════════════════════════════════════════
+       SOCIAL: large flat floating cards
+    ════════════════════════════════════════ */
+    .soc-river {
+      height: 80vh;
+      min-height: 560px;
+      border-radius: 0;
+      background: none;
+      /* Side-fade vignette */
+      -webkit-mask-image: linear-gradient(to right,
+        transparent 0%, rgba(0,0,0,0.6) 8%, #000 20%, #000 80%, rgba(0,0,0,0.6) 92%, transparent 100%);
+      mask-image: linear-gradient(to right,
+        transparent 0%, rgba(0,0,0,0.6) 8%, #000 20%, #000 80%, rgba(0,0,0,0.6) 92%, transparent 100%);
+    }
+
+    /* Remove phone bezel */
+    .soc-bezel { display: none !important; }
+
+    /* Larger flat cards */
+    .soc-post {
+      width: 440px;
+      height: 560px;
+      border-radius: 16px;
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.55),
+        0 2px 8px rgba(0,0,0,0.35);
+      transition: transform 0.38s cubic-bezier(.22,1,.36,1),
+                  box-shadow 0.38s cubic-bezier(.22,1,.36,1);
+    }
+    .soc-post img {
+      object-fit: cover;
+    }
+    .soc-strip {
+      gap: 24px;
+    }
+    .soc-post:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow:
+        0 24px 64px rgba(0,0,0,0.7),
+        0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    @media (max-width: 900px) {
+      .soc-river { height: 70vh; min-height: 460px; }
+      .soc-post  { width: 320px; height: 405px; }
+    }
+    @media (max-width: 560px) {
+      .soc-river { height: 65vh; min-height: 380px; }
+      .soc-post  { width: 240px; height: 305px; }
+      .soc-strip { gap: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -3284,84 +3336,82 @@
 
     <!-- Post strip: real posts + clones for infinite loop (clones added by JS) -->
     <div class="soc-strip" id="socStrip">
-          <div class="soc-post" data-camp="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace1.webp" alt="Post 1"></div>
-          <div class="soc-post" data-camp="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-2.webp" alt="Post 2"></div>
-          <div class="soc-post" data-camp="0" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-3.webp" alt="Post 3"></div>
-          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety.webp" alt="Post 4"></div>
-          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-2.webp" alt="Post 5"></div>
-          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-3.webp" alt="Post 6"></div>
-          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol.webp" alt="Post 7"></div>
-          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol2.webp" alt="Post 8"></div>
-          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol3.webp" alt="Post 9"></div>
-          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/Womens-day-1.jpeg" alt="Post 10"></div>
-          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-2.jpeg" alt="Post 11"></div>
-          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-3.jpeg" alt="Post 12"></div>
-          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/womens-day-5.jpeg" alt="Post 13"></div>
-          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts.webp" alt="Post 14"></div>
-          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts3.webp" alt="Post 15"></div>
-          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts4.webp" alt="Post 16"></div>
-          <div class="soc-post" data-camp="5" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-WUF12-Flyer.webp" alt="Post 17"></div>
-          <div class="soc-post" data-camp="5" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-Green-Flyer.webp" alt="Post 18"></div>
-          <div class="soc-post" data-camp="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%201.webp" alt="Post 19"></div>
-          <div class="soc-post" data-camp="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%202.webp" alt="Post 20"></div>
-          <div class="soc-post" data-camp="6" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20%20-%20Page%203.webp" alt="Post 21"></div>
+          <div class="soc-post" data-camp="0" data-real="1"><img loading="eager" src="Social-Design/Social-Media-Post-1.png"  alt="Social media post 1"></div>
+          <div class="soc-post" data-camp="0" data-real="1"><img loading="eager" src="Social-Design/Social-Media-Post-12.png" alt="Social media post 12"></div>
+          <div class="soc-post" data-camp="0" data-real="1"><img loading="eager" src="Social-Design/Social-Media-Post-13.png" alt="Social media post 13"></div>
+          <div class="soc-post" data-camp="0" data-real="1"><img loading="eager" src="Social-Design/Social-Media-Post-14.png" alt="Social media post 14"></div>
+          <div class="soc-post" data-camp="0" data-real="1"><img loading="eager" src="Social-Design/Social-Media-Post-15.png" alt="Social media post 15"></div>
+          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Building-peace1.webp" alt="Post 1"></div>
+          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-2.webp" alt="Post 2"></div>
+          <div class="soc-post" data-camp="1" data-real="1"><img loading="lazy" src="Social-Design/Building-peace-3.webp" alt="Post 3"></div>
+          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety.webp" alt="Post 4"></div>
+          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-2.webp" alt="Post 5"></div>
+          <div class="soc-post" data-camp="2" data-real="1"><img loading="lazy" src="Social-Design/Guardians-of-their-own-safety-3.webp" alt="Post 6"></div>
+          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol.webp" alt="Post 7"></div>
+          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol2.webp" alt="Post 8"></div>
+          <div class="soc-post" data-camp="3" data-real="1"><img loading="lazy" src="Social-Design/Men-and-Boys-Carasol3.webp" alt="Post 9"></div>
+          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/Womens-day-1.jpeg" alt="Post 10"></div>
+          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/womens-day-2.jpeg" alt="Post 11"></div>
+          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/womens-day-3.jpeg" alt="Post 12"></div>
+          <div class="soc-post" data-camp="4" data-real="1"><img loading="lazy" src="Social-Design/womens-day-5.jpeg" alt="Post 13"></div>
+          <div class="soc-post" data-camp="5" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts.webp" alt="Post 14"></div>
+          <div class="soc-post" data-camp="5" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts3.webp" alt="Post 15"></div>
+          <div class="soc-post" data-camp="5" data-real="1"><img loading="lazy" src="Social-Design/16DAYS-Activism-Posts4.webp" alt="Post 16"></div>
+          <div class="soc-post" data-camp="6" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-WUF12-Flyer.webp" alt="Post 17"></div>
+          <div class="soc-post" data-camp="6" data-real="1"><img loading="lazy" src="Social-Design/Dialogue-4-Green-Flyer.webp" alt="Post 18"></div>
+          <div class="soc-post" data-camp="7" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%201.webp" alt="Post 19"></div>
+          <div class="soc-post" data-camp="7" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20-%20Page%202.webp" alt="Post 20"></div>
+          <div class="soc-post" data-camp="7" data-real="1"><img loading="lazy" src="Social-Design/W2W-Carasoul%20%20-%20Page%203.webp" alt="Post 21"></div>
     </div>
 
-    <!-- Phone bezel overlay: transparent screen area lets posts show through -->
-    <div class="soc-bezel" id="socBezel">
-      <div class="soc-bezel-top">
-        <div class="soc-b-island"></div>
-        <div class="soc-b-status">
-          <span>9:41</span>
-          <span>▲▲ ◼◼◼</span>
-        </div>
-      </div>
-      <div class="soc-bezel-btm">
-        <div class="soc-b-home"></div>
-      </div>
-    </div>
   </div>
 
   <!-- Description + campaign nav below the river -->
   <div class="soc-meta">
     <div class="soc-info-panels">
       <div class="soc-info-panel-new active" data-camp="0">
+        <div class="soc-info-panel-title">Social Media Campaign</div>
+        <div class="soc-info-panel-agency">IOM Somalia</div>
+        <div class="soc-info-panel-body">A series of impactful social media graphics designed for digital platforms — bold visuals built to stop the scroll and drive awareness across key programme areas.</div>
+        <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Social Media</span><span class="soc-info-panel-tag">Campaign</span><span class="soc-info-panel-tag">Instagram</span><span class="soc-info-panel-tag">IOM Somalia</span></div>
+      </div>
+      <div class="soc-info-panel-new" data-camp="1">
         <div class="soc-info-panel-title">Building Peace One Family at a Time</div>
         <div class="soc-info-panel-agency">IOM × UKAID · #WomentoWomen</div>
         <div class="soc-info-panel-body">A three-part visual series exploring how lasting peace starts at home — produced for digital platforms as part of the #WomentoWomen campaign across Somalia.</div>
         <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Carousel</span><span class="soc-info-panel-tag">#WomentoWomen</span><span class="soc-info-panel-tag">Instagram</span><span class="soc-info-panel-tag">Peacebuilding</span></div>
       </div>
-      <div class="soc-info-panel-new" data-camp="1">
+      <div class="soc-info-panel-new" data-camp="2">
         <div class="soc-info-panel-title">Guardians of Their Own Safety</div>
         <div class="soc-info-panel-agency">IOM Somalia · Baidoa Series</div>
         <div class="soc-info-panel-body">Baidoa community safety series — spotlighting women as active agents in building secure environments for themselves and their families.</div>
         <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Carousel</span><span class="soc-info-panel-tag">Community Safety</span><span class="soc-info-panel-tag">Baidoa</span><span class="soc-info-panel-tag">Instagram</span></div>
       </div>
-      <div class="soc-info-panel-new" data-camp="2">
+      <div class="soc-info-panel-new" data-camp="3">
         <div class="soc-info-panel-title">Men &amp; Boys as Allies</div>
         <div class="soc-info-panel-agency">IOM Somalia · #WomentoWomen</div>
         <div class="soc-info-panel-body">Campaign positioning men and boys as essential partners in ending gender-based violence — part of the wider #WomentoWomen programme messaging.</div>
         <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Carousel</span><span class="soc-info-panel-tag">GBV Prevention</span><span class="soc-info-panel-tag">#WomentoWomen</span><span class="soc-info-panel-tag">Campaign</span></div>
       </div>
-      <div class="soc-info-panel-new" data-camp="3">
+      <div class="soc-info-panel-new" data-camp="4">
         <div class="soc-info-panel-title">International Women's Day Campaign</div>
         <div class="soc-info-panel-agency">IOM Somalia</div>
         <div class="soc-info-panel-body">Four-slide IWD campaign celebrating women's leadership in peace and security — designed for bold impact across social platforms on 8 March.</div>
         <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">#IWD</span><span class="soc-info-panel-tag">4-Slide Series</span><span class="soc-info-panel-tag">Campaign</span><span class="soc-info-panel-tag">Instagram</span></div>
       </div>
-      <div class="soc-info-panel-new" data-camp="4">
+      <div class="soc-info-panel-new" data-camp="5">
         <div class="soc-info-panel-title">16 Days of Activism</div>
         <div class="soc-info-panel-agency">IOM Somalia · End GBV</div>
         <div class="soc-info-panel-body">End GBV campaign for the 16 Days of Activism — raising awareness through bold visual storytelling across digital platforms.</div>
         <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">16 Days</span><span class="soc-info-panel-tag">End GBV</span><span class="soc-info-panel-tag">Activism</span><span class="soc-info-panel-tag">Campaign</span></div>
       </div>
-      <div class="soc-info-panel-new" data-camp="5">
+      <div class="soc-info-panel-new" data-camp="6">
         <div class="soc-info-panel-title">World Urban Forum 12 — Dialogue 4</div>
         <div class="soc-info-panel-agency">UN-Habitat · WUF12</div>
         <div class="soc-info-panel-body">Event flyers for Dialogue 4 at the World Urban Forum 12 in Cairo — clean, conference-ready layouts in two colourways.</div>
         <div class="soc-info-panel-tags"><span class="soc-info-panel-tag">Flyer Design</span><span class="soc-info-panel-tag">WUF12</span><span class="soc-info-panel-tag">UN-Habitat</span><span class="soc-info-panel-tag">Event</span></div>
       </div>
-      <div class="soc-info-panel-new" data-camp="6">
+      <div class="soc-info-panel-new" data-camp="7">
         <div class="soc-info-panel-title">Women to Women — Carousel</div>
         <div class="soc-info-panel-agency">IOM × UKID · #WomentoWomen</div>
         <div class="soc-info-panel-body">Multi-slide Instagram carousel introducing the Women to Women programme — designed to be swiped through as a narrative, building awareness slide by slide.</div>
@@ -3370,12 +3420,13 @@
     </div>
     <div class="soc-camp-nav">
       <button class="soc-camp-dot-new active" data-camp="0" aria-label="Campaign 1"></button>
-      <button class="soc-camp-dot-new" data-camp="1" aria-label="Campaign 2"></button>
-      <button class="soc-camp-dot-new" data-camp="2" aria-label="Campaign 3"></button>
-      <button class="soc-camp-dot-new" data-camp="3" aria-label="Campaign 4"></button>
-      <button class="soc-camp-dot-new" data-camp="4" aria-label="Campaign 5"></button>
-      <button class="soc-camp-dot-new" data-camp="5" aria-label="Campaign 6"></button>
-      <button class="soc-camp-dot-new" data-camp="6" aria-label="Campaign 7"></button>
+      <button class="soc-camp-dot-new" data-camp="1" aria-label="Campaign 1"></button>
+      <button class="soc-camp-dot-new" data-camp="2" aria-label="Campaign 2"></button>
+      <button class="soc-camp-dot-new" data-camp="3" aria-label="Campaign 3"></button>
+      <button class="soc-camp-dot-new" data-camp="4" aria-label="Campaign 4"></button>
+      <button class="soc-camp-dot-new" data-camp="5" aria-label="Campaign 5"></button>
+      <button class="soc-camp-dot-new" data-camp="6" aria-label="Campaign 6"></button>
+      <button class="soc-camp-dot-new" data-camp="7" aria-label="Campaign 7"></button>
     </div>
     <div class="soc-river-hint">posts flow automatically · drag to explore</div>
   </div>
@@ -3476,22 +3527,22 @@
 
     <!-- Slide strip — clones added by JS for infinite loop -->
     <div class="ppt-strip" id="pptStrip">
-      <div class="ppt-slide" data-camp="0" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit1.webp" alt="Slide 1"></div>
-      <div class="ppt-slide" data-camp="0" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit2.webp" alt="Slide 2"></div>
-      <div class="ppt-slide" data-camp="0" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit3.webp" alt="Slide 3"></div>
-      <div class="ppt-slide" data-camp="0" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit4.webp" alt="Slide 4"></div>
-      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec1.webp" alt="Slide 5"></div>
-      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec2.webp" alt="Slide 6"></div>
-      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec3.webp" alt="Slide 7"></div>
-      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec4.webp" alt="Slide 8"></div>
-      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update.webp" alt="Slide 9"></div>
-      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update-2.webp" alt="Slide 10"></div>
-      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update-3.webp" alt="Slide 11"></div>
-      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update-4.webp" alt="Slide 12"></div>
-      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/Wal-1.webp" alt="Slide 13"></div>
-      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/Wal-2.webp" alt="Slide 14"></div>
-      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/Wal-3.webp" alt="Slide 15"></div>
-      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/Wal-4.webp" alt="Slide 16"></div>
+      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit1.webp" alt="Slide 1"></div>
+      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit2.webp" alt="Slide 2"></div>
+      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit3.webp" alt="Slide 3"></div>
+      <div class="ppt-slide" data-camp="1" data-real="1"><img loading="lazy" src="Powerpoints/ppt-summit4.webp" alt="Slide 4"></div>
+      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec1.webp" alt="Slide 5"></div>
+      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec2.webp" alt="Slide 6"></div>
+      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec3.webp" alt="Slide 7"></div>
+      <div class="ppt-slide" data-camp="2" data-real="1"><img loading="lazy" src="Powerpoints/ppt-dec4.webp" alt="Slide 8"></div>
+      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update.webp" alt="Slide 9"></div>
+      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update-2.webp" alt="Slide 10"></div>
+      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update-3.webp" alt="Slide 11"></div>
+      <div class="ppt-slide" data-camp="3" data-real="1"><img loading="lazy" src="Powerpoints/PPT-Update-4.webp" alt="Slide 12"></div>
+      <div class="ppt-slide" data-camp="4" data-real="1"><img loading="lazy" src="Powerpoints/Wal-1.webp" alt="Slide 13"></div>
+      <div class="ppt-slide" data-camp="4" data-real="1"><img loading="lazy" src="Powerpoints/Wal-2.webp" alt="Slide 14"></div>
+      <div class="ppt-slide" data-camp="4" data-real="1"><img loading="lazy" src="Powerpoints/Wal-3.webp" alt="Slide 15"></div>
+      <div class="ppt-slide" data-camp="4" data-real="1"><img loading="lazy" src="Powerpoints/Wal-4.webp" alt="Slide 16"></div>
     </div>
 
     <!-- Monitor bezel overlay -->
@@ -3514,25 +3565,25 @@
 
   <div class="ppt-meta">
     <div class="ppt-info-panels">
-    <div class="ppt-info-panel active" data-camp="0">
+    <div class="ppt-info-panel active" data-camp="1">
       <div class="ppt-info-title">Women to Women — CS Summit Updates &amp; Linkages</div>
       <div class="ppt-info-agency">IOM × UKAID · Stakeholder Presentation</div>
       <div class="ppt-info-body">Stakeholder presentation summarising W2W programme linkages and updates — delivered at the Civil Society Summit for donors and implementing partners.</div>
       <div class="ppt-info-tags"><span class="ppt-info-tag">PowerPoint</span><span class="ppt-info-tag">W2W</span><span class="ppt-info-tag">Stakeholder</span><span class="ppt-info-tag">CS Summit</span></div>
     </div>
-    <div class="ppt-info-panel" data-camp="1">
+    <div class="ppt-info-panel" data-camp="2">
       <div class="ppt-info-title">Women to Women — Empower One, Empower All</div>
       <div class="ppt-info-agency">Baidoa &amp; Dhusamareb · December 2025</div>
       <div class="ppt-info-body">December 2025 programme brief covering W2W activities, outcomes, and field impact across Baidoa and Dhusamareb — presented to programme leads.</div>
       <div class="ppt-info-tags"><span class="ppt-info-tag">PowerPoint</span><span class="ppt-info-tag">W2W</span><span class="ppt-info-tag">Dec 2025</span><span class="ppt-info-tag">Programme Brief</span></div>
     </div>
-    <div class="ppt-info-panel" data-camp="2">
+    <div class="ppt-info-panel" data-camp="3">
       <div class="ppt-info-title">Political &amp; Security Updates — Baidoa &amp; Dhusamareb</div>
       <div class="ppt-info-agency">IOM UN Migration · Programme Brief</div>
       <div class="ppt-info-body">Monthly political and security update brief synthesising field intelligence and situational analysis from Baidoa and Dhusamareb for programme management.</div>
       <div class="ppt-info-tags"><span class="ppt-info-tag">PowerPoint</span><span class="ppt-info-tag">Security Brief</span><span class="ppt-info-tag">Field Intelligence</span><span class="ppt-info-tag">Monthly</span></div>
     </div>
-    <div class="ppt-info-panel" data-camp="3">
+    <div class="ppt-info-panel" data-camp="4">
       <div class="ppt-info-title">WaL-MCAP — Presentation</div>
       <div class="ppt-info-agency">IOM UN Migration · Programme Deck</div>
       <div class="ppt-info-body">Presentation deck for the Women and Leadership — Management of Conflict Action Plan programme, covering objectives, activities, and outcomes.</div>
@@ -3540,10 +3591,10 @@
     </div>
     </div>
     <div class="ppt-camp-nav">
-    <button class="ppt-camp-dot active" data-camp="0" aria-label="PPT set 1"></button>
-    <button class="ppt-camp-dot" data-camp="1" aria-label="PPT set 2"></button>
-    <button class="ppt-camp-dot" data-camp="2" aria-label="PPT set 3"></button>
-    <button class="ppt-camp-dot" data-camp="3" aria-label="PPT set 4"></button>
+    <button class="ppt-camp-dot active" data-camp="1" aria-label="PPT set 1"></button>
+    <button class="ppt-camp-dot" data-camp="2" aria-label="PPT set 2"></button>
+    <button class="ppt-camp-dot" data-camp="3" aria-label="PPT set 3"></button>
+    <button class="ppt-camp-dot" data-camp="4" aria-label="PPT set 4"></button>
     </div>
     <div class="ppt-river-hint">slides flow automatically · drag to explore</div>
   </div>
@@ -4372,14 +4423,14 @@
     const strip  = document.getElementById('socStrip');
     if (!river || !strip) return;
 
-    const POST_W = 320;   // must match CSS .soc-post width
-    const POST_H = 400;   // must match CSS .soc-post height
-    const GAP    = 20;    // must match CSS .soc-strip gap
+    const POST_W = 440;   // must match CSS .soc-post width
+    const POST_H = 560;   // must match CSS .soc-post height
+    const GAP    = 24;    // must match CSS .soc-strip gap
     const STEP   = POST_W + GAP; // px per post slot
 
     // Clone all real posts and append (makes the loop seamless)
     const realPosts = [...strip.querySelectorAll('.soc-post[data-real]')];
-    const N = realPosts.length; // 21
+    const N = realPosts.length;
     realPosts.forEach(p => {
       const c = p.cloneNode(true);
       c.removeAttribute('data-real');
