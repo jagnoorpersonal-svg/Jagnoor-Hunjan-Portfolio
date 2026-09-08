@@ -2801,257 +2801,295 @@
     }
 
 
-    
-  
-    /* ═══════════════════════════════════════════════════════
-       AESTHETIC REDESIGN — light, warm, minimal
-    ═══════════════════════════════════════════════════════ */
-
-    /* Page background */
-    body { background: #EDEBE5; color: #1C1C1E; }
-
-    /* Hero: keep warm coral energy but softened */
-    #hero { background: #E8BFA8; }
-    .hero-name-wrap .hero-jagnoor,
-    .hero-name-wrap .hero-hunjan { color: #1C1C1E; }
-    .hero-role { color: #4A3728; }
-    .hero-contact { color: rgba(28,28,30,0.55); }
-    .hero-bio { color: rgba(28,28,30,0.72); }
-    .hero-skills .skill-chip { background: rgba(28,28,30,0.1); color: #1C1C1E; border-color: rgba(28,28,30,0.15); }
-
-    /* Tagline section */
-    #tagline { background: #EDEBE5; }
-    .tagline-line { color: #1C1C1E; }
-    .tagline-line.accent { color: #7C5B3E; }
-    .tagline-scroll-hint { color: rgba(28,28,30,0.38); }
-    .tools-badge.coral  { background: #E8BFA8; color: #3A1C0C; }
-    .tools-badge.green  { background: #C8DAB0; color: #1A3010; }
-    .tools-badge.navy   { background: #C0CDE0; color: #0C1A30; }
-    .tools-badge.yellow { background: #EAE0B0; color: #2A2000; }
-    .tool-item { background: rgba(28,28,30,0.07); border-color: rgba(28,28,30,0.14); color: #2D2D2D; }
-    .tool-item.pm { color: #1A3010; border-color: rgba(60,100,40,0.25); }
-    .tool-item.skill { color: #1A2840; }
-    .tool-item.code  { color: #20104A; }
-    .tool-item.program { color: #2A1A40; }
-
-    /* ── Section dividers: soft pastels ── */
-    .section-divider { background: #EDEBE5; }
-    #reports-divider { background: #DDE8C8; }
-    #social-divider  { background: #E4D4F4; }
-    #info-divider    { background: #C8DCF0; }
-    #ppt-divider     { background: #F0DDD0; }
-    #brand-divider   { background: #F0E8C8; }
-    #web-divider     { background: #C8E8D8; }
-    #app-divider     { background: #D0DCF0; }
-
-    .divider-number { color: rgba(28,28,30,0.08); }
-    .divider-tag-line { color: #1C1C1E; }
-    .divider-tag-line.accent { color: #5A3E28; }
-    .divider-label-wrap { color: #1C1C1E; }
-    .divider-title, .divider-num-small { color: rgba(28,28,30,0.55); }
-
-    /* Quote strips */
-    .quote-strip { background: rgba(28,28,30,0.06); color: rgba(28,28,30,0.5); }
-    #reports-strip { background: #C8D8A8; color: #1A2C10; }
-    #social-strip  { background: #D0C0E8; color: #200A38; }
-    #info-strip    { background: #B8CCE4; color: #0A1C38; }
-    #ppt-strip     { background: #E4CCC0; color: #381808; }
-    #brand-strip   { background: #E4D8B0; color: #382800; }
-    #web-strip     { background: #B0D4C4; color: #083820; }
-    #app-strip     { background: #B8CCE8; color: #081838; }
-
-    /* ── Content sections: white/near-white ── */
-    .content-section, .reports-section { background: #F7F5F0; }
-    #reports-content  { background: #F4F7EE; }
-    #social-content   { background: #F5F0FA; }
-    #info-content     { background: #EEF4FA; }
-    #ppt-content      { background: #FAF4EE; }
-    #brand-content    { background: #FAF8EE; }
-    #web-content      { background: #EEF8F4; }
-    #app-content      { background: #EEF2FA; }
-
-    /* Section headers on light bg */
-    .section-num, .section-title-text { color: #1C1C1E !important; }
-    .section-line { background: rgba(28,28,30,0.14) !important; }
-    .brand-desc, .portfolio-desc-title { color: #1C1C1E; }
-    .portfolio-desc-agency { color: #5A5A5A; }
-    .portfolio-desc-body { color: #5A5A5A !important; }
-    .portfolio-tag { background: rgba(28,28,30,0.08); color: #2D2D2D; border-color: rgba(28,28,30,0.15); }
-
-    /* Contact */
-    #contact { background: #1C1C1E; color: #EDEBE5; }
-
-    /* Back to top */
-    .back-to-top { background: rgba(28,28,30,0.85); color: #EDEBE5; border-color: rgba(255,255,255,0.15); }
-
-    /* ── Launcher section: convert to soft anchor links ── */
-    .section-launchers { display: none !important; }
-
-    /* ── A4 REPORT FAN MOCKUP ── */
-    .rpt-fan-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 3rem 2rem 2rem;
-      gap: 2.5rem;
-    }
-
-    .rpt-fan {
-      position: relative;
-      width: 100%;
-      height: clamp(380px, 55vh, 580px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .rpt-card {
-      position: absolute;
-      width: clamp(200px, 22vw, 300px);
-      aspect-ratio: 210 / 297;
-      border-radius: 4px;
-      overflow: hidden;
-      transition: transform 0.55s cubic-bezier(.22,1,.36,1),
-                  box-shadow 0.55s ease,
-                  opacity 0.55s ease;
-      cursor: pointer;
-      background: #fff;
-    }
-    .rpt-card img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-      pointer-events: none;
-    }
-
-    /* Active card: front, straight */
-    .rpt-card.rc-active {
-      z-index: 3;
-      transform: translateX(0) rotate(0deg) scale(1);
-      box-shadow: 0 28px 72px rgba(28,28,30,0.22), 0 8px 20px rgba(28,28,30,0.14);
-    }
-    /* Prev card: left, tilted */
-    .rpt-card.rc-prev {
-      z-index: 2;
-      transform: translateX(-52%) rotate(-7deg) scale(0.84);
-      box-shadow: 0 12px 40px rgba(28,28,30,0.12);
-      opacity: 0.82;
-    }
-    /* Next card: right, tilted */
-    .rpt-card.rc-next {
-      z-index: 2;
-      transform: translateX(52%) rotate(7deg) scale(0.84);
-      box-shadow: 0 12px 40px rgba(28,28,30,0.12);
-      opacity: 0.82;
-    }
-    /* Far prev/next: nearly hidden behind */
-    .rpt-card.rc-far-prev {
-      z-index: 1;
-      transform: translateX(-72%) rotate(-12deg) scale(0.72);
-      opacity: 0.4;
-    }
-    .rpt-card.rc-far-next {
-      z-index: 1;
-      transform: translateX(72%) rotate(12deg) scale(0.72);
-      opacity: 0.4;
-    }
-    .rpt-card.rc-hidden {
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .rpt-nav {
-      display: flex;
-      align-items: center;
-      gap: 1.4rem;
-    }
-    .rpt-nav-btn {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(28,28,30,0.18);
-      background: #fff;
-      color: #1C1C1E;
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, border-color 0.2s, transform 0.2s;
-      box-shadow: 0 2px 8px rgba(28,28,30,0.08);
-    }
-    .rpt-nav-btn:hover { background: #1C1C1E; color: #fff; border-color: #1C1C1E; transform: scale(1.08); }
-    .rpt-counter {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      color: rgba(28,28,30,0.45);
-      min-width: 56px;
-      text-align: center;
-    }
-
-    .rpt-desc {
-      text-align: center;
-      max-width: 520px;
-    }
-    .rpt-desc-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      font-weight: 700;
-      color: #1C1C1E;
-      margin-bottom: 0.35rem;
-    }
-    .rpt-desc-agency {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.78rem;
-      color: rgba(28,28,30,0.45);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-    .rpt-dots {
-      display: flex; gap: 6px; justify-content: center; margin-top: 0.8rem;
-    }
-    .rpt-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(28,28,30,0.18);
-      border: none; cursor: pointer; padding: 0;
-      transition: background 0.25s, transform 0.25s;
-    }
-    .rpt-dot.active { background: #1C1C1E; transform: scale(1.45); }
-
-    /* Social grid on light bg */
-    .soc-grid-item { box-shadow: 0 4px 16px rgba(28,28,30,0.12); }
-
-    /* Info full image on light bg */
-    .info-full-img { filter: drop-shadow(0 12px 36px rgba(28,28,30,0.18)); }
-    .infosheet-dl-btn { background: #1C1C1E; color: #EDEBE5; border-color: #1C1C1E; }
-    .infosheet-dl-btn:hover { background: #3A3A3A; }
-    .info-dl-desc { color: #5A5A5A; }
-  
     /* ════════════════════════════════════════
-       TAGLINE & TOOLS — SCROLL ERA
+       SECTION LAUNCHERS — page 2 tagline
     ════════════════════════════════════════ */
+
+    /* Two-column layout: left = tagline text + buttons, right = tools */
     #tagline {
       display: grid;
       grid-template-columns: 1fr 210px;
-      grid-template-areas: "text tools";
+      grid-template-areas:
+        "text  tools"
+        "launch tools";
       column-gap: 4rem;
-      align-items: center;
+      align-items: start;
     }
-    .tagline-inner { grid-area: text; }
+
+    .tagline-inner    { grid-area: text; }
+    .section-launchers { grid-area: launch; margin-top: 2rem; }
+
+    /* Restore tools-corner to right column, right-aligned */
     .tools-corner {
       grid-area: tools !important;
       position: static !important;
-      bottom: auto !important; right: auto !important;
+      bottom: auto !important;
+      right: auto !important;
       text-align: right;
-      display: flex; flex-direction: column; gap: 1.4rem;
-      align-items: flex-end; align-self: start; padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      align-items: flex-end;
+      align-self: start;
+      padding-top: 1rem;
     }
-    .tools-group { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end; }
-    .tools-badge { align-self: flex-end; }
+    .tools-group  { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end; }
+    .tools-badge  { align-self: flex-end; }
+
+    /* ─── Launcher grid ─── */
+    .launcher-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+    }
+
+    .launcher-btn {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto auto;
+      column-gap: 0.65rem;
+      align-items: start;
+      padding: 0.6rem 0.8rem;
+      background: #ffffff;
+      border: 1.5px solid rgba(255,255,255,0.9);
+      border-radius: 10px;
+      cursor: pointer;
+      transition:
+        transform 0.28s cubic-bezier(.22,1,.36,1),
+        box-shadow 0.28s ease;
+      text-align: left;
+    }
+
+    .launcher-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(10,10,28,0.2);
+    }
+    .launcher-btn:active { transform: translateY(-1px); }
+
+    .launcher-num {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: rgba(10,10,28,0.13);
+      align-self: center;
+      transition: color 0.25s;
+      letter-spacing: 0.02em;
+    }
+    .launcher-btn:hover .launcher-num { color: rgba(10,10,28,0.35); }
+
+    .launcher-title {
+      grid-column: 2;
+      grid-row: 1;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #0a0a1c;
+      line-height: 1.15;
+    }
+
+    .launcher-desc {
+      grid-column: 2;
+      grid-row: 2;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6rem;
+      color: rgba(10,10,28,0.44);
+      line-height: 1.35;
+      padding-top: 0.12rem;
+    }
+
+    .launcher-arrow {
+      grid-column: 3;
+      grid-row: 1 / 3;
+      font-size: 0.82rem;
+      color: rgba(10,10,28,0.2);
+      align-self: center;
+      transition: transform 0.25s cubic-bezier(.22,1,.36,1), color 0.25s;
+    }
+    .launcher-btn:hover .launcher-arrow {
+      transform: translateX(4px);
+      color: #0a0a1c;
+    }
+
+    /* ════════════════════════════════════════
+       SECTION MODAL
+    ════════════════════════════════════════ */
+
+    #section-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #0a0a1c;
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.38s ease;
+    }
+    #section-modal.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #modal-close {
+      position: fixed;
+      top: 1.4rem;
+      right: 1.6rem;
+      z-index: 10001;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.85);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s, transform 0.25s;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    #modal-close:hover {
+      background: rgba(255,255,255,0.16);
+      border-color: rgba(255,255,255,0.55);
+      transform: rotate(90deg);
+    }
+
+    #modal-body { min-height: 100vh; }
+    #section-store { display: none; }
+
+    .modal-open .back-to-top { opacity: 0 !important; pointer-events: none !important; }
+
+    .tools-badge.green { background: var(--cyan); color: var(--dark); }
+    .tool-item.pm {
+      border-color: rgba(10,10,28,0.25);
+      color: #0a0a1c;
+    }
+
     @media (max-width: 900px) {
-      #tagline { grid-template-columns: 1fr; grid-template-areas: "text" "tools"; }
-      .tools-corner { text-align: left; align-items: flex-start; padding-top: 1.5rem; }
-      .tools-group { align-items: flex-start; }
-      .tools-badge { align-self: flex-start; }
+      #tagline {
+        grid-template-columns: 1fr;
+        grid-template-areas: "text" "launch" "tools";
+      }
+      .tools-corner {
+        text-align: left;
+        align-items: flex-start;
+        padding-top: 2rem;
+      }
+      .tools-group  { align-items: flex-start; }
+      .tools-badge  { align-self: flex-start; }
+      .launcher-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .launcher-grid { grid-template-columns: 1fr; }
+      #modal-close { top: 1rem; right: 1rem; width: 40px; height: 40px; font-size: 1rem; }
+    }
+
+  
+    /* ════════════════════════════════════════
+       SOCIAL: large flat floating cards
+    ════════════════════════════════════════ */
+    .soc-river {
+      height: 80vh;
+      min-height: 560px;
+      border-radius: 0;
+      background: none;
+      /* Side-fade vignette */
+      -webkit-mask-image: linear-gradient(to right,
+        transparent 0%, rgba(0,0,0,0.6) 8%, #000 20%, #000 80%, rgba(0,0,0,0.6) 92%, transparent 100%);
+      mask-image: linear-gradient(to right,
+        transparent 0%, rgba(0,0,0,0.6) 8%, #000 20%, #000 80%, rgba(0,0,0,0.6) 92%, transparent 100%);
+    }
+
+    /* Remove phone bezel */
+    .soc-bezel { display: none !important; }
+
+    /* Larger flat cards */
+    .soc-post {
+      width: 440px;
+      height: 560px;
+      border-radius: 16px;
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.55),
+        0 2px 8px rgba(0,0,0,0.35);
+      transition: transform 0.38s cubic-bezier(.22,1,.36,1),
+                  box-shadow 0.38s cubic-bezier(.22,1,.36,1);
+    }
+    .soc-post img {
+      object-fit: cover;
+    }
+    .soc-strip {
+      gap: 24px;
+    }
+    .soc-post:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow:
+        0 24px 64px rgba(0,0,0,0.7),
+        0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    @media (max-width: 900px) {
+      .soc-river { height: 70vh; min-height: 460px; }
+      .soc-post  { width: 320px; height: 405px; }
+    }
+    @media (max-width: 560px) {
+      .soc-river { height: 65vh; min-height: 380px; }
+      .soc-post  { width: 240px; height: 305px; }
+      .soc-strip { gap: 16px; }
+    }
+  
+    /* ════════════════════════════════════════
+       SOCIAL GRID — 3×2, no scroll
+    ════════════════════════════════════════ */
+    #social-content {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 3.5rem 3.5rem 2.5rem;
+      box-sizing: border-box;
+    }
+
+    .soc-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 1rem;
+      min-height: 0;
+    }
+
+    .soc-grid-item {
+      overflow: hidden;
+      border-radius: 14px;
+      min-height: 0;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+      transition: transform 0.32s cubic-bezier(.22,1,.36,1),
+                  box-shadow 0.32s ease;
+      cursor: pointer;
+    }
+    .soc-grid-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.7);
+      z-index: 2;
+      position: relative;
+    }
+    .soc-grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      #social-content { padding: 2.5rem 2rem 2rem; }
+      .soc-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); gap: 0.75rem; }
+    }
+    @media (max-width: 560px) {
+      #social-content { padding: 2rem 1.2rem 1.5rem; }
+      .soc-grid { gap: 0.55rem; }
     }
   </style>
 </head>
@@ -3115,6 +3153,60 @@
       <span class="tagline-line accent reveal reveal-delay-4">the one before.</span>
     </div>
 
+    <div class="section-launchers reveal">
+      <div class="launcher-grid">
+
+        <button class="launcher-btn" data-section="reports">
+          <span class="launcher-num">01</span>
+          <span class="launcher-title">Reports</span>
+          <span class="launcher-desc">Donor reports, programme briefs &amp; policy publications</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="social">
+          <span class="launcher-num">02</span>
+          <span class="launcher-title">Social Media</span>
+          <span class="launcher-desc">Strategic content across platforms for UN agencies</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="info">
+          <span class="launcher-num">03</span>
+          <span class="launcher-title">Infosheets</span>
+          <span class="launcher-desc">Visual fact sheets, briefing packs &amp; one-pagers</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="ppt">
+          <span class="launcher-num">04</span>
+          <span class="launcher-title">Powerpoints</span>
+          <span class="launcher-desc">Campaign decks, donor pitches &amp; training materials</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="brand">
+          <span class="launcher-num">05</span>
+          <span class="launcher-title">Brand Guidelines</span>
+          <span class="launcher-desc">Identity systems, typography &amp; logo usage rules</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="web">
+          <span class="launcher-num">06</span>
+          <span class="launcher-title">Websites</span>
+          <span class="launcher-desc">UI/UX design, full-stack builds &amp; digital platforms</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+        <button class="launcher-btn" data-section="app">
+          <span class="launcher-num">07</span>
+          <span class="launcher-title">App Design</span>
+          <span class="launcher-desc">Mobile-first interface design for field &amp; conservation tools</span>
+          <span class="launcher-arrow">&#8594;</span>
+        </button>
+
+      </div>
+    </div>
 
     <div class="tools-corner reveal">
 
@@ -3199,83 +3291,49 @@
   </div>
 
   <section class="reports-section" id="reports-content">
+
   <div class="section-header reveal">
     <span class="section-num">01</span>
     <span class="section-title-text green">Reports</span>
     <div class="section-line"></div>
   </div>
 
-  <div class="rpt-fan-wrap reveal">
-    <div class="rpt-fan" id="rptFan">
-      <div class="rpt-card rc-active" data-idx="0">
-        <img loading="eager" src="Report-Cover/Mockup-Cover-GESI.png" alt="GESI Progress Report">
-      </div>
-      <div class="rpt-card rc-next" data-idx="1">
-        <img loading="eager" src="Report-Cover/Mockup-2-GESI.png" alt="GESI Progress — Inside Spread">
-      </div>
-      <div class="rpt-card rc-hidden" data-idx="2">
-        <img loading="eager" src="Report-Cover/Mockup-3-GESI.png" alt="GESI Progress — Data Section">
-      </div>
-      <div class="rpt-card rc-hidden" data-idx="3">
-        <img loading="eager" src="Report-Cover/Mockup-4-GESI.png" alt="GESI Progress — Closing">
-      </div>
-      <div class="rpt-card rc-hidden" data-idx="4">
-        <img loading="eager" src="Report-Cover/2024-Highlights.png" alt="2024 Programme Highlights">
-      </div>
-      <div class="rpt-card rc-hidden" data-idx="5">
-        <img loading="eager" src="Report-Cover/JOSP-REPORT.png" alt="JOSP Report">
-      </div>
-      <div class="rpt-card rc-hidden" data-idx="6">
-        <img loading="eager" src="Report-Cover/CSSF-BASELINES.png" alt="CSSF Baseline Assessment">
-      </div>
-      <div class="rpt-card rc-hidden" data-idx="7">
-        <img loading="eager" src="Report-Cover/Conflict-trends.png" alt="Conflict Trends Analysis">
-      </div>
-      <div class="rpt-card rc-hidden" data-idx="8">
-        <img loading="eager" src="Report-Cover/Scoping-Mission-Report.png" alt="Scoping Mission Report">
-      </div>
-      <div class="rpt-card rc-hidden" data-idx="9">
-        <img loading="eager" src="Report-Cover/SOP-Report.png" alt="SOP Framework Report">
-      </div>
-      <div class="rpt-card rc-hidden" data-idx="10">
-        <img loading="eager" src="Report-Cover/WhatsApp Image 2026-06-23 at 09.25.34.jpeg" alt="Field Documentation Report">
-      </div>
-      <div class="rpt-card rc-hidden" data-idx="11">
-        <img loading="eager" src="Report-Cover/WhatsApp Image 2026-06-23 at 09.25.34 (1).jpeg" alt="Programme Brief">
-      </div>
-      <div class="rpt-card rc-prev" data-idx="12">
-        <img loading="eager" src="Report-Cover/WhatsApp Image 2026-06-23 at 09.25.34 (2).jpeg" alt="Impact Summary">
-      </div>
-    </div>
-
-    <div class="rpt-nav">
-      <button class="rpt-nav-btn" id="rptPrev" aria-label="Previous">&#8592;</button>
-      <div class="rpt-counter" id="rptCounter">1 / 13</div>
-      <button class="rpt-nav-btn" id="rptNext" aria-label="Next">&#8594;</button>
-    </div>
-
-    <div class="rpt-desc" id="rptDesc">
-      <div class="rpt-desc-title" id="rptTitle">GESI Progress Report</div>
-      <div class="rpt-desc-agency" id="rptAgency">IOM Somalia · UKAID</div>
-      <div class="rpt-dots" id="rptDots">
-      <button class="rpt-dot active" data-rdot="0" aria-label="Report 1"></button>
-      <button class="rpt-dot" data-rdot="1" aria-label="Report 2"></button>
-      <button class="rpt-dot" data-rdot="2" aria-label="Report 3"></button>
-      <button class="rpt-dot" data-rdot="3" aria-label="Report 4"></button>
-      <button class="rpt-dot" data-rdot="4" aria-label="Report 5"></button>
-      <button class="rpt-dot" data-rdot="5" aria-label="Report 6"></button>
-      <button class="rpt-dot" data-rdot="6" aria-label="Report 7"></button>
-      <button class="rpt-dot" data-rdot="7" aria-label="Report 8"></button>
-      <button class="rpt-dot" data-rdot="8" aria-label="Report 9"></button>
-      <button class="rpt-dot" data-rdot="9" aria-label="Report 10"></button>
-      <button class="rpt-dot" data-rdot="10" aria-label="Report 11"></button>
-      <button class="rpt-dot" data-rdot="11" aria-label="Report 12"></button>
-      <button class="rpt-dot" data-rdot="12" aria-label="Report 13"></button>
-      </div>
-    </div>
+  <div class="rcover-wrap reveal" id="rcoverWrap">
+      <img class="rcover-img active" id="rcImg0" loading="eager" src="Report-Cover/Mockup-Cover-GESI.png" alt="GESI Progress Report — Cover">
+      <img class="rcover-img" id="rcImg1" loading="eager" src="Report-Cover/Mockup-2-GESI.png" alt="GESI Progress Report — Inside spread">
+      <img class="rcover-img" id="rcImg2" loading="eager" src="Report-Cover/Mockup-3-GESI.png" alt="GESI Progress Report — Data section">
+      <img class="rcover-img" id="rcImg3" loading="eager" src="Report-Cover/Mockup-4-GESI.png" alt="GESI Progress Report — Closing section">
+      <img class="rcover-img" id="rcImg4" loading="eager" src="Report-Cover/2024-Highlights.png" alt="2024 Programme Highlights Report">
+      <img class="rcover-img" id="rcImg5" loading="eager" src="Report-Cover/JOSP-REPORT.png" alt="JOSP Report">
+      <img class="rcover-img" id="rcImg6" loading="eager" src="Report-Cover/CSSF-BASELINES.png" alt="CSSF Baseline Assessment">
+      <img class="rcover-img" id="rcImg7" loading="eager" src="Report-Cover/Conflict-trends.png" alt="Conflict Trends Analysis">
+      <img class="rcover-img" id="rcImg8" loading="eager" src="Report-Cover/Scoping-Mission-Report.png" alt="Scoping Mission Report">
+      <img class="rcover-img" id="rcImg9" loading="eager" src="Report-Cover/SOP-Report.png" alt="SOP Framework Report">
+      <img class="rcover-img" id="rcImg10" loading="eager" src="Report-Cover/WhatsApp Image 2026-06-23 at 09.25.34.jpeg" alt="Report cover — field documentation">
+      <img class="rcover-img" id="rcImg11" loading="eager" src="Report-Cover/WhatsApp Image 2026-06-23 at 09.25.34 (1).jpeg" alt="Report cover — programme brief">
+      <img class="rcover-img" id="rcImg12" loading="eager" src="Report-Cover/WhatsApp Image 2026-06-23 at 09.25.34 (2).jpeg" alt="Report cover — impact summary">
   </div>
 
-  <div class="brand-desc reveal" style="text-align:center;max-width:640px;margin:0 auto 3rem;">
+  <div class="rcover-dots" id="rcoverDots">
+      <button class="rcover-dot active" data-rc="0" aria-label="Report cover 1"></button>
+      <button class="rcover-dot" data-rc="1" aria-label="Report cover 2"></button>
+      <button class="rcover-dot" data-rc="2" aria-label="Report cover 3"></button>
+      <button class="rcover-dot" data-rc="3" aria-label="Report cover 4"></button>
+      <button class="rcover-dot" data-rc="4" aria-label="Report cover 5"></button>
+      <button class="rcover-dot" data-rc="5" aria-label="Report cover 6"></button>
+      <button class="rcover-dot" data-rc="6" aria-label="Report cover 7"></button>
+      <button class="rcover-dot" data-rc="7" aria-label="Report cover 8"></button>
+      <button class="rcover-dot" data-rc="8" aria-label="Report cover 9"></button>
+      <button class="rcover-dot" data-rc="9" aria-label="Report cover 10"></button>
+      <button class="rcover-dot" data-rc="10" aria-label="Report cover 11"></button>
+      <button class="rcover-dot" data-rc="11" aria-label="Report cover 12"></button>
+      <button class="rcover-dot" data-rc="12" aria-label="Report cover 13"></button>
+  </div>
+
+  <div class="brand-desc reveal">
+    <div class="portfolio-desc-title">Report &amp; Publication Design</div>
+    <div class="portfolio-desc-agency">IOM Somalia · UN-Habitat Urban Lab · CSSF · UKAID · JOSP</div>
+    <div class="portfolio-desc-body" style="max-width:640px;line-height:1.65;color:rgba(255,255,255,0.6);font-size:0.9rem;">A collection of donor reports, programme briefs, GESI assessments, conflict analyses and policy publications — each designed for clarity, donor visibility and measurable impact across humanitarian programmes in East Africa.</div>
     <div class="portfolio-tag-row" style="justify-content:center">
       <span class="portfolio-tag">Report Design</span>
       <span class="portfolio-tag">IOM Somalia</span>
@@ -3285,7 +3343,8 @@
       <span class="portfolio-tag">CSSF</span>
     </div>
   </div>
-</section>
+
+  </section>
 
 
   <!-- ══════════════════════════════════════ -->
@@ -4788,79 +4847,96 @@
 
   
 
-
-
-  
-
-  // ─── REPORT FAN MOCKUP ───
+  // ─── SECTION MODAL SYSTEM ───
   (function () {
-    var N      = 13;
-    var cur    = 0;
-    var cards  = Array.from(document.querySelectorAll('.rpt-card'));
-    var dots   = Array.from(document.querySelectorAll('.rpt-dot'));
-    var counter= document.getElementById('rptCounter');
-    var title  = document.getElementById('rptTitle');
-    var agency = document.getElementById('rptAgency');
-    var META   = [{"title":"GESI Progress Report","agency":"IOM Somalia · UKAID"},{"title":"GESI Progress — Inside Spread","agency":"IOM Somalia · UKAID"},{"title":"GESI Progress — Data Section","agency":"IOM Somalia · UKAID"},{"title":"GESI Progress — Closing","agency":"IOM Somalia · UKAID"},{"title":"2024 Programme Highlights","agency":"IOM Somalia"},{"title":"JOSP Report","agency":"IOM Somalia"},{"title":"CSSF Baseline Assessment","agency":"CSSF · UKAID"},{"title":"Conflict Trends Analysis","agency":"IOM Somalia"},{"title":"Scoping Mission Report","agency":"IOM Somalia"},{"title":"SOP Framework Report","agency":"IOM Somalia"},{"title":"Field Documentation Report","agency":"IOM Somalia"},{"title":"Programme Brief","agency":"IOM Somalia"},{"title":"Impact Summary","agency":"IOM Somalia"}];
+    var SECTIONS = {
+      reports: ['#reports-divider', '#reports-strip', '#reports-content'],
+      social:  ['#social-divider',  '#social-strip',  '#social-content'],
+      info:    ['#info-divider',    '#info-strip',    '#info-content'],
+      ppt:     ['#ppt-divider',     '#ppt-strip',     '#ppt-content'],
+      brand:   ['#brand-divider',   '#brand-strip',   '#brand-content'],
+      web:     ['#web-divider',     '#web-strip',     '#web-content'],
+      app:     ['#app-divider',     '#app-strip',     '#app-content'],
+    };
 
-    function cls(i) {
-      var d = ((i - cur) % N + N) % N;
-      if (d === 0) return 'rc-active';
-      if (d === 1) return 'rc-next';
-      if (d === 2) return 'rc-far-next';
-      if (d === N-1) return 'rc-prev';
-      if (d === N-2) return 'rc-far-prev';
-      return 'rc-hidden';
-    }
+    // Defer until full DOM (modal+store are injected after the script tag)
+    document.addEventListener('DOMContentLoaded', function () {
+      var store     = document.getElementById('section-store');
+      var modal     = document.getElementById('section-modal');
+      var modalBody = document.getElementById('modal-body');
+      var closeBtn  = document.getElementById('modal-close');
 
-    function update() {
-      cards.forEach(function (c, i) {
-        c.className = 'rpt-card ' + cls(i);
+      if (!store || !modal) return;
+
+      // Move all portfolio section elements to hidden store
+      Object.keys(SECTIONS).forEach(function (key) {
+        SECTIONS[key].forEach(function (sel) {
+          var el = document.querySelector(sel);
+          if (el) store.appendChild(el);
+        });
       });
-      dots.forEach(function (d, i) {
-        d.classList.toggle('active', i === cur);
+
+      function openSection(key) {
+        var sels = SECTIONS[key];
+        if (!sels) return;
+
+        // Return any open section to store first
+        while (modalBody.firstChild) store.appendChild(modalBody.firstChild);
+
+        // Move this section into modal
+        sels.forEach(function (sel) {
+          var el = document.querySelector(sel);
+          if (el) modalBody.appendChild(el);
+        });
+
+        modal.classList.add('open');
+        document.body.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+        modal.scrollTop = 0;
+
+        // Trigger reveal animations inside modal
+        setTimeout(function () {
+          modalBody.querySelectorAll('.reveal').forEach(function (el) {
+            el.classList.add('visible');
+          });
+          // Force-load images that did not load while hidden
+          modalBody.querySelectorAll('img').forEach(function (img) {
+            if (!img.complete || img.naturalWidth === 0) {
+              var s = img.getAttribute('src'); img.src = ''; img.src = s;
+            }
+          });
+        }, 80);
+      }
+
+      function closeModal() {
+        while (modalBody.firstChild) store.appendChild(modalBody.firstChild);
+        modal.classList.remove('open');
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+      }
+
+      // Launcher buttons
+      document.querySelectorAll('.launcher-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () { openSection(btn.dataset.section); });
       });
-      if (counter) counter.textContent = (cur + 1) + ' / ' + N;
-      if (title)   title.textContent   = META[cur].title;
-      if (agency)  agency.textContent  = META[cur].agency;
-    }
 
-    function next() { cur = (cur + 1) % N; update(); }
-    function prev() { cur = (cur - 1 + N) % N; update(); }
-
-    var nextBtn = document.getElementById('rptNext');
-    var prevBtn = document.getElementById('rptPrev');
-    if (nextBtn) nextBtn.addEventListener('click', next);
-    if (prevBtn) prevBtn.addEventListener('click', prev);
-
-    dots.forEach(function (d) {
-      d.addEventListener('click', function () { cur = parseInt(d.dataset.rdot); update(); });
-    });
-
-    // Click side cards to advance
-    cards.forEach(function (c, i) {
-      c.addEventListener('click', function () {
-        var cls = c.className;
-        if (cls.includes('rc-next') || cls.includes('rc-far-next')) next();
-        else if (cls.includes('rc-prev') || cls.includes('rc-far-prev')) prev();
-      });
-    });
-
-    // Auto-advance every 4s
-    var timer = setInterval(next, 4000);
-    var fan = document.getElementById('rptFan');
-    if (fan) {
-      fan.addEventListener('mouseenter', function () { clearInterval(timer); });
-      fan.addEventListener('mouseleave', function () { timer = setInterval(next, 4000); });
-    }
-
-    // Keyboard
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight') next();
-      if (e.key === 'ArrowLeft')  prev();
+      // Close triggers
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
     });
   })();
+
   </script>
+
+  <!-- SECTION MODAL -->
+  <div id="section-modal" role="dialog" aria-modal="true" aria-label="Portfolio section">
+    <button id="modal-close" aria-label="Close">&#10005;</button>
+    <div id="modal-body"></div>
+  </div>
+
+  <!-- SECTION STORE — hidden warehouse for all portfolio sections -->
+  <div id="section-store"></div>
 
 </body>
 </html>
